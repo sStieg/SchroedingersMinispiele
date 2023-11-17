@@ -5,20 +5,18 @@
 // import modules
 import express from "express";
 import { join } from "path";
+import { minigameRouter } from "./routers/minigameRouter";
 //import { taskRouter } from "./task-router";
 
 // create express application
 const app = express();
 
 // mount middleware
-//app.use(express.json());    // parse JSON data and place result in req.body
-app.get("/", function(request: any, response: any){
-    const file = join(__dirname, "../frontend/index.html")
-    response.sendFile(file);
-});
+app.use(express.json());    // parse JSON data and place result in req.body
+
 
 // mount router(s)
-//app.use("/api/tasks", taskRouter);
+app.use("/minigames", minigameRouter);
 
 // start http server
 app.listen(3000, function () {
