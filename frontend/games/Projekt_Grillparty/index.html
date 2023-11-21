@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script src="./script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gochi+Hand&display=swap" rel="stylesheet">
+    <title>Grillparty</title>
+</head>
+<body>
+    <div id="startscreen">
+        <img id="maskottchen" src="Startscreen/Maskottchen.png">
+        <img id="grillstart" src="./Startscreen/Grill_anfang.png">
+        <input id="nameInput" type="text" placeholder="Gib deinen Namen ein!">
+        <div id="error"></div>
+        <div id="startbutton" onclick="startGame()"><h1>PLAY!</h1></div>
+    </div>
+    <h1 id="title">Grillparty</h1>
+    <div id="timeLine"><div id="shownLine"></div></div>
+    <div id="grill">
+        <h2 onclick="openGrill(this)">Klicke um zu öffnen</h2>
+        <image id="grillImg" src="./Hintergrund/Grill_geschlossen.png" alt="Grill">
+        <div id="grillFlex">
+            <div id="0"></div>
+            <div id="1"></div>
+            <div id="2"></div>
+            <div id="3"></div>
+        </div>
+        <div id="tempBox">
+            <input id="temperature" type="range" name="temperature" min="0" max="300" value="0"
+            oninput="tempOutput.value=temperature.value+'°C'">                                                       
+            <output id="tempOutput" name="amount" for="temperature">0°C</output>
+        </div>        
+    </div>
+    <div id="ingredientList">
+        <h2 id="titleIngr">Zutaten</h2>
+        <div class="ingredient">
+            <div class="addButton" onclick="addToGrill('Hühnchen', 180, 6)">+</div>
+            <div>
+                <h3>Hühnchen</h3>
+                <p>Bei 180° grillen für 8 Minuten</p>
+            </div>
+            
+            <img src="./Ingredients/Hühnchen_raw.png">
+        </div>
+        <div class="ingredient">
+            <div class="addButton" onclick="addToGrill('Rippchen', 200, 10)">+</div>
+            <div>
+                <h3>Rippchen</h3>
+                <p>Bei 200° grillen für 10 Minuten</p>
+            </div>
+
+            <img src="./Ingredients/Rippchen_raw.png">
+        </div>
+        <div class="ingredient">
+            <div class="addButton" onclick="addToGrill('Schweinekotlett', 190, 10)">+</div>
+            <div>
+                <h3>Schweinekotlett</h3>
+                <p>Bei 190° grillen für 10 Minuten</p>
+            </div>
+
+            <img src="./Ingredients/Schweinekotlett_raw.png">
+        </div>
+        <div class="ingredient">
+            <div class="addButton" onclick="addToGrill('Käsekrainer', 185, 8)">+</div>
+            <div>
+                <h3>Käsekrainer</h3>
+                <p>Bei 180° grillen für 8 Minuten</p>
+            </div>
+
+            <img src="./Ingredients/Käsekrainer_raw.png">
+        </div>
+        <div class="ingredient">
+            <div class="addButton" onclick="addToGrill('Baguette', 200, 10)">+</div>
+            <div>
+                <h3>Baguette</h3>
+                <p>Bei 200° grillen für 10 Minuten</p>
+            </div>
+            
+            <img src="./Ingredients/Baguette_raw.png">
+        </div>
+        <div class="ingredient">
+            <div class="addButton" onclick="addToGrill('Ofenkartoffel', 170, 6)">+</div>
+            <div>
+                <h3>Ofenkartoffel</h3>
+                <p>Bei 170° grillen für 6 Minuten</p>
+            </div>
+
+            <img src="./Ingredients/Ofenkartoffel_raw.png">
+        </div>
+        <div class="ingredient">
+            <div class="addButton" onclick="addToGrill('Maiskolben', 150, 8)">+</div>
+            <div>
+                <h3>Maiskolben</h3>
+                <p>Bei 150° grillen für 8 Minuten</p>
+            </div>
+
+            <img src="./Ingredients/Maiskolben_raw.png">
+        </div>
+        <div class="ingredient">
+            <div class="addButton" onclick="addToGrill('Zucchini', 160, 8)">+</div>
+            <div>
+                <h3>Zucchini</h3>
+                <p>Bei 150° grillen für 8 Minuten</p>
+            </div>
+
+            <img src="./Ingredients/Zucchini_raw.png">
+        </div>
+    </div>
+    <div id="noteBlock">
+        <h2 id="titleIngr">Bestellungen</h2>
+        <div id="orders">
+
+        </div>
+    </div>
+    <div id="finishedFood">
+        
+    </div>
+</body>
+</html>

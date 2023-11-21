@@ -1,0 +1,439 @@
+:root {
+    --boxColor: #e0b76be5;
+    --fontColor: #f3f3f3;
+    --headlines: 'Cabin Sketch', cursive
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: calibri light;
+}
+
+#timeLine{
+    width: 0;
+    height: 2vh;
+    position: absolute;
+    top: 0;
+    
+    overflow: hidden;
+}
+@keyframes time {
+    50%{width: 50vw;}
+    100%{width: 100vw}
+}
+#shownLine{
+    width: 100vw;
+    height: 2vh;
+    background-color: var(--fontColor);
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+}
+
+h1,h2,h3{
+    font-family: var(--headlines);
+}
+
+#title, #titleIngr{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: var(--fontColor) dotted 5px;
+    color: var(--fontColor);
+    transition: 200ms;
+}
+
+#title {
+    width: 50vw;
+    font-size: 400%;
+    position: relative;
+    top: 20vh;
+    left: 25vw;
+    z-index: 9;
+    transition: 200ms;
+}
+
+#highscores{
+    width: 30vw;
+    height: 20vh;
+    overflow-x: hidden;
+    display: grid;
+    grid-template-columns: 80% 20%;
+    background-color: #f3f3f371;
+    border-radius: 20px;
+    padding: 10px;
+    border: 4px solid #f3f3f39f;
+    position: absolute;
+    bottom: 20px;
+}
+
+#highscores h2 {
+    grid-column: 1/3;
+}
+
+#endText {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--fontColor);
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url("./Hintergrund/Garden.png");
+    background-size: cover;
+}
+
+/*STARTSCREEN*/
+#startscreen *{
+    z-index: 8;
+    transition: 200ms;
+}
+#startscreen{
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(5px);
+    z-index: 8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#nameInput {
+    width: 20vw;
+    background-color: #f3f3f349;
+    border: none;
+    border-bottom: 4px dotted var(--fontColor);
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--fontColor);
+    padding: 5px;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+::placeholder{
+    color: var(--fontColor);
+    font-weight: bold;
+}
+#nameInput:focus {
+    border: 4px dotted var(--fontColor);
+    background-color: #f3f3f371;
+    outline: none;
+}
+
+#error{
+    color: red;
+}
+
+#maskottchen {
+    width: 40%;
+    position: absolute;
+    left: -15%;
+    bottom: -5%;
+    transform: rotateZ(20deg);
+}
+
+#grillstart {
+    width: 28%;
+    position: absolute;
+    right: -5%;
+    top: 35%;
+    transform: rotateZ(-20deg);
+    transition: 200ms;
+}
+
+#startbutton {
+    width: 32%;
+    height: 20%;
+    background-image: url(./Startscreen/Zange.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 60%;
+    left: 35%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000;
+}
+
+#startbutton h1{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 700%;
+}
+
+#startbutton h1:hover{
+    font-size: 800%;
+}
+
+/*GRILL STYLE*/
+#grill{
+    width: 33vw;
+    position: absolute;
+    bottom: -40vh;
+    left: -50vw;
+    transition: 200ms;
+}
+
+#grillImg{
+    width: 100%;
+}
+
+#grill h2{
+    font-family: 'Cabin Sketch', cursive;
+    width: 10vw;
+    height: 10vw;
+    color: var(--fontColor);
+    font-size: 150%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 100px;
+    background-color: var(--boxColor);
+    position: absolute;
+    right: 8%;
+    top: 15%;
+    rotate: 30px;
+    cursor: pointer;
+    transition: 200ms;
+}
+
+#grill h2:hover {
+    background-color: #e0b76bcc;
+    transition: 200ms;
+}
+
+#grillFlex {
+    width: 69%;
+    height: 12.5%;
+    display: flex;
+    position: absolute;
+    bottom: 59%;
+    right: 13%;
+    border-radius: 100%;
+    opacity: 0;
+}
+
+#tempBox{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 100%;
+    transition: 200ms;
+}
+#temperature {
+    width: 50%;
+}
+#tempOutput{
+    width: 20%;
+    text-align: center;
+    border: dotted 3px var(--fontColor);
+    border-radius: 10px;
+    font-family: var(--headlines);
+    font-size: 200%;
+    font-weight: bold;
+    background-color: var(--fontColor);
+}
+
+.food {
+    width: 70%;
+    cursor: grab;
+    transition: 50ms;
+    border-radius: 10px;
+}
+.food:hover {
+    width: 78%;
+}
+
+.timer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    font-size: 300%;
+}
+
+#grillFlex div{
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/*ZUTATENLISTE STYLE*/
+#ingredientList {
+    width: 33vw;
+    height: 90vh;
+    background-color: var(--boxColor);
+    border-radius: 10px;
+    position: absolute;
+    top: 5vh;
+    left: 100vw;
+    transition: 200ms;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+#titleIngr {
+    width: 60%;
+    font-size: 300%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.ingredient{
+    width: 70%;
+    margin-bottom: 10px;
+    border: dotted 4px var(--fontColor);
+    border-radius: 10px;
+    position: relative;
+    padding: 3%;
+    font-size: 120%;
+    display: flex;
+}
+
+.ingredient img {
+    width: 15%;
+    position: absolute; 
+    right: 3%;
+    top: 25%;
+}
+
+.addButton {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #e6e6e6c2;
+    color: var(--fontColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight:900;
+    font-size: 300%;
+    opacity: 0;
+    transition: 200ms;
+    z-index: 3;
+    cursor: pointer;
+}
+.addButton:hover{
+    opacity: 1;
+    cursor: grab;
+}
+
+#finishedFood{
+    display: flex;
+    align-items: center;
+    width: 55vw;
+    height: 8vh;
+    position: absolute;
+    background-color: var(--boxColor);
+    bottom: -10vh;
+    left: -80vw;
+    border-radius: 10px;
+    transition: 200ms;
+}
+#finishedFood div {
+    width: 5%;
+    margin: 1.5%;
+    position: relative;
+}
+#finishedFood img {
+    width: 90%;
+}
+#finishedFood h3 {
+    position: absolute;
+    right: 1%;
+    bottom: 1%;
+    color: var(--fontColor);
+}
+
+/*BESTELLUNGEN*/
+#noteBlock{
+    background-image: url("./Hintergrund/Notitzblock.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 21vw;
+    height: 54vh;
+    position: absolute;
+    left: 43vw;
+    bottom: 100vh;
+    transition: 200ms;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#noteBlock p {
+    font-family: 'Gochi Hand', cursive;
+}
+#noteBlock #titleIngr{
+    color: #000000;
+    margin-top: 38px;
+    border-color: #000000;
+    font-size: 200%;
+    border-width: 3px;
+}
+#orders{
+    width: 100%;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.order{
+    width: 80%;
+    height: 30%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: #000000 dotted 2px;
+    cursor: pointer;
+    position: relative;
+}
+
+.greenTick{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e6e6e6c2;
+    opacity: 0.7;
+}
+.greenTick:hover{
+    opacity: 1;
+}
+.greenTick img{
+    width: 20%;
+}
+
+#orders .timer{
+    opacity: 0.3;
+}
