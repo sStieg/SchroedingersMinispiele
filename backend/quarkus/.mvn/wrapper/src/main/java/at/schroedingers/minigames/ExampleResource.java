@@ -1,16 +1,19 @@
 package at.schroedingers.minigames;
 
+import jakarta.annotation.Resource;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/hello")
+import java.io.File;
+import java.nio.file.Paths;
+@Path("/minigames")
 public class ExampleResource {
 
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.TEXT_HTML)
     public String hello() {
-        return "Hello from RESTEasy Reactive";
+        return "<h1>Schrödingers Minispiele</h2>";
     }
 }

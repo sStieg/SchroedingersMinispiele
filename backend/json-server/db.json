@@ -1,0 +1,13 @@
+{
+    "minigames": [
+        { 
+            "id" : 1, 
+            "answer" : "yes" 
+        },
+        {
+            "id" : 2,
+            "answer" : "no"
+        }
+
+    ]
+}
