@@ -1,13 +1,6 @@
 {
-    "minigames": [
-        { 
-            "id" : 1, 
-            "answer" : "yes" 
-        },
-        {
-            "id" : 2,
-            "answer" : "no"
-        }
-
+    "posts": [
+      { "id": 1, "text": "true" },
+      { "id": 2, "text": "false" }
     ]
-}
+  }
