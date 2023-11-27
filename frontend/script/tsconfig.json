@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "noImplicitAny": true,
+      "module": "CommonJS",
+      "target": "es6",
+      "allowJs": true,
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports" : true,
+      "esModuleInterop" : true,
+    }
+  }
