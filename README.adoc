@@ -1,0 +1,11 @@
+= SchroedingersMinispiele
+
+== Team
+Aschenberger Maria (Scrum Master), Stieg Seppi
+
+== Projektantrag
+=== Ausgangslage
+Der VR Escape Room ist eine Diplomarbeit aus dem Jahr 2023. Unsere Aufgabe ist es, Minispiele zu entwickeln um mehr Spielern die Möglichkeit zu geben sich aktiv an dem Spiel zu beteiligen. Die Spieler die von "außen" zusehen also die VR-Brille nicht auf haben, haben die Möglichkeit Nachrichten über den Chat an den Spieler mit der Brille zu senden. Die Spieler ohne Brille müssen verschiedene Rätsel lösen damit der Spieler mit der Brille aus dem Escape Room kommt. 
+
+=== Projektziele
+Die Ermöglichung der aktiven Mitbeteiligung am Spiel für die Mitspieler.
