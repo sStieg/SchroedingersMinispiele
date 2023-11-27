@@ -9,3 +9,20 @@ Der VR Escape Room ist eine Diplomarbeit aus dem Jahr 2023. Unsere Aufgabe ist e
 
 === Projektziele
 Die Ermöglichung der aktiven Mitbeteiligung am Spiel für die Mitspieler.
+
+=== Risikoanalyse
+==== Chancen
+* Zweigübergreifende Zusammenarbeit
+==== Risiken
+* Das beschaffen der Daten aus dem Unity Spiel
+
+=== Umgebung
+* VisualStudio Code
+* IntelliJ
+
+=== Technologien
+* TypeScript
+* Java
+* HTML
+* CSS
+* PHP
