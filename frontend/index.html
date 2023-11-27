@@ -4,12 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schrödingers Minispiele</title>
-    <script src="./script/script.js" defer></script>
+    <script src="./script.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>Schrödingers Minispiele</h1> 
-
-    <div id="button">Anfrage</div>
+    <div onclick="requestGame()" class="anfrage">Anfrage</div>
+    
+    <div class="overview">
+        <div class="live-view">live view</div>
+        <div class="chat-diary">
+            <img src="images/pfeil.png">
+            chat/diary
+        </div>
+        <div class="map">
+            <img src="images/man-icon.png">
+            <div class="room1">room 1</div>
+            <div class="room2">room 2</div>
+            <div class="room3">room 3</div>
+            <div class="room4">room 4</div>
+        </div>
+    </div>
 
     <div id="minigame"></div>
 </body>
