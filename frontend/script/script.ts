@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 
 
 let minigameBox = document.getElementById("minigame");
-let button = document.getElementById("button")
+let button = document.getElementById("anfrage");
 
 
 button.addEventListener("click", requestGame);
@@ -20,4 +20,4 @@ async function requestGame() {
         minigameBox!.innerHTML = "No game available";
     }
     
-}
+} 

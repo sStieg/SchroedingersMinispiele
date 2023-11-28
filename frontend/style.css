@@ -7,7 +7,7 @@ body{
     text-align: center;
 }
 
-.anfrage{
+#anfrage{
     color: white;
     position: absolute;
     top: 0px;
@@ -66,4 +66,10 @@ body{
 .map img{
     position: absolute;
     width: 100px;
+}
+
+#minigame {
+    position: absolute;
+    color: #fff;
+    z-index: 5;
 }
