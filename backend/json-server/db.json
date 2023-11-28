@@ -1,6 +1,0 @@
-{
-    "posts": [
-      { "id": 1, "text": "true" },
-      { "id": 2, "text": "false" }
-    ]
-  }
