@@ -1,50 +1,24 @@
 package at.schroedingers.minigames;
 
+import jakarta.websocket.ContainerProvider;
+import jakarta.websocket.Session;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
+import java.net.URI;
 
 @Path("/api")
 public class RestAPI {
-    private final String PATH_TO_FRONTEND = "./../../../../frontend";
 
     @GET
     @Produces(MediaType.TEXT_HTML)
-    public String startPage() {
-        try {
-            Object[] lines = Files.readAllLines(Paths.get(String.format("%s/index.html", PATH_TO_FRONTEND))).toArray();
-
-            String htmlLines = "";
-
-            for(int i = 0; i < lines.length; i++) {
-                htmlLines += lines[i] + " ";
-            }
-
-            return htmlLines;
-        } catch (Exception e) {
-            return e.getMessage();
-        }
-    }
-
-    @GET
-    @Produces(MediaType.TEXT_HTML)
-    @Path("/players/{playerId}/{position}")
-    public String startGame() {
-        try {
-            Object[] lines = Files.readAllLines(Paths.get(String.format("%s/games/pacman/pacman.html", PATH_TO_FRONTEND))).toArray();
-
-            String htmlLines = "";
-
-            for(int i = 0; i < lines.length; i++) {
-                htmlLines += lines[i] + " ";
-            }
-
-            return htmlLines;
-        } catch (Exception e) {
-            return e.getMessage();
+    @Path("/players/{player}/{position}")
+    public void startGame(@PathParam("player") String player, @PathParam("position") int position) throws Exception {
+        try (Session session = ContainerProvider.getWebSocketContainer().connectToServer(WebSocketClient.class, URI.create("http://localhost:8080/connect-websocket/rest"))) {
+            session.getAsyncRemote().sendText(String.format("%s: %d",player ,position));
         }
     }
 }
