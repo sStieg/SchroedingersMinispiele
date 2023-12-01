@@ -15,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @ServerEndpoint("/connect-websocket/{username}")
 @ApplicationScoped
 public class WebSocketServer {
-
     Map<String, Session> sessions = new ConcurrentHashMap<>();
 
     @OnOpen

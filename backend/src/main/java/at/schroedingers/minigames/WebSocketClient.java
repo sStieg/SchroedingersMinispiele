@@ -9,7 +9,6 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 @ClientEndpoint
 public class WebSocketClient {
-
     public static final LinkedBlockingDeque<String> MESSAGES = new LinkedBlockingDeque<>();
 
     @OnOpen

@@ -20,5 +20,6 @@ public class RestAPI {
         try (Session session = ContainerProvider.getWebSocketContainer().connectToServer(WebSocketClient.class, URI.create("http://localhost:8080/connect-websocket/rest"))) {
             session.getAsyncRemote().sendText(String.format("%s: %d",player ,position));
         }
+
     }
 }
