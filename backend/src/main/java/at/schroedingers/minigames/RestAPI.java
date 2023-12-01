@@ -18,9 +18,7 @@ public class RestAPI {
     public void startGame(@PathParam("player") String player, @PathParam("position") int position) throws Exception {
 
         try (Session session = ContainerProvider.getWebSocketContainer().connectToServer(WebSocketClient.class, URI.create("http://localhost:8080/connect-websocket/rest"))) {
-
             session.getAsyncRemote().sendText(String.format("%s: %d",player ,position));
-
         }
     }
 }
