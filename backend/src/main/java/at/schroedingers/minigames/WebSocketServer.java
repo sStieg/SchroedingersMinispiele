@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @ServerEndpoint("/connect-websocket/{username}")
 @ApplicationScoped
-public class WebSocket {
+public class WebSocketServer {
 
     Map<String, Session> sessions = new ConcurrentHashMap<>();
 
@@ -29,7 +29,7 @@ public class WebSocket {
     public void onClose(Session session, @PathParam("username") String username) {
         sessions.remove(username);
         System.out.println("User " + username + " left");
-        broadcast("User " + username + " left");
+        //broadcast("User " + username + " left");
     }
 
     @OnError

@@ -13,7 +13,7 @@ import io.quarkus.test.common.http.TestHTTPResource;
 import io.quarkus.test.junit.QuarkusTest;
 
 @QuarkusTest
-public class WebSocketTest {
+public class WebSocketServerTest {
     @TestHTTPResource("/connect-websocket/seppi")
     URI uri;
 
