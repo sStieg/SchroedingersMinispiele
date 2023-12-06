@@ -117,10 +117,34 @@
 
   <script type="text/javascript" defer>
       function setEingabe(id){
-          let row = getRowOrColumn(id, true);
-          let column = getRowOrColumn(id, false);
+          let row = getRowOrColumn(id, true) -1;
+          let column = getRowOrColumn(id, false) -1;
 
-          console.log(row, column)
+          if(isRight(row, column)){
+            console.log(":)")
+          }else{
+            console.log(":(")
+          }
+      }
+
+      function isRight(row, column){
+        let array = [
+          [true, true, true, true, true, false, false, false, false],
+          [false, false, false, false, false, false, false, false, false],
+          [false, false, false, false, false, false, false, false, false],
+          [false, false, false, false, false, false, false, false, false],
+          [false, false, false, false, false, false, false, false, false],
+          [false, false, false, false, false, true, true, true, true],
+          [false, false, false, false, false, false, false, false, false],
+          [false, false, false, false, false, false, false, false, false],
+          [false, false, false, false, false, false, false, false, false]
+        ];
+
+        if(array[row][column] == true){
+          return true;
+        }else{
+          return false;
+        }
       }
 
       function getRowOrColumn(str, isRow) {
