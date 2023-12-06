@@ -39,9 +39,8 @@ public class WebSocketServer {
     }
 
     @OnMessage
-    public void onMessage(String message, @PathParam("username") String username) {
-        System.out.println(">> " + username + ": " + message);
-        broadcast(">> " + username + ": " + message);
+    public void onMessage(String message) {
+        broadcast(message);
     }
 
     private void broadcast(String message) {
