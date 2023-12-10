@@ -68,8 +68,17 @@ body {
 
 #minigame {
   position: absolute;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  width: 100vw;
+  height: 100vh;
   color: #fff;
   z-index: 5;
+}
+
+#pacman-game {
+  opacity: 0;
 }
 
 /*# sourceMappingURL=style.css.map */
