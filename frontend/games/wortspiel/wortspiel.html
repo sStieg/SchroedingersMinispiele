@@ -4,8 +4,23 @@
 	<title>Maintenance - Moota.co</title>
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Permanent+Marker">
 	<style type="text/css">
+    @import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&family=Roboto:wght@300;400;500;700&display=swap');
+    *{
+      font-family: 'Rethink Sans', sans-serif;
+      text-align: center;
+    }
     .letter:hover{
       cursor: pointer;
+    }
+
+    td{
+      padding: 10px;
+      border: solid black 1px;
+      text-align: center;
+    }
+
+    #raster{
+      margin: 0 auto;
     }
   </style>
 </head>
@@ -14,12 +29,12 @@
 <table id="raster">
   <tbody>
     <tr>
-      <td class="letter" id="1x1" onclick="setEingabe(this.id)">U</td>
-      <td class="letter" id="1x2" onclick="setEingabe(this.id)">N</td>
-      <td class="letter" id="1x3" onclick="setEingabe(this.id)">T</td>
-      <td class="letter" id="1x4" onclick="setEingabe(this.id)">E</td>
-      <td class="letter" id="1x5" onclick="setEingabe(this.id)">R</td>
-      <td class="letter" id="1x6" onclick="setEingabe(this.id)">Z</td>
+      <td class="letter" id="1x1" onclick="setEingabe(this.id)">H</td>
+      <td class="letter" id="1x2" onclick="setEingabe(this.id)">I</td>
+      <td class="letter" id="1x3" onclick="setEingabe(this.id)">N</td>
+      <td class="letter" id="1x4" onclick="setEingabe(this.id)">T</td>
+      <td class="letter" id="1x5" onclick="setEingabe(this.id)">E</td>
+      <td class="letter" id="1x6" onclick="setEingabe(this.id)">R</td>
       <td class="letter" id="1x7" onclick="setEingabe(this.id)">X</td>
       <td class="letter" id="1x8" onclick="setEingabe(this.id)">I</td>
       <td class="letter" id="1x9" onclick="setEingabe(this.id)">J</td>
@@ -75,9 +90,9 @@
       <td class="letter" id="6x4" onclick="setEingabe(this.id)">N</td>
       <td class="letter" id="6x5" onclick="setEingabe(this.id)">O</td>
       <td class="letter" id="6x6" onclick="setEingabe(this.id)">B</td>
-      <td class="letter" id="6x7" onclick="setEingabe(this.id)">E</td>
-      <td class="letter" id="6x8" onclick="setEingabe(this.id)">T</td>
-      <td class="letter" id="6x9" onclick="setEingabe(this.id)">T</td>
+      <td class="letter" id="6x7" onclick="setEingabe(this.id)">U</td>
+      <td class="letter" id="6x8" onclick="setEingabe(this.id)">C</td>
+      <td class="letter" id="6x9" onclick="setEingabe(this.id)">H</td>
     </tr>
     <tr>
       <td class="letter" id="7x1" onclick="setEingabe(this.id)">R</td>
@@ -116,34 +131,44 @@
 </table>
 
   <script type="text/javascript" defer>
+      let lettersBefore = [];
+
       function setEingabe(id){
           let row = getRowOrColumn(id, true) -1;
           let column = getRowOrColumn(id, false) -1;
 
-          if(isRight(row, column)){
-            console.log(":)")
+          if(isRight(row, column) != 0){
+            let letter = document.getElementById(id);
+            letter.style.backgroundColor = "green";
+            
+            lettersBefore.push(id);
+            console.log(lettersBefore);
           }else{
+            for(i = 0; i < lettersBefore.length; i++){
+              document.getElementById(lettersBefore[i]).style.backgroundColor = "white";
+            } 
+            lettersBefore = [];
             console.log(":(")
           }
       }
 
       function isRight(row, column){
         let array = [
-          [true, true, true, true, true, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, true, true, true, true],
-          [false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false],
-          [false, false, false, false, false, false, false, false, false]
+          [1, 2, 3, 4, 5, 6, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 11, 12, 13, 14],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0, 0],
         ];
 
-        if(array[row][column] == true){
-          return true;
+        if(array[row][column] != 0){
+          return array[row][column];
         }else{
-          return false;
+          return 0;
         }
       }
 
