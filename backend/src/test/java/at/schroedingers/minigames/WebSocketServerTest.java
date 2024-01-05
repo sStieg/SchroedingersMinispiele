@@ -22,7 +22,7 @@ public class WebSocketServerTest {
         try (Session session = ContainerProvider.getWebSocketContainer().connectToServer(WebSocketClient.class, uri)) {
             Assertions.assertEquals("CONNECT", WebSocketClient.MESSAGES.poll(10, TimeUnit.SECONDS));
             session.getAsyncRemote().sendText("hello world");
-            Assertions.assertEquals(">> seppi: hello world", WebSocketClient.MESSAGES.poll(10, TimeUnit.SECONDS));
+            Assertions.assertEquals("hello world", WebSocketClient.MESSAGES.poll(10, TimeUnit.SECONDS));
         }
     }
 
