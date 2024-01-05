@@ -27,7 +27,7 @@
 
     const user = { //user object
         x: 0,
-        y: canvas.height/2 -50,
+        y: (canvas.height-50)/2 ,
         width: 10,
         height: 100,
         color: "WHITE",
@@ -48,7 +48,7 @@
         y: 0,
         width: 2,
         height: 10,
-        color: "WHITE",
+        color: "WHITE"
     }
 
     const ball = { //ball object
@@ -58,7 +58,7 @@
         speed: 5,
         velocityX: 5,
         velocityY: 5,
-        color: "WHITE",
+        color: "WHITE"
     }
     
 
@@ -106,9 +106,72 @@
         let rect = canvas.getBoundingClientRect();
         user.y = evt.clientY - rect.top - user.height/2;
     }
-    
+
+    function resetBall(){
+        ball.x = canvas.width/2;
+        ball.y = canvas.height/2;
+
+        ball.speed = 5;
+        ball.velocityX = -ball.velocityX;
+    }
+
+
+    function collision(b, p){
+        p.top = p.y;
+        p.bottom = p.y + p.height;
+        p.left = p.x;
+        p.right = p.x + p.width;
+        
+        b.top = b.y - b.radius;
+        b.bottom = b.y + b.radius;
+        b.left = b.x - b.radius;
+        b.right = b.x + b.radius;
+
+        //returns if collision or not
+        return p.left < b.right && p.top < b.bottom && p.right > b.left && p.bottom > b.top;
+    }
+
+    //logic behind the game
+    function update(){  
+        ball.x += ball.velocityX;
+        ball.y += ball.velocityY;
+
+        //control computer paddle
+        let computerLevel = 0.07;
+        com.y += ((ball.y - (com.y + com.height/2))) * computerLevel;
+
+        if(ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0){
+            ball.velocityY = -ball.velocityY;
+        }
+
+        let player = (ball.x < canvas.width/2) ? user : com;
+
+        if(collision(ball, player)){
+            let collidePoint = ball.y - (player.y + player.height/2)
+            
+            collidePoint = collidePoint/(player.height/2);
+
+            let angleRad = collidePoint * (Math.PI/4);
+
+            let direction = (ball.x < canvas.width/2) ? 1 : -1;
+            
+            ball.velocityX = direction * ball.speed * Math.cos(angleRad);
+            ball.velocityY = ball.speed * Math.sin(angleRad);
+
+            ball.speed += 0.4;
+        }
+
+        else if(ball.x - ball.radius < 0){
+            com.score++;
+            resetBall();
+        }else if(ball.x + ball.radius > canvas.width){
+            user.score++;
+            resetBall();
+        }  
+    }
 
     function game(){ 
+        update();
         render();
     }
 
