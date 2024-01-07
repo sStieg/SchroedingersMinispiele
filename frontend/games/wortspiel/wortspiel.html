@@ -185,7 +185,7 @@
 
 
   <script type="text/javascript" defer>
-      let lettersBefore = [];
+      let letters = [];
 
       function setEingabe(id){
           let row = getRowOrColumn(id, true) -1;
@@ -196,19 +196,30 @@
             letter.style.backgroundColor = "#e8ffde";
             letter.style.border = "solid #78fa41 1px";
             
-            lettersBefore.push(id);
-            console.log(lettersBefore);
+            letters.push(id);
+            console.log(letters);
 
             let result = document.getElementById(isRight(row, column));
             result.style.visibility = "visible";
+
+            console.log(endGame());
           }else{
-            for(i = 0; i < lettersBefore.length; i++){
-              document.getElementById(lettersBefore[i]).style.backgroundColor = "white";
-              document.getElementById(lettersBefore[i]).style.border = "solid black 1px";
+            for(i = 0; i < letters.length; i++){
+              document.getElementById(letters[i]).style.backgroundColor = "white";
+              document.getElementById(letters[i]).style.border = "solid black 1px";
             } 
-            lettersBefore = [];
+            letters = [];
             console.log(":(")
           }
+      }
+
+      function endGame(){
+        if(letters.includes("1x1") && letters.includes("1x2") && letters.includes("1x3") && letters.includes("1x3") 
+        && letters.includes("1x4") && letters.includes("1x5") && letters.includes("1x6") && letters.includes("6x6")
+        && letters.includes("6x7") && letters.includes("6x8") && letters.includes("6x9")){
+          return true;
+        }
+        return false;
       }
 
       function isRight(row, column){
