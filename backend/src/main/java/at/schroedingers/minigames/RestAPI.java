@@ -11,11 +11,11 @@ import java.net.URI;
 public class RestAPI {
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.MEDIA_TYPE_WILDCARD)
-    public void startGame(Object position) throws Exception {
+    public void startGame(int position) throws Exception {
         System.out.println(position);
-        try (Session session = ContainerProvider.getWebSocketContainer().connectToServer(WebSocketClient.class, URI.create("http://localhost:8080/connect-websocket/rest"))) {
+        try (Session session = ContainerProvider.getWebSocketContainer().connectToServer(WebSocketClient.class, URI.create("http://localhost:8080/api/connect-websocket/rest"))) {
             session.getAsyncRemote().sendText(String.format("%d" ,position));
         }
 

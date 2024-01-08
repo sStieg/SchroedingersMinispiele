@@ -68,7 +68,7 @@ body{
     width: 100px;
 }
 
-#minigame {
+#minigames {
     position: absolute;
     top: 0;
     background-color: rgba(0,0,0,0.9);
@@ -79,6 +79,6 @@ body{
     z-index: 5;
 }
 
-#pacman-game {
+.game {
     opacity: 0;
 }
