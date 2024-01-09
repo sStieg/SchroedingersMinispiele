@@ -1568,7 +1568,11 @@
                         let result = document.getElementById(isRight(row, column));
                         result.style.visibility = "visible";
 
-                        endGame();
+                        if(letters.includes("1x1") && letters.includes("1x2") && letters.includes("1x3") && letters.includes("1x3")
+                            && letters.includes("1x4") && letters.includes("1x5") && letters.includes("1x6") && letters.includes("6x6")
+                            && letters.includes("6x7") && letters.includes("6x8") && letters.includes("6x9")){
+                            endGame("HINTER BUCH");
+                        }
                     }else{
                         for(i = 0; i < letters.length; i++){
                             document.getElementById(letters[i]).style.backgroundColor = "white";
@@ -1576,18 +1580,6 @@
                         }
                         letters = [];
                         console.log(":(")
-                    }
-                }
-
-                function endGame(){
-                    if(letters.includes("1x1") && letters.includes("1x2") && letters.includes("1x3") && letters.includes("1x3")
-                        && letters.includes("1x4") && letters.includes("1x5") && letters.includes("1x6") && letters.includes("6x6")
-                        && letters.includes("6x7") && letters.includes("6x8") && letters.includes("6x9")){
-                        socket = new WebSocket("ws://localhost:8080/api/connect-websocket/wortspiel");
-                        socket.onopen = function() {
-                            socket.send("solution: HINTER BUCH");
-                            socket.close();
-                        }
                     }
                 }
 

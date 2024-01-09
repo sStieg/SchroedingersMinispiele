@@ -27,3 +27,6 @@ function startGame(gameNumber) {
         }
     }
 }
+function endGame() {
+    socket.send("solution: HINTER BUCH");
+}
