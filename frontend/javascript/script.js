@@ -1,5 +1,11 @@
 var connected = false;
 var socket;
+var hostPingPong = document.querySelector("#shadow-pingpong");
+var shadowPingPong = hostPingPong.attachShadow({ mode: "open" });
+var hostWordgame = document.querySelector("#shadow-wordgame");
+var shadowWordgame = hostWordgame.attachShadow({ mode: "open" });
+var hostHangman = document.querySelector("#shadow-hangman");
+var shadowHangman = hostHangman.attachShadow({ mode: "open" });
 $(document).ready(function () {
     connect();
 });
@@ -24,8 +30,8 @@ function startGame(gameNumber) {
             $("#pacman-game").css("position", "relative");
         }
         else if (gameNumber == 2) {
-            $('#wortspiel').css("opacity", "1");
-            $("#wortspiel").css("position", "relative");
+            $('#shadow-wordgame').css("opacity", "1");
+            $("#shadow-wordgame").css("position", "relative");
         }
     }
 }

@@ -1,6 +1,15 @@
 var connected = false;
 var socket;
 
+const hostPingPong = document.querySelector("#shadow-pingpong");
+const shadowPingPong = hostPingPong.attachShadow({ mode: "open" });
+
+const hostWordgame = document.querySelector("#shadow-wordgame");
+const shadowWordgame = hostWordgame.attachShadow({ mode: "open" });
+
+const hostHangman = document.querySelector("#shadow-hangman");
+const shadowHangman = hostHangman.attachShadow({ mode: "open" });
+
 $( document ).ready(function() {
     connect();
 });
@@ -29,8 +38,8 @@ function startGame(gameNumber) {
             $('#pacman-game').css("opacity", "1");
             $("#pacman-game").css("position", "relative");
         } else if(gameNumber == 2) {
-            $('#wortspiel').css("opacity", "1");
-            $("#wortspiel").css("position", "relative");
+            $('#shadow-wordgame').css("opacity", "1");
+            $("#shadow-wordgame").css("position", "relative");
         }
     }
 }
