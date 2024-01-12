@@ -27,12 +27,19 @@ function startGame(gameNumber) {
 
         if(gameNumber == 1) {
             $('#pacman-game').css("opacity", "1");
+            $("#pacman-game").css("position", "relative");
         } else if(gameNumber == 2) {
             $('#wortspiel').css("opacity", "1");
+            $("#wortspiel").css("position", "relative");
         }
     }
 }
 
 function endGame(){
     socket.send("solution: HINTER BUCH");
+
+    $("#minigames").css("opacity", "0");
+    $(".game").css("opacity", "0");
+    $(".game").css("position", "absolute");
+
 }
