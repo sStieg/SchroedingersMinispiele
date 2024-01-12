@@ -1,0 +1,14 @@
+@startuml
+'https://plantuml.com/deployment-diagram
+
+actor/ brille
+node server
+node quarkus
+node client
+
+brille "betrete Raum" --> "1" server
+server "Post"--> "2" quarkus
+quarkus --> server
+quarkus "Websocket"--> "3" client
+client --> quarkus
+@enduml
