@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Draw and GUESS</title>
+</head>
+<body>
+    <div id="drawguess">
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&family=Whisper&display=swap');
+            * {
+                font-family: 'Rethink Sans', sans-serif;
+            }
+
+            body{
+                padding: 0;
+                margin: 0;
+                color: white;
+            }
+
+            h1{
+                margin: 0;
+                padding-top: 5vh;
+            }
+
+            #drawguess{
+                text-align: center;
+                justify-content: center;
+                background-color: #02020B;
+                width: 100vw;
+                height: 100vh
+            }
+
+            .life{
+                width: 70px;
+            }
+
+            #submit, #guess{
+                height: 50px;
+                border-radius: 10px;
+            }
+
+            #guess{
+                margin-top: 20vh;
+                margin-bottom: 20px;
+                width: 325px;
+                background-color: #1c1c1c;
+                border: 3px #a8a8a8 solid;
+                color: white;
+                font-size: 35px;
+            }
+
+            #submit{
+                width: 70px;
+                background-color: white;
+            }
+        </style>
+
+        <h1>Draw and GUESS</h1>
+        <h2>What is drawn here?</h2>
+
+        <div>
+            <input type="text" name="guess" id="guess">
+            <input type="submit" id="submit" onclick="isRightGuess()">
+        </div>
+
+
+        <div id="lifes">
+            <img src="heart.png" class="life" id="1">
+            <img src="heart.png" class="life" id="2">
+            <img src="heart.png" class="life" id="3">
+            <img src="heart.png" class="life" id="4">
+        </div>
+
+
+        <script>
+            let counter = 0;
+            function isRightGuess(){
+                if(counter < 4){
+                    let guess = document.getElementById("guess").value;
+                    console.log(guess);
+
+
+                    if(guess === getSolution()){
+                        console.log("glückwunsch")
+                    }
+                    else{
+                        counter++;
+                        let image = document.getElementById(counter);
+                        image.src = "heart-dead.png";
+                        if(counter == 4){
+                            console.log("tot")
+                        }
+                        console.log("bist blind?")
+                    }
+                }else{
+                    console.log("tot")
+                }
+            }
+
+            function getSolution(){
+                return "Katze";
+            }
+        </script>
+    </div>
+</body>
+</html>
