@@ -35,8 +35,8 @@ function startGame(gameNumber) {
         $('#minigames').css("opacity", "1");
 
         if(gameNumber == 1) {
-            $('#pacman-game').css("opacity", "1");
-            $("#pacman-game").css("position", "relative");
+            $('#shadow-drawguess').css("opacity", "1");
+            $("#shadow-drawguess").css("position", "relative");
         } else if(gameNumber == 2) {
             $('#shadow-wordgame').css("opacity", "1");
             $("#shadow-wordgame").css("position", "relative");
