@@ -7,9 +7,10 @@
 <body>
     <div id="drawguess">
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&family=Whisper&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Rubik+Burned&display=swap');
+
             * {
-                font-family: 'Rethink Sans', sans-serif;
+                font-family: 'Roboto', sans-serif;
             }
 
             body{
@@ -21,6 +22,12 @@
             h1{
                 margin: 0;
                 padding-top: 5vh;
+                font-size: 50px;
+                font-family: "Rubik Burned";
+            }
+
+            #head{
+                padding-top: 10vh;
             }
 
             #drawguess{
@@ -32,31 +39,45 @@
             }
 
             .life{
-                width: 70px;
-            }
-
-            #submit, #guess{
-                height: 50px;
-                border-radius: 10px;
+                width: 4vw;
             }
 
             #guess{
+                height: 5vh;
                 margin-top: 20vh;
-                margin-bottom: 20px;
-                width: 325px;
+                margin-bottom: 2vh;
+                width: 30vw;
                 background-color: #1c1c1c;
                 border: 3px #a8a8a8 solid;
                 color: white;
+                border-radius: 10px;
                 font-size: 35px;
             }
 
             #submit{
-                width: 70px;
+                height: 5vw;
+                width: 5vw;
+                border-radius: 100px;
                 background-color: white;
+            }
+
+            #submit:hover{
+                cursor: pointer;
+            }
+
+            #win{
+                margin-top: -2vh;
+                font-size: 40px;
+                visibility: hidden;
+            }
+
+            #game-over{
+                font-size: 40px;
+                visibility: hidden;
             }
         </style>
 
-        <h1>Draw and GUESS</h1>
+        <h1 id="head">Draw and GUESS</h1>
         <h2>What is drawn here?</h2>
 
         <div>
@@ -72,6 +93,14 @@
             <img src="heart.png" class="life" id="4">
         </div>
 
+        <div id="win">
+            <h1>Glückwunsch!</h1>
+        </div>
+
+        <div id="game-over">
+            <h1>Game Over!</h1>
+        </div>
+
 
         <script>
             let counter = 0;
@@ -80,9 +109,10 @@
                     let guess = document.getElementById("guess").value;
                     console.log(guess);
 
-
-                    if(guess === getSolution()){
+                    guess = guess.toLocaleLowerCase;
+                    if(guess === getSolution().toLocaleLowerCase){
                         console.log("glückwunsch")
+                        document.getElementById("win").style.visibility = "visible";
                     }
                     else{
                         counter++;
@@ -90,6 +120,7 @@
                         image.src = "heart-dead.png";
                         if(counter == 4){
                             console.log("tot")
+                            document.getElementById("game-over").style.visibility = "visible";
                         }
                         console.log("bist blind?")
                     }
