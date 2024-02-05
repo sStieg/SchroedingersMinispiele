@@ -37,7 +37,7 @@ body {
 
 .overview > div {
   margin: 10vh 10vw;
-  width: 90vw;
+  width: 80vw;
   height: 80vh;
 }
 
@@ -46,7 +46,7 @@ body {
   height: 80vh;
   display: grid;
   grid-template-areas: "live-view live-view chat" "map story chat";
-  grid-template-columns: 30% 30% 27%;
+  grid-template-columns: 30% 30% 30%;
   grid-template-rows: 60% 40%;
 }
 
@@ -62,20 +62,35 @@ body {
 }
 
 /*****CHAT****/
+h2 {
+  margin: 0;
+  padding-top: 40px;
+  font-size: large;
+  font-weight: 500;
+}
+
 .chat {
   grid-area: chat;
 }
 
 .chat > div {
-  margin-left: 5%;
+  margin-left: 3%;
   height: 100%;
-  width: 95%;
+  width: 92%;
   border-radius: 39px;
   box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.2);
 }
 
 .chat #messages {
-  height: 87%;
+  height: 85%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.chat .write-message {
+  margin-top: 4%;
 }
 
 .chat textarea {
@@ -101,6 +116,46 @@ body {
   background-color: white;
 }
 
+.message-self, .message-other {
+  padding-top: 30px;
+}
+
+.message-self {
+  width: 70%;
+  margin-left: 25%;
+  text-align: right;
+}
+
+.message-other {
+  width: 70%;
+  margin-left: 5%;
+  text-align: left;
+}
+
+.message-self .text {
+  width: 100%;
+  height: 36px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #99D7D7;
+}
+
+.message-other .text {
+  width: 100%;
+  height: 36px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F8BA64;
+}
+
+.message-self .name, .message-other .name {
+  margin: 4px 20px;
+}
+
 /*****STORY****/
 .story {
   grid-area: story;
@@ -113,6 +168,26 @@ body {
   width: 95%;
   outline: 2px solid rgba(255, 149, 0, 0.48);
   outline-offset: -2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.story > div > div {
+  max-height: 80%;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.story p {
+  margin: 0 auto;
+  text-align: left;
 }
 
 /*****MAP****/
