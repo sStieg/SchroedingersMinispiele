@@ -14,23 +14,37 @@
 
 <body>
     
-    <div class="overview">
-        <div class="live-view">live view</div>
-        <div class="chat-diary">
-            <img src="images/pfeil.png">
-            chat/diary
-        </div>
-        <div class="map">
-            <img src="images/man-icon.png">
-            <div class="room1">room 1</div>
-            <div class="room2">room 2</div>
-            <div class="room3">room 3</div>
-            <div class="room4">room 4</div>
-        </div>
+    <div class="overview"> 
+        <div>
+            <div id="grid">
+                <div class="live-view">live view</div>
+
+                <div class="map">
+                    <div>
+                        <div class="room1">Room 1</div>
+                        <div class="room2">Room 2</div>
+                        <div class="room3">Room 3</div>
+                        <div class="room4">Room 4</div>
+                    </div>
+                </div>
+
+                <div class="story"><div></div></div>
+
+                <div class="chat">
+                    <div>
+                        <div id="messages"></div>
+                        <div>
+                            <textarea id="text" name="text" cols="35" rows="4"></textarea> 	
+                            <input type="submit" value="Senden" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
     </div>
 
     <div id="minigames">
-
+        <!-- 
         <div class="game" id="shadow-wordgame">
             <style type="text/css">
                 @import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&family=Whisper&display=swap');
@@ -62,7 +76,6 @@
                 #shadow-wordgame #raster{
                     background-color: grey;
                     border-radius: 5px;
-
                 }
 
                 #shadow-wordgame table{
@@ -555,7 +568,7 @@
                 }
             </script>
         </div>
-
+        -->
     </div>
 </body>
 </html>
