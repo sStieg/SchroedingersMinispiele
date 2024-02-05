@@ -23,11 +23,10 @@ var connected = false;
             }
         }
 
-        function startGame() {
-            let data = {"position": 1};
+        function startGame(message) {
             fetch("http://schroedinger.hopto.org/api/position/", {
                 method: "POST",
                 mode: "no-cors",
-                body: 2
+                body: message
             })
         }
