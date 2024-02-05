@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;    
+    padding: 10vh 20vw;
+    background-image: url("./Meta-Quest-2-pc-games_b2article_artwork.jpg");
+    background-size: 100vw;
+    background-repeat: no-repeat;
+    background-position-x: center;
+}
+
+#big-box {
+    width: 45vw;
+    height: 40vh;
+    overflow-x: hidden;
+    position: relative;
+    top: 30vh;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#big-box::-webkit-scrollbar {
+    display: none;
+  }
+
+.room {
+    width: 48%;
+    margin: 10px auto;
+    display: grid;
+    grid-template-columns: 50% 30%;
+    border: 2px #ffffff solid;
+    padding: 2%;
+    background-color: #ffffff41;
+}
+
+.post-button {
+    padding: 10%;
+    margin: 10px 0;
+    background-color: #d8d8d8;
+    border: 1px solid #3a3a3a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'calibri';
+    transition: 100ms;
+}
+
+.post-button:hover {
+    background-color: #929292;
+    cursor: pointer;
+}
+
+.roomName {
+    grid-row: 1/10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#solution {
+    width: 30%;
+    max-height: 50%;
+    position: absolute;
+    top: 10%;
+    left: 35%;
+    background-color: #6b6b6b;
+    color: #fff;
+    padding: 20px;
+}
