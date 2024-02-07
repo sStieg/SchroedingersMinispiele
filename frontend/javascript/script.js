@@ -27,7 +27,7 @@ var connect = function () {
 };
 function startGame(roomNumber, gameNumber) {
     if (!isNaN(gameNumber) && !isNaN(roomNumber)) {
-        $('#minigames').css("opacity", "1");
+        $('#minigames').css("display", "block");
         if (roomNumber == 1) {
             if (gameNumber == 1) {
                 $('#shadow-drawguess').css("opacity", "1");
@@ -53,7 +53,7 @@ function startGame(roomNumber, gameNumber) {
 }
 function endGame() {
     socket.send("solution: " + solution);
-    $("#minigames").css("opacity", "0");
+    $("#minigames").css("display", "none");
     $(".game").css("opacity", "0");
     $(".game").css("position", "absolute");
     $(".game").css("z-index", "0");
