@@ -5,6 +5,9 @@ $current-room-filling: rgb(255, 148, 0, 0.15);
 $chat-color-other: #F8BA64;
 $chat-color-self: #99D7D7;
 
+html{
+    overflow: hidden;
+}
 
 body{
     height: 100%;
