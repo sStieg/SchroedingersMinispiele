@@ -1,5 +1,6 @@
 var connected = false;
 var socket;
+var solution;
 
 const hostPingPong = document.querySelector("#shadow-pingpong");
 //const shadowPingPong = hostPingPong.attachShadow({ mode: "open" });
@@ -25,34 +26,44 @@ var connect = function() {
         socket.onmessage = function (m) {
             console.log(m.data);
 
-            startGame(m.data)
+            var splittedMessage = m.data.toString().split(";");
+
+            solution = splittedMessage[1];
+
+            startGame(splittedMessage[0].split("x")[0], splittedMessage[0].split("x")[1])
         }
     }
 }
 
-function startGame(gameNumber) {
-    if(!isNaN(gameNumber)) {
+function startGame(roomNumber, gameNumber) {
+    if(!isNaN(gameNumber) && !isNaN(roomNumber)) {
         $('#minigames').css("opacity", "1");
 
-        if(gameNumber == 1) {
-            $('#shadow-drawguess').css("opacity", "1");
-            $("#shadow-drawguess").css("position", "relative");
-            $("#shadow-drawguess").css("z-index", "10");
-        } else if(gameNumber == 2) {
-            $('#shadow-wordgame').css("opacity", "1");
-            $("#shadow-wordgame").css("position", "relative");
-            $("#shadow-wordgame").css("z-index", "10");
-        } else if(gameNumber == 3) {
-            $('#shadow-pingpong').css("opacity", "1");
-            $("#shadow-pingpong").css("position", "relative");
-            $("#shadow-pingpong").css("z-index", "10");
+        if(roomNumber == 1) {
+            if(gameNumber == 1) {
+                $('#shadow-drawguess').css("opacity", "1");
+                $("#shadow-drawguess").css("position", "relative");
+                $("#shadow-drawguess").css("z-index", "10");
+            }
+        } else if(roomNumber == 2) {
+            if(gameNumber == 1) {
+                $('#shadow-wordgame').css("opacity", "1");
+                $("#shadow-wordgame").css("position", "relative");
+                $("#shadow-wordgame").css("z-index", "10");
+            }
+        } else if(roomNumber == 3) {
+            if(gameNumber == 1) {
+                $('#shadow-pingpong').css("opacity", "1");
+                $("#shadow-pingpong").css("position", "relative");
+                $("#shadow-pingpong").css("z-index", "10");
+            }
         }
 
     }
 }
 
 function endGame(){
-    socket.send("solution: HINTER BUCH");
+    socket.send("solution: "+solution);
 
     $("#minigames").css("opacity", "0");
     $(".game").css("opacity", "0");
