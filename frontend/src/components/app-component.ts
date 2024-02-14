@@ -1,4 +1,4 @@
-import {html} from "lit-html";
+import {html, render} from "lit-html";
 
 console.log("hello world")
 
