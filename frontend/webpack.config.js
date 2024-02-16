@@ -8,7 +8,7 @@ const isProduction = process.env.NODE_ENV == 'production';
 
 
 const stylesHandler = isProduction ? MiniCssExtractPlugin.loader : 'style-loader';
-
+const CopyPlugin = require("copy-webpack-plugin");
 
 
 const config = {
@@ -25,6 +25,11 @@ const config = {
         new HtmlWebpackPlugin({
             template: 'index.html',
         }),
+        new CopyPlugin({
+            patterns: [
+              { from: "scss", to: "scss"},
+            ],
+          }),
 
         // Add your plugins here
         // Learn more about plugins from https://webpack.js.org/configuration/plugins/
