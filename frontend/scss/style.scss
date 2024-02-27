@@ -189,12 +189,11 @@ chat-component{
     grid-area: diary;
 
     p{
-        margin: 0 auto; 
-        text-align: left; 
-        color: black;
+        text-align: left;
     }
 
     & > div{
+        margin-top: 6.5%;
         background-color: #fff;
         height: 90%;
         width: 95%;
@@ -207,6 +206,7 @@ chat-component{
 }
 
 diary-component > div{
+    margin: 0 auto;
     max-height: 80%;
     width: 80%;
     display: flex;

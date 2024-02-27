@@ -172,9 +172,7 @@ chat-component img {
   grid-area: diary;
 }
 .diary p {
-  margin: 0 auto;
   text-align: left;
-  color: black;
 }
 .diary > div {
   margin-top: 6.5%;
@@ -189,6 +187,7 @@ chat-component img {
 }
 
 diary-component > div {
+  margin: 0 auto;
   max-height: 80%;
   width: 80%;
   display: flex;
@@ -215,12 +214,12 @@ map-component > div {
   grid-gap: 2% 1%;
 }
 
-.room1, .room2, .room3, .room4 {
+.room {
   padding-top: 25%;
   border: 2px solid rgba(255, 149, 0, 0.48);
 }
 
-.room1 {
+#room1 {
   border: 2px solid #FF6800;
   background-color: rgba(255, 148, 0, 0.15);
 }
