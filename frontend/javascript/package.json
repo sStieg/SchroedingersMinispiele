@@ -1,9 +1,6 @@
 {
   "dependencies": {
-    "fs": "0.0.1-security",
     "jquery": "^3.7.1",
-    "read-file": "^0.2.0",
-    "tsc": "^2.0.4",
     "typescript": "^5.3.3"
   },
   "devDependencies": {

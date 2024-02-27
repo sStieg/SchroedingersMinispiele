@@ -1,6 +1,7 @@
 var connected = false;
 var socket;
 var solution;
+var currentRoomNumber;
 var hostPingPong = document.querySelector("#shadow-pingpong");
 //const shadowPingPong = hostPingPong.attachShadow({ mode: "open" });
 var hostWordgame = document.querySelector("#shadow-wordgame");
@@ -28,6 +29,9 @@ var connect = function () {
 function startGame(roomNumber, gameNumber) {
     if (!isNaN(gameNumber) && !isNaN(roomNumber)) {
         $('#minigames').css("display", "block");
+        currentRoomNumber = roomNumber;
+        $('#room' + roomNumber).css("border-color", "#FF6800");
+        $('#room' + roomNumber).css("background-color", "#FF940026");
         if (roomNumber == 1) {
             if (gameNumber == 1) {
                 $('#shadow-drawguess').css("opacity", "1");
@@ -53,6 +57,8 @@ function startGame(roomNumber, gameNumber) {
 }
 function endGame() {
     socket.send("solution: " + solution);
+    $('#room' + currentRoomNumber).css("border-color", "#FF95007A");
+    $('#room' + currentRoomNumber).css("background-color", "none");
     $("#minigames").css("display", "none");
     $(".game").css("opacity", "0");
     $(".game").css("position", "absolute");
