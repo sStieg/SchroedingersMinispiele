@@ -3,7 +3,6 @@ import {html, render} from "lit-html";
 console.log("room-component")
 
 const template = () => html`
-Room
 `
 
 class RoomComponent extends HTMLElement{
