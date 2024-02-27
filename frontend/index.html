@@ -17,24 +17,17 @@
     <div class="overview"> 
         <div>
             <div id="grid">
-                <div class="live-view">live view</div>
+                <live-view-component>Live View</live-view-component>
 
-                <div class="map">
-                    <div>
-                        <div class="room1">Room 1</div>
-                        <div class="room2">Room 2</div>
-                        <div class="room3">Room 3</div>
-                        <div class="room4">Room 4</div>
-                    </div>
-                </div>
+                <map-component></map-component>
 
-                <div class="story">
+                <div class="diary">
                     <div>
                         <diary-component></diary-component>
                     </div>
                 </div>
 
-                <div class="chat">
+                <chat-component>
                     <div>
                         <div id="messages">
                             <h2>Today</h2>
@@ -72,7 +65,7 @@
                             <button><img src="./images/send.png"></button>
                         </div>
                     </div>
-                </div>
+                </chat-component>
             </div>
         </div> 
     </div>

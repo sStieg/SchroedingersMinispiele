@@ -1,12 +1,12 @@
 import {html, render} from "lit-html";
 
-console.log("Schrödingers Minispiele")
+console.log("room-component")
 
 const template = () => html`
-    <h1>Schrödingers Minispiele</h1>
+Room
 `
 
-class AppComponent extends HTMLElement{
+class RoomComponent extends HTMLElement{
     connectedCallback(){
         console.log("connected")
         this.render()
@@ -16,4 +16,4 @@ class AppComponent extends HTMLElement{
         render(template(), this)
     }
 }
-customElements.define("app-component", AppComponent);
+customElements.define("room-component", RoomComponent);

@@ -69,14 +69,14 @@ body{
     width: 90vw;
     height: 80vh;
     display: grid;
-    grid-template-areas: 'live-view live-view chat' 'map story chat';
+    grid-template-areas: 'live-view live-view chat' 'map diary chat';
     grid-template-columns: 30% 30% 30%;
     grid-template-rows: 60% 40%;
 }
 
 
 /*****LIVE-VIEW****/
-.live-view{
+live-view-component{
     grid-area: live-view;
     height: 98%;
     width: 97.5%;
@@ -94,7 +94,7 @@ h2{
     font-size:large;
     font-weight: 500;
 }
-.chat{
+chat-component{
     grid-area: chat;
 
     & > div{
@@ -184,24 +184,29 @@ h2{
 }
 
 
-/*****STORY****/
-.story{
-    grid-area: story;
+/*****DIARY****/
+.diary{
+    grid-area: diary;
+
+    p{
+        margin: 0 auto; 
+        text-align: left; 
+        color: black;
+    }
+
+    & > div{
+        background-color: #fff;
+        height: 90%;
+        width: 95%;
+        outline: 2px solid $border-orange;
+        outline-offset: -2px; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
-.story > div{
-    margin-top: 6.5%;
-    background-color: #fff;
-    height: 90%;
-    width: 95%;
-    outline: 2px solid $border-orange;
-    outline-offset: -2px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.story> div > div{
+diary-component > div{
     max-height: 80%;
     width: 80%;
     display: flex;
@@ -213,34 +218,28 @@ h2{
     scrollbar-width: none;
 }
 
-.story p{
-    margin: 0 auto; 
-    text-align: left; 
-}
-
-
 /*****MAP****/
-.map{
+map-component{
     grid-area: map;
+
+    & > div{
+        margin-top: 6.5%;
+        background-color: #fff;
+        height: 90%;
+        width: 95%;
+        display: grid;
+        grid-template-columns: 49.5% 49.5%;
+        grid-template-rows: 49% 49%;
+        grid-gap: 2% 1%;
+    }
 }
 
-.map > div{
-    margin-top: 6.5%;
-    background-color: #fff;
-    height: 90%;
-    width: 95%;
-    display: grid;
-    grid-template-columns: 49.5% 49.5%;
-    grid-template-rows: 49% 49%;
-    grid-gap: 2% 1%;
-}
-
-.room1, .room2, .room3, .room4{
+.room{
     padding-top: 25%;
     border: 2px solid $border-orange;
 }
 
-.room1{
+#room1{
     border: 2px solid $current-room-border;
     background-color: $current-room-filling;
 }
