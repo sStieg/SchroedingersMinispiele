@@ -3,6 +3,9 @@ import "./components/diary-component"
 import "./components/room-component"
 import "./components/map-component"
 import "./components/live-view-component"
+import "./components/chat-component"
+import "./components/message-component"
+import "./components/write-message-component"
 
 var connected = false;
 var socket;
@@ -89,3 +92,4 @@ function endGame(){
     $(".game").css("position", "absolute");
     $(".game").css("z-index", "0");
 }
+

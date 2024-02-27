@@ -110,7 +110,7 @@ chat-component #messages {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-chat-component .write-message {
+chat-component write-message-component {
   margin-top: 4%;
 }
 chat-component textarea {
@@ -135,44 +135,36 @@ chat-component img {
   padding: 0;
 }
 
-.message-self, .message-other {
+message-component {
   padding-top: 30px;
+}
+message-component .text {
+  width: 70%;
+  height: 36px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .message-self {
-  width: 70%;
-  margin-left: 25%;
   text-align: right;
+}
+.message-self .text {
+  background-color: #99D7D7;
+  margin-left: 25%;
 }
 
 .message-other {
-  width: 70%;
-  margin-left: 5%;
   text-align: left;
 }
-
-.message-self .text {
-  width: 100%;
-  height: 36px;
-  border-radius: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #99D7D7;
-}
-
 .message-other .text {
-  width: 100%;
-  height: 36px;
-  border-radius: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #F8BA64;
+  margin-left: 5%;
 }
 
-.message-self .name, .message-other .name {
-  margin: 4px 20px;
+message-component .name {
+  margin: 10px 40px;
 }
 
 /*****DIARY****/
