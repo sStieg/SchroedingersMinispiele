@@ -232,9 +232,9 @@ map-component{
         grid-template-rows: 49% 49%;
         grid-gap: 2% 1%;
     }
-}
 
-.room{
-    padding-top: 25%;
-    border: 2px solid $border-orange;
+    .room {
+        padding-top: 25%;
+        border: 2px solid $border-orange;
+    }
 }

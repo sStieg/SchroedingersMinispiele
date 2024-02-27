@@ -1,9 +1,10 @@
 import {html, render} from "lit-html";
+import "./room-component"
 
 console.log("map-component")
 
 const template = () => html`
-<room-component>
+<div>
     <room-component class="room" id="room1">Room 1</room-component>
     <room-component class="room" id="room2">Room 2</room-component>
     <room-component class="room" id="room3">Room 3</room-component>
