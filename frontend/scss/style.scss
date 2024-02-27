@@ -69,8 +69,17 @@ body{
     width: 90vw;
     height: 80vh;
     display: grid;
-    grid-template-areas: 'live-view live-view chat' 'map diary chat';
-    grid-template-columns: 30% 30% 30%;
+    grid-template-areas: 'game-place chat';
+    grid-template-columns: 60% 30%;
+    grid-template-rows: 100%;
+}
+
+
+game-component{
+    grid-area: game-place;
+    display: grid;
+    grid-template-areas: 'live-view live-view' 'map diary';
+    grid-template-columns: 50% 50%;
     grid-template-rows: 60% 40%;
 }
 
