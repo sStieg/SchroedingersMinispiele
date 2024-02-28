@@ -110,7 +110,7 @@ chat-component #messages {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-chat-component write-message-component {
+chat-component #write-message {
   margin-top: 4%;
 }
 chat-component textarea {

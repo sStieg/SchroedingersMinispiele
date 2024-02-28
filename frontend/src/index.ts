@@ -5,7 +5,6 @@ import "./components/map-component"
 import "./components/live-view-component"
 import "./components/chat-component"
 import "./components/message-component"
-import "./components/write-message-component"
 
 var connected = false;
 var socket;

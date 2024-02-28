@@ -16,7 +16,10 @@ const template = () => html`
         <message-component class="message-other"></message-component>
     </div>
 
-    <write-message-component></write-component>
+    <div id="write-message">
+        <textarea id="text" name="text"></textarea> 	
+        <button><img src="../../images/send.png"></button>
+    </div>
 </div>
 `
 
