@@ -40,6 +40,11 @@ function startGame(roomNumber, gameNumber) {
     if(!isNaN(gameNumber) && !isNaN(roomNumber)) {
         $('#minigames').css("display", "block");
 
+        if(currentRoomNumber != undefined) {
+            $('#room'+currentRoomNumber).css("border-color", "#FF95007A");
+            $('#room'+currentRoomNumber).css("background-color", "none");
+        }
+
         currentRoomNumber = roomNumber;
 
         $('#room'+roomNumber).css("border-color", "#FF6800");
@@ -71,10 +76,6 @@ function startGame(roomNumber, gameNumber) {
 
 function endGame(){
     socket.send("solution: "+solution);
-
-    $('#room'+currentRoomNumber).css("border-color", "#FF95007A");
-    $('#room'+currentRoomNumber).css("background-color", "none");
-
 
     $("#minigames").css("display", "none");
     $(".game").css("opacity", "0");

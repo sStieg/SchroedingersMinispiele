@@ -28,6 +28,7 @@ const config = {
         new CopyPlugin({
             patterns: [
               { from: "scss", to: "scss"},
+                {from: "images", to: "images"}
             ],
           }),
 
@@ -52,6 +53,14 @@ const config = {
             {
                 test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
                 type: 'asset',
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
             },
 
             // Add your rules for custom modules here
