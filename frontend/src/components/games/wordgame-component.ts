@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Wortspiel - Bücherei</title>
-	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Permanent+Marker">
+import {html, render} from "lit-html";
 
-</head>
-<body>
+console.log("diary-component")
 
+const template = () => html`
 <style type="text/css">
   @import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&family=Whisper&display=swap');
   *{
@@ -282,5 +278,16 @@
         return charNumber;
       }
   </script>
-</body>
-</html>
+`
+
+class DiaryComponent extends HTMLElement{
+    connectedCallback(){
+        console.log("connected")
+        this.render()
+    }
+
+    render() {
+        render(template(), this)
+    }
+}
+customElements.define("diary-component", DiaryComponent);
