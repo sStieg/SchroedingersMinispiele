@@ -163,14 +163,33 @@
 
             ball.speed += 0.4;
         }
-
         else if(ball.x - ball.radius < 0){
             com.score++;
+            if(isEnd(com.score)){
+                resetGame();
+                console.log("Game over")
+            }
             resetBall();
         }else if(ball.x + ball.radius > canvas.width){
             user.score++;
+            if(isEnd(user.score)){
+                console.log("You won")
+            }
             resetBall();
         }  
+    }
+
+    function resetGame(){
+        resetBall();
+        user.score = 0;
+        com.score = 0;
+    }
+
+    function isEnd(score){
+        if(score === 3){
+            return true
+        }
+        return false;
     }
 
     function game(){ 
