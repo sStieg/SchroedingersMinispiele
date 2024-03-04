@@ -1,6 +1,6 @@
 import {html, render} from "lit-html";
 
-console.log("chat-component")
+console.log("pingpong-component")
 
 const template = () => html`
 <style>
