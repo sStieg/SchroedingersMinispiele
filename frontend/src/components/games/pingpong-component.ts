@@ -4,10 +4,7 @@ console.log("chat-component")
 
 const template = () => html`
 <style>
-body{
-    background-color: dimgray;
-}
-#pong{
+#pingpong #pong{
     border: 2px solid #FFF;
     position: absolute;
     margin :auto;
@@ -17,8 +14,9 @@ body{
     bottom:0;
 }
 </style>
-
-<canvas id="pong" width="600" height="400"></canvas>
+<div  id="pingpong" class="game">
+    <canvas id="pong" width="600" height="400"></canvas>
+</div>
 
 <script>
 const canvas = document.getElementById("pong");
@@ -198,7 +196,7 @@ let loop = setInterval(game,1000/framesPerSecond); //call game() 50x every 1s
 </script>
 `
 
-class ChatComponent extends HTMLElement{
+class PingpongComponent extends HTMLElement{
     connectedCallback(){
         console.log("connected")
         this.render()
@@ -208,4 +206,4 @@ class ChatComponent extends HTMLElement{
         render(template(), this)
     }
 }
-customElements.define("chat-component", ChatComponent);
+customElements.define("pingpong-component", PingpongComponent);

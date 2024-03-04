@@ -42,7 +42,7 @@ function startGame(roomNumber, gameNumber) {
 
         if(currentRoomNumber != undefined) {
             $('#room'+currentRoomNumber).css("border-color", "#FF95007A");
-            $('#room'+currentRoomNumber).css("background-color", "none");
+            $('#room'+currentRoomNumber).css("background-color", "#fff");
         }
 
         currentRoomNumber = roomNumber;
@@ -53,21 +53,21 @@ function startGame(roomNumber, gameNumber) {
 
         if(roomNumber == 1) {
             if(gameNumber == 1) {
-                $('#shadow-drawguess').css("opacity", "1");
+                $('#drawguess').css("opacity", "1");
                 $("#shadow-drawguess").css("position", "relative");
                 $("#shadow-drawguess").css("z-index", "10");
             }
         } else if(roomNumber == 2) {
             if(gameNumber == 1) {
-                $('#shadow-wordgame').css("opacity", "1");
-                $("#shadow-wordgame").css("position", "relative");
-                $("#shadow-wordgame").css("z-index", "10");
+                $('#wordgame').css("opacity", "1");
+                $("#wordgame").css("position", "relative");
+                $("#wordgame").css("z-index", "10");
             }
         } else if(roomNumber == 3) {
             if(gameNumber == 1) {
-                $('#shadow-pingpong').css("opacity", "1");
-                $("#shadow-pingpong").css("position", "relative");
-                $("#shadow-pingpong").css("z-index", "10");
+                $('#pingpong').css("opacity", "1");
+                $("#pingpong").css("position", "relative");
+                $("#pingpong").css("z-index", "10");
             }
         }
 

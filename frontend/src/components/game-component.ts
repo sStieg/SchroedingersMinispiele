@@ -1,16 +1,13 @@
 import {html, render} from "lit-html";
+import "./games/wordgame-component";
+import "./games/pingpong-component"
 
 console.log("game-component")
 
 const template = () => html`
-<live-view-component>Live View</live-view-component>
-
-<map-component></map-component>
-
-<div class="diary">
-    <div>
-        <diary-component></diary-component>
-    </div>
+<div id="minigames">
+    <wordgame-component></wordgame-component>
+    <pingpong-component></pingpong-component>
 </div>
 `
 
