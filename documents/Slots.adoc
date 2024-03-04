@@ -1,0 +1,15 @@
+==Templates:
+* Templates ermöglichen es, HTML-Strukturen zu definieren, die nicht sofort im DOM gerendert werden, sondern später per JavaScript eingefügt werden können.
+* Sie werden durch das `<template>`-Element definiert und können beliebige HTML-Inhalte enthalten, einschließlich Tags, Attribute und Text.
+* Templates sind besonders nützlich, wenn man dieselben Strukturen mehrmals auf einer Seite verwenden möchte, ohne den HTML-Code zu wiederholen.
+* Durch das Klonen des Template-Inhalts können wir die Vorlage mehrmals verwenden, ohne sie jedes Mal neu erstellen zu müssen.
+* Templates sind nicht im DOM sichtbar, bis sie aktiviert werden, indem ihr Inhalt geklont und in das DOM eingefügt wird.
+
+==Slots:
+* Slots sind Platzhalter in Vorlagen, die mit beliebigen Inhalten gefüllt werden können, wenn das Element im Markup verwendet wird.
+* *Sie ermöglichen es, unterschiedlichen Inhalt in dieselbe Vorlage einzufügen, je nach Bedarf, wodurch die Vorlage flexibel und wiederverwendbar wird.
+* Slots werden durch das `<slot>`-Element definiert und können einen Namen haben, um verschiedene Bereiche der Vorlage zu kennzeichnen.
+* Wenn ein Slot im Markup verwendet wird, können beliebige Inhalte eingefügt werden, die dann anstelle des Slots in der Vorlage angezeigt werden.
+* Falls kein Inhalt für einen Slot bereitgestellt wird, kann ein Standardinhalt in der Vorlage angezeigt werden.
+
+Insgesamt ermöglichen Templates und Slots eine effektive Trennung von Struktur und Inhalt in HTML, was die Wiederverwendbarkeit und Flexibilität von Code erhöht. Sie sind besonders nützlich bei der Erstellung von Webkomponenten und beim Organisieren von komplexem HTML-Code.
