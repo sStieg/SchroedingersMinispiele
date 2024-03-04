@@ -1,6 +1,4 @@
 import {html, render} from "lit-html";
-import "./games/wordgame-component";
-import "./games/pingpong-component"
 
 console.log("game-component")
 
