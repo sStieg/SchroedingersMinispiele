@@ -1,3 +1,5 @@
+export {solution};
+
 var solution;
 var connected = false;
 var socket;
@@ -45,8 +47,8 @@ function startGame(roomNumber?: number, gameNumber?: number) {
         if(roomNumber == 1) {
             if(gameNumber == 1) {
                 $('#drawguess').css("opacity", "1");
-                $("#shadow-drawguess").css("position", "relative");
-                $("#shadow-drawguess").css("z-index", "10");
+                $("#drawguess").css("position", "relative");
+                $("#drawguess").css("z-index", "10");
             }
         } else if(roomNumber == 2) {
             if(gameNumber == 1) {
