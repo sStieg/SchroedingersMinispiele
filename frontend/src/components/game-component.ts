@@ -6,6 +6,7 @@ const template = () => html`
 <div id="minigames">
     <wordgame-component></wordgame-component>
     <pingpong-component></pingpong-component>
+    <drawguess-component></drawguess-component>
 </div>
 `
 
