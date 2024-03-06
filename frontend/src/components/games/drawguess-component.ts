@@ -47,7 +47,7 @@ const template = () => html`
             #drawguess {
                 padding: 0;
                 margin: 0;
-                color: white;
+                color: #000000;
             }
 
             #drawguess h1 {
@@ -64,7 +64,6 @@ const template = () => html`
             #drawguess {
                 text-align: center;
                 justify-content: center;
-                background-color: rgba(2, 2, 11, 0.56);
                 width: 100%;
                 height: 100%;
             }
@@ -86,8 +85,8 @@ const template = () => html`
             }
 
             #drawguess #submit {
-                height: 5%;
-                width: 5%;
+                height: 10%;
+                width: 10%;
                 border-radius: 100px;
                 background-color: white;
             }
@@ -113,7 +112,7 @@ const template = () => html`
 
         <div>
             <input type="text" name="guess" id="guess">
-            <input type="submit" id="submit" @click=${() => isRightGuess()}>
+            <input value="Senden" type="submit" id="submit" @click=${() => isRightGuess()}>
         </div>
 
 

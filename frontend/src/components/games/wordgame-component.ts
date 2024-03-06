@@ -41,7 +41,7 @@ const template = () => html`
   #wordgame{
     font-family: 'Rethink Sans', sans-serif;
     text-align: center;
-    color: white;
+    color: #000000;
   }
   #wordgame .letter:hover{
     cursor: pointer;
