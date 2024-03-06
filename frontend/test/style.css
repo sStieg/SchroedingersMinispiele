@@ -10,10 +10,11 @@ body {
     width: 100vw;
     height: 100vh;    
     padding: 10vh 20vw;
-    background-image: url("./Meta-Quest-2-pc-games_b2article_artwork.jpg");
-    background-size: 100vw;
+    background-image: url("./vr-headset.jpg");
+    background-size: 70%;
     background-repeat: no-repeat;
     background-position-x: center;
+    background-position-y: center;
 }
 
 #big-box {
