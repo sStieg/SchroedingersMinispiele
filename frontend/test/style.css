@@ -27,8 +27,7 @@ body {
     scrollbar-width: none;  /* Firefox */
     margin-left: auto;
     margin-right: auto;
-    display: flex;
-    flex-wrap: wrap;
+
 }
 
 #big-box::-webkit-scrollbar {
@@ -36,30 +35,43 @@ body {
   }
 
 .room {
-    width: 48%;
+    width: 100%;
     margin: 10px auto;
     display: grid;
     grid-template-columns: 50% 30%;
     border: 2px #ffffff solid;
     padding: 2%;
-    background-color: #ffffff41;
+    background-color: #444444;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.527),rgba(0, 0, 0, 0.5)) , var(--pic);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
 }
 
 .post-button {
-    padding: 10%;
+    padding: 5%;
     margin: 10px 0;
-    background-color: #d8d8d8;
+    background-color: #ffffff;
     border: 1px solid #3a3a3a;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'calibri';
     transition: 100ms;
+    color: #000000;
 }
 
 .post-button:hover {
-    background-color: #929292;
+    background-color: #d3d3d3;
     cursor: pointer;
+}
+
+.unavailable {
+    opacity: 0.5;
+}
+
+.unavailable:hover {
+    background-color: #ffffff;
 }
 
 .roomName {
