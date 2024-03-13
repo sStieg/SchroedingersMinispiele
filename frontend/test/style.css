@@ -80,14 +80,3 @@ body {
     justify-content: center;
     align-items: center;
 }
-
-#solution {
-    width: 30%;
-    max-height: 50%;
-    position: absolute;
-    top: 10%;
-    left: 35%;
-    background-color: #6b6b6b;
-    color: #fff;
-    padding: 20px;
-}
