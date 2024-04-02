@@ -15,10 +15,6 @@ var connected = false;
 
                 socket.onmessage = function (m) {
                     console.log(m.data);
-
-                    if(m.data.toString().includes("solution")) {
-                        $('#solution').html(m.data);
-                    }
                 };
             }
         }
