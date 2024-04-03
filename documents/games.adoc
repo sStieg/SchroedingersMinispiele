@@ -1,25 +1,25 @@
 == Kinderzimmer
-Basketballgame - Maria
-Papierkorbgame - Maria
-CD-Game - Maria
-Teddy Game - Maria
-Matheaufgabe - Maria
-Schubladengame - Seppi
-Hammergame - Seppi
+* Basketballgame - Maria
+* Papierkorbgame - Maria
+* CD-Game - Maria
+* Teddy Game - Maria
+* Matheaufgabe - Maria
+* Schubladengame - Seppi
+* Hammergame - Seppi
 
 == Bibliothek
-Notitzgame - Seppi
-Zeichengame - Seppi
-Buchgame - Seppi
+* Notitzgame - Seppi
+* Zeichengame - Seppi
+* Buchgame - Seppi
 
 == Labor
-Lüftung Game - Seppi
-Zutatengame - Seppi
-Mischgame - Maria
-Codegame - Maria
+* Lüftung Game - Seppi
+* Zutatengame - Seppi
+* Mischgame - Maria
+* Codegame - Maria
 
 == Kerker
-Schriftrolle Game - Seppi
-Schwertgame - Maria
-Ofengame - Seppi
-Kettengame - Maria
+* Schriftrolle Game - Seppi
+* Schwertgame - Maria
+* Ofengame - Seppi
+* Kettengame - Maria
