@@ -1,3 +1,5 @@
+import {startBasketballGame} from "./components/games/basketball/basketball-game-component";
+
 export {solution};
 
 var solution;
@@ -46,15 +48,16 @@ function startGame(roomNumber?: number, gameNumber?: number) {
 
         if(roomNumber == 1) {
             if(gameNumber == 1) {
-                $('#drawguess').css("opacity", "1");
-                $("#drawguess").css("position", "relative");
-                $("#drawguess").css("z-index", "10");
+                $('#basketballGame').css("opacity", "1");
+                $("#basketballGame").css("position", "relative");
+                $("#basketballGame").css("z-index", "15");
+                startBasketballGame();
             }
         } else if(roomNumber == 2) {
             if(gameNumber == 1) {
-                $('#wordgame').css("opacity", "1");
-                $("#wordgame").css("position", "relative");
-                $("#wordgame").css("z-index", "10");
+                $('#drawguess').css("opacity", "1");
+                $("#drawguess").css("position", "relative");
+                $("#drawguess").css("z-index", "10");
             }
         } else if(roomNumber == 3) {
             if(gameNumber == 1) {

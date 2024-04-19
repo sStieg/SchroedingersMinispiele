@@ -4,7 +4,7 @@ console.log("game-component")
 
 const template = () => html`
 <div id="minigames">
-    <wordgame-component></wordgame-component>
+    <basketball-component></basketball-component>
     <pingpong-component></pingpong-component>
     <drawguess-component></drawguess-component>
 </div>
