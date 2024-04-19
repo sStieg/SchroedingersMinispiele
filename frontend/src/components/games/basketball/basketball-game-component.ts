@@ -187,8 +187,6 @@ function gameLoop() {
     moveBasket();
 
 }
-gameLoop();
-
 
 /* MOVE SPRITE */
 function moveSprite(dx, dy){
