@@ -150,11 +150,12 @@ export function startBasketballGame() {
     longObstacle2.style.bottom = "30%";
 
     gameInterval = setInterval(gameLoop, 20); // async recursion
+    document.onkeydown = keyListenerDown;
+    document.onkeyup = keyListenerUp;
 }
 
 /* EVENT LISTENER */
-document.onkeydown = keyListenerDown;
-document.onkeyup = keyListenerUp;
+
 
 /* CHECK PRESSED KEY */
 function keyListenerDown(e){
