@@ -28,7 +28,8 @@ const config = {
         new CopyPlugin({
             patterns: [
               { from: "scss", to: "scss"},
-                {from: "images", to: "images"}
+                {from: "images", to: "images"},
+                {from: "test", to: "test"}
             ],
           }),
 
