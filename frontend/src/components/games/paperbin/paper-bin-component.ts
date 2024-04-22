@@ -1,6 +1,7 @@
 import { html, render } from "lit-html";
 import { PaperBinGame, store } from "./model";
 import {produce} from 'immer'
+import {endGame} from "../../../script";
 
 class PaperBinComponent extends HTMLElement{
     connectedCallback(){
@@ -26,10 +27,7 @@ customElements.define("paper-bin-component", PaperBinComponent);
 function template(paperbingame: PaperBinGame) {
     return html`
     <style>
-        *{
-            opacity: 1;
-            z-index: 100;
-        }
+        
         @keyframes paperplane {
             0% {
                 transform: rotate(30deg);
@@ -60,7 +58,7 @@ function template(paperbingame: PaperBinGame) {
             position: relative;
         }
     </style>
-    <div id="paperBinGame" >
+    <div id="paperBinGame" class="game">
         <div id="surface">
             <div id="sprite" style="position: absolute; bottom: 20vw; left: 20vw;">
                 <img id="korb" style="width: 15vw; height: auto" src = "../../../images/papierkorb.png"/>
@@ -87,8 +85,7 @@ let rightArrow = false;
 let planeIdCounter = 0;
 
 /* EVENT LISTENER */
-document.onkeydown = keyListenerDown;
-document.onkeyup = keyListenerUp;
+
 
 export function startPaperBinGame() {
     korb.style.left = "5%"; // starting position
@@ -99,6 +96,8 @@ export function startPaperBinGame() {
 
 
     gameInterval = setInterval(gameLoop, 10); // async recursion
+    document.onkeydown = keyListenerDown;
+    document.onkeyup = keyListenerUp;
 }
         
 /* CHECK PRESSED KEY */
@@ -206,6 +205,6 @@ function checkKorb() {
         (parseFloat(planeBox.style.top) >= parseFloat(korb.style.top))){
         console.log("YOU WON")
         clearInterval(gameInterval);
-        //endGame();
+        endGame();
     }
 }
