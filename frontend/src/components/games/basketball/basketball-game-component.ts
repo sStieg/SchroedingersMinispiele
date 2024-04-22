@@ -78,6 +78,27 @@ function template (basketballGame: BasketballGame){
                 width: 50vw;
                 height: 50vh;
                 position: relative;
+                background-color: #000000;
+            }
+            
+            #big {
+                width: 5%;
+                height: 55%;
+            }
+            
+            #small {
+                width: 5%;
+                height: 10%;
+            }
+            
+            .long {
+                width: 20%;
+                height: 10%;
+            }
+            
+            .obstacle {
+                background-color: #fff;
+                position: absolute;
             }
         </style>
         
@@ -85,6 +106,11 @@ function template (basketballGame: BasketballGame){
             <div id="board">
                 <img id="basket" src="../../../../images/basket.png">
                 <img id="basketball" src="../../../../images/basketball.png"/>
+                
+                <div id="big" class="obstacle"></div>
+                <div class="obstacle long"></div>
+                <div class="obstacle long"></div>
+                <div id="small" class="obstacle"></div>
             </div>
         </div>
     `
@@ -94,7 +120,12 @@ function template (basketballGame: BasketballGame){
 /* INIT */
 let basketball: HTMLElement = document.getElementById("basketball");
 let basket: HTMLElement = document.getElementById("basket");
-let gameInterval;
+let bigObstacle: HTMLElement = document.getElementById("big");
+let smallObstacle: HTMLElement = document.getElementById("small");
+let longObstacle1: HTMLElement = <HTMLElement> document.getElementsByClassName("long")[0];
+let longObstacle2: HTMLElement = <HTMLElement> document.getElementsByClassName("long")[1];
+let fallBorder = 0;
+let gameInterval: NodeJS.Timeout;
 let moveBasketCounter = 0;
 let isBasketOnTop = false;
 let gravitation: number = 0;
@@ -102,15 +133,21 @@ let gravitation: number = 0;
 let leftArrow = false;
 let rightArrow = false;
 let upArrow = false;
-let downArrow = false;
-
 
 
 export function startBasketballGame() {
     basketball.style.left = "10%"; // starting position
-    basketball.style.top = "95%"; // starting position
-    basket.style.left = "95%"; // starting position
-    basket.style.top = "10%"; // starting position
+    basketball.style.bottom = "0%"; // starting position
+    basket.style.left = "90%"; // starting position
+    basket.style.bottom = "25%"; // starting position
+    bigObstacle.style.left = "85%";
+    bigObstacle.style.bottom = "0%";
+    smallObstacle.style.left = "15%";
+    smallObstacle.style.bottom = "0%";
+    longObstacle1.style.left = "25%";
+    longObstacle1.style.bottom = "15%";
+    longObstacle2.style.left = "60%";
+    longObstacle2.style.bottom = "30%";
 
     gameInterval = setInterval(gameLoop, 20); // async recursion
 }
@@ -135,9 +172,6 @@ function keyListenerDown(e){
     if (e.keyCode == 39){ // rightArrow
         rightArrow = true;
     }
-    if (e.keyCode == 40){ // downArrow
-        downArrow = true;
-    }
 }
 function keyListenerUp(e){
     //console.log(e);
@@ -154,9 +188,6 @@ function keyListenerUp(e){
     if (e.keyCode == 39){ // rightArrow
         rightArrow = false;
     }
-    if (e.keyCode == 40){ // downArrow
-        downArrow = false;
-    }
 }
 
 
@@ -164,59 +195,82 @@ function keyListenerUp(e){
 function gameLoop() {
     checkBasket();
 
-    if(parseFloat(basketball.style.top) < 95) {
-        moveSprite(0, gravitation);
+    if(parseFloat(basketball.style.bottom) > fallBorder) {
+        moveSprite(0, -gravitation);
         gravitation += 0.18;
     } else {
         gravitation = 0;
     }
 
-    if(leftArrow && parseFloat(basketball.style.left) > 0) {
+    if(leftArrow) {
         moveSprite(-1,0);
     }
-    if(rightArrow && parseFloat(basketball.style.left) < 98) {
+    if(rightArrow) {
         moveSprite(1,0)
     }
-    if(upArrow && parseFloat(basketball.style.top) > 0) {
-        moveSprite(0,-2.5);
-    }
-    if(downArrow && parseFloat(basketball.style.top) < 95) {
+    if(upArrow) {
         moveSprite(0,2.5);
     }
 
-    moveBasket();
 
 }
-gameLoop();
-
 
 /* MOVE SPRITE */
 function moveSprite(dx, dy){
     // current position
     let x = parseFloat(basketball.style.left);
-    let y = parseFloat(basketball.style.top);
+    let y = parseFloat(basketball.style.bottom);
 
     // calc new position
     x += dx;
     y += dy;
 
+    if(x < 0) {
+        x = 0;
+    } else if (x > 95) {
+        x = 95;
+    }
+
+    if(y < fallBorder) {
+        y = fallBorder;
+    }
+
+    fallBorder = 0;
+
+    x = checkObstacle(bigObstacle, 5, 55, x, y);
+    x = checkObstacle(longObstacle1, 20, 10, x, y);
+    x = checkObstacle(longObstacle2, 20, 10, x, y);
+    x = checkObstacle(smallObstacle, 5, 10, x, y);
+
     // assign new position
     basketball.style.left = x + "%";
-    basketball.style.top = y + "%";
+    basketball.style.bottom = y + "%";
 
+}
+
+function checkObstacle(obstacle: HTMLElement, width: number, height: number, x: number, y: number) {
+    if(x + 4 > parseFloat(obstacle.style.left) && x < parseFloat(obstacle.style.left) + width) {
+        if(parseFloat(basketball.style.bottom) >= parseFloat(obstacle.style.bottom) + height ) {
+            fallBorder = parseFloat(obstacle.style.bottom) + height;
+        } else if (!(parseFloat(basketball.style.bottom)+5 < parseFloat(obstacle.style.bottom))) {
+            return parseFloat(basketball.style.left);
+        }
+
+    }
+    return x;
 }
 
 function moveBasket() {
     if(!isBasketOnTop) {
-        basket.style.top = parseFloat(basket.style.top)+2 +"%";
+        basket.style.bottom = parseFloat(basket.style.bottom)+2 +"%";
         moveBasketCounter++;
-        if(parseFloat(basket.style.top) == 90) {
+        if(parseFloat(basket.style.bottom) == 90) {
             isBasketOnTop = true;
         }
     } else {
-        basket.style.top = parseFloat(basket.style.top)-2 +"%";
+        basket.style.bottom = parseFloat(basket.style.bottom)-2 +"%";
         moveBasketCounter--;
-        if(parseFloat(basket.style.top) == 10) {
+        if(parseFloat(basket.style.bottom) == 10) {
             isBasketOnTop = false;
         }
     }
@@ -224,8 +278,7 @@ function moveBasket() {
 
 function checkBasket() {
     if((parseFloat(basketball.style.left) >= parseFloat(basket.style.left)) && (parseFloat(basketball.style.left) <= parseFloat(basket.style.left)+5)) {
-
-        if((parseFloat(basketball.style.top)+5 >= parseFloat(basket.style.top)) && (parseFloat(basketball.style.top)-5 <= parseFloat(basket.style.top))) {
+        if(parseFloat(basketball.style.bottom)+5 <= parseFloat(basket.style.bottom)) {
             console.log("YOU WON")
             clearInterval(gameInterval);
             endGame();
