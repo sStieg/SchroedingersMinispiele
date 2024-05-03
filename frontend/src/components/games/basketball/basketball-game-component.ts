@@ -1,11 +1,11 @@
-import {BasketballGame, store} from "./model";
+import {BasketballGame, gameState} from "./model";
 import {produce} from "immer";
 import {html, render} from "lit-html";
 import {endGame} from "../../../script";
 class BasketballGameComponent extends HTMLElement{
     connectedCallback(){
         console.log("connected")
-        store.subscribe(basketballGame => {
+        gameState.subscribe(basketballGame => {
             this.render(basketballGame)
         })
     }
@@ -15,46 +15,6 @@ class BasketballGameComponent extends HTMLElement{
     }
 
     tick() {
-        const nextState = produce(store.getValue(), game => {
-            if(this.leftArrow) {
-                this.moveSprite(-1.5,0);
-            }
-            if(this.rightArrow) {
-                this.moveSprite(1.5,0)
-            }
-            if(this.upArrow) {
-                this.moveSprite(0,-1.5);
-            }
-            if(this.downArrow) {
-                this.moveSprite(0,1.5);
-            }
-        })
-        store.next(nextState)
-    }
-
-    leftArrow = false;
-    rightArrow = false;
-    upArrow = false;
-    downArrow = false;
-    basketball: HTMLElement = document.getElementById("basketball");
-
-    onClick (e: Event) {
-        console.log("clicked")
-    }
-
-    moveSprite(dx, dy){
-        // current position
-        let x = parseFloat(this.basketball.style.left);
-        let y = parseFloat(this.basketball.style.top);
-
-        // calc new position
-        x += dx;
-        y += dy;
-
-        // assign new position
-        this.basketball.style.left = x + "vw";
-        this.basketball.style.top = y + "vw";
-
     }
 }
 customElements.define("basketball-component", BasketballGameComponent);
@@ -130,12 +90,19 @@ let moveBasketCounter = 0;
 let isBasketOnTop = false;
 let gravitation: number = 0;
 
+const basketBallGame: BasketballGame = new BasketballGame();
+
 let leftArrow = false;
 let rightArrow = false;
 let upArrow = false;
 
 
 export function startBasketballGame() {
+    basketBallGame.basketball.position.width = parseFloat(basketball.style.width);
+    basketBallGame.basketball.position.height = parseFloat(basketball.style.height);
+    basketBallGame.basketball.position.center.x = 10;
+    basketBallGame.basketball.position.center.y = 0;
+
     basketball.style.left = "10%"; // starting position
     basketball.style.bottom = "0%"; // starting position
     basket.style.left = "90%"; // starting position
