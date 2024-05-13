@@ -36,7 +36,7 @@ jobs:
           overwrite: true
           prerelease: true
           body: "Intermediate Release for Sprint Review"
-          files: backend/target/*-runner.jar
+          file: backend/target/*-runner.jar
       #         tag: ${{ github.ref }}
       - name: Display url
         run: |
