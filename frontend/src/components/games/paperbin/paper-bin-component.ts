@@ -144,9 +144,6 @@ function spawnPlane(){
 }
 spawnPlane();*/
 
-
-
-/* GAME LOOP */
 function gameLoop() {
     checkKorb();
 
@@ -158,6 +155,11 @@ function gameLoop() {
     }
     movePlane(0.1,0.3);
 }
+
+
+
+/* GAME LOOP */
+
 
 /*MOVE PLANE*/
 function movePlane(dx, dy){
@@ -198,7 +200,8 @@ function moveKorb(dx, dy){
     // assign new position
     korb.style.left = x + "%";
     korb.style.top = y + "%";  
-}	
+}
+	
 
 function checkKorb() {
     if((parseFloat(planeBox.style.left) >= parseFloat(korb.style.left)) && (parseFloat(planeBox.style.left) <= parseFloat(korb.style.left)+15) &&
