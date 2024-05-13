@@ -15,8 +15,6 @@ jobs:
           java-version: '21'
           cache: 'maven'
           cache-dependency-path: 'backend/pom.xml' # optional
-          workdir: backend
-          run: mvn clean package
 
       - name: compile
         working-directory: backend
