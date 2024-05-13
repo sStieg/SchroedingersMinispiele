@@ -37,6 +37,6 @@ jobs:
           body: "Intermediate Release for Sprint Review"
           file: backend/target/*-runner.jar
       #         tag: ${{ github.ref }}
-      - name: Display url
-        run: |
-          echo "TODO: tell the server that it should download this url:""
+      #- name: Display url
+       # run: |
+        #  echo "TODO: tell the server that it should download this url:""
