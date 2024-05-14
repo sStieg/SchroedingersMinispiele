@@ -25,8 +25,8 @@ jobs:
         working-directory: frontend
         run: npm install | npm run build
 
-      - name: backend upload to release
-        id: upload
+      - name: Upload backend to release
+        id: upload-backend
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
@@ -36,8 +36,8 @@ jobs:
           body: "Intermediate Release for Sprint Review"
           file: backend/target/*-runner.jar
 
-      - name: frontend upload to release
-        id: upload
+      - name: Upload frontend to release
+        id: upload-frontend
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
