@@ -40,6 +40,7 @@ jobs:
           prerelease: true
           body: "Intermediate Release for Sprint Review"
           file: backend/target/*-runner.jar
+          tag: SchroedingersMinispiele
 
       - name: Upload frontend to release
         id: upload-frontend
@@ -51,7 +52,7 @@ jobs:
           prerelease: true
           body: "Intermediate Release for Sprint Review"
           file: frontend/frontend.zip
-      #         tag: ${{ github.ref }}
+          tag: SchroedingersMinispiele
       #- name: Display url
        # run: |
         #  echo "TODO: tell the server that it should download this url:""
