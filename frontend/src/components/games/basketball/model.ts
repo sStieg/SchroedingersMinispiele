@@ -16,7 +16,7 @@ enum BasketballState {
     MISSED
 }
 
-interface GameElement {
+export class GameElement {
     elementId: string
     position: Rectangle
 }
@@ -32,28 +32,24 @@ export class BasketballGame {
     basketball: Basketball
     basket: GameElement
     obstacles: GameElement[]
-    checkObstacles(dx: number, dy: number): any {}
-    isMoveAllowed(dx: number, dy: number): any {}
+    moveBall(dx: number, dy: number): any {}
 }
 
-const basketBallGame: BasketballGame = {
+export const basketBallGame: BasketballGame = {
     basketball: {
         position: {
             center: {
                 x: 0,
                 y: 0
             },
-            width: 100,
-            height: 100
+            width: 0,
+            height: 0
         },
-        elementId: "",
+        elementId: "basketball",
         move: function (dx: number, dy: number): void {
-            let x = this.position.center.x;
-            let y = this.position.center.y;
-
             // calc new position
             this.position.center.x += dx;
-            y += dy;
+            this.position.center.y += dy;
 
             if(this.position.center.x < 0) {
                 this.position.center.x = 0;
@@ -61,11 +57,11 @@ const basketBallGame: BasketballGame = {
                 this.position.center.x = 95;
             }
 
-            if(y < this.fallLimit) {
-                y = this.fallLimit;
+            if(this.position.center.y < this.fallLimit) {
+                this.position.center.y = this.fallLimit;
             }
 
-            this.fallLimit = 0;
+
         },
         fallLimit: 0
     },
@@ -78,24 +74,24 @@ const basketBallGame: BasketballGame = {
             width: 0,
             height: 0
         },
-        elementId: ""
+        elementId: "basket"
     },
     obstacles: [],
-    checkObstacles(dx: number, dy: number): any {
+    moveBall(dx: number, dy: number): any {
+        this.basketball.fallLimit = 0;
+        let x = this.basketball.position.center.x + dx;
+        let y = this.basketball.position.center.y + dy;
         for(let currObstacle of this.obstacles) {
-            if(dx + 4 > parseFloat(currObstacle.position.center.x) && dx < parseFloat(currObstacle.position.center.x) + currObstacle.position.width) {
+            if(x + 4 > parseFloat(currObstacle.position.center.x) && x < parseFloat(currObstacle.position.center.x) + currObstacle.position.width) {
                 if(parseFloat(this.basketball.position.center.y) >= parseFloat(currObstacle.position.center.y) + currObstacle.position.height ) {
                     this.basketball.fallLimit = parseFloat(currObstacle.position.center.y) + currObstacle.position.height;
                 } else if (!(parseFloat(this.basketball.position.center.y)+5 < parseFloat(currObstacle.position.center.y))) {
-                    return true;
+                    dx = 0;
                 }
-
             }
         }
 
-        return false;
-    },
-    isMoveAllowed(dx: number, dy: number): any {
+        this.basketball.move(dx,dy);
     }
 }
 

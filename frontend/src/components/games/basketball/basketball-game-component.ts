@@ -1,4 +1,4 @@
-import {BasketballGame, gameState} from "./model";
+import {basketBallGame, BasketballGame, gameState} from "./model";
 import {produce} from "immer";
 import {html, render} from "lit-html";
 import {endGame} from "../../../script";
@@ -32,6 +32,7 @@ function template (basketballGame: BasketballGame){
                 width: 80px;
                 height: 80px;
                 position: absolute;
+                z-index: 2
             }
             
             #board {
@@ -68,8 +69,8 @@ function template (basketballGame: BasketballGame){
                 <img id="basketball" src="../../../../images/basketball.png"/>
                 
                 <div id="big" class="obstacle"></div>
-                <div class="obstacle long"></div>
-                <div class="obstacle long"></div>
+                <div id="long1" class="obstacle long"></div>
+                <div id="long2" class="obstacle long"></div>
                 <div id="small" class="obstacle"></div>
             </div>
         </div>
@@ -80,17 +81,8 @@ function template (basketballGame: BasketballGame){
 /* INIT */
 let basketball: HTMLElement = document.getElementById("basketball");
 let basket: HTMLElement = document.getElementById("basket");
-let bigObstacle: HTMLElement = document.getElementById("big");
-let smallObstacle: HTMLElement = document.getElementById("small");
-let longObstacle1: HTMLElement = <HTMLElement> document.getElementsByClassName("long")[0];
-let longObstacle2: HTMLElement = <HTMLElement> document.getElementsByClassName("long")[1];
-let fallBorder = 0;
 let gameInterval: NodeJS.Timeout;
-let moveBasketCounter = 0;
-let isBasketOnTop = false;
 let gravitation: number = 0;
-
-const basketBallGame: BasketballGame = new BasketballGame();
 
 let leftArrow = false;
 let rightArrow = false;
@@ -102,19 +94,63 @@ export function startBasketballGame() {
     basketBallGame.basketball.position.height = parseFloat(basketball.style.height);
     basketBallGame.basketball.position.center.x = 10;
     basketBallGame.basketball.position.center.y = 0;
+    basketBallGame.basket.position.center.x = 90;
+    basketBallGame.basket.position.center.y = 25;
 
-    basketball.style.left = "10%"; // starting position
-    basketball.style.bottom = "0%"; // starting position
-    basket.style.left = "90%"; // starting position
-    basket.style.bottom = "25%"; // starting position
-    bigObstacle.style.left = "85%";
-    bigObstacle.style.bottom = "0%";
-    smallObstacle.style.left = "15%";
-    smallObstacle.style.bottom = "0%";
-    longObstacle1.style.left = "25%";
-    longObstacle1.style.bottom = "15%";
-    longObstacle2.style.left = "60%";
-    longObstacle2.style.bottom = "30%";
+    basketBallGame.obstacles.push({
+        elementId: "big",
+        position: {
+            center: {
+                x: 85,
+                y: 0
+            },
+            width: 5,
+            height: 55
+        }
+    });
+    basketBallGame.obstacles.push({
+        elementId: "long1",
+        position: {
+            center: {
+                x: 25,
+                y: 15
+            },
+            width: 20,
+            height: 10
+        }
+    });
+    basketBallGame.obstacles.push({
+        elementId: "long2",
+        position: {
+            center: {
+                x: 60,
+                y: 30
+            },
+            width: 20,
+            height: 10
+        }
+    });
+    basketBallGame.obstacles.push({
+        elementId: "small",
+        position: {
+            center: {
+                x: 15,
+                y: 0
+            },
+            width: 5,
+            height: 10
+        }
+    });
+
+    basketball.style.left = basketBallGame.basketball.position.center.x +"%"; // starting position
+    basketball.style.bottom = basketBallGame.basketball.position.center.y + "%"; // starting position
+    basket.style.left = basketBallGame.basket.position.center.x + "%"; // starting position
+    basket.style.bottom = basketBallGame.basket.position.center.y + "%"; // starting position
+
+    for(let currObstacle of basketBallGame.obstacles) {
+        document.getElementById(currObstacle.elementId).style.left = currObstacle.position.center.x + "%";
+        document.getElementById(currObstacle.elementId).style.bottom = currObstacle.position.center.y + "%";
+    }
 
     gameInterval = setInterval(gameLoop, 20); // async recursion
     document.onkeydown = keyListenerDown;
@@ -163,85 +199,34 @@ function keyListenerUp(e){
 function gameLoop() {
     checkBasket();
 
-    if(parseFloat(basketball.style.bottom) > fallBorder) {
-        moveSprite(0, -gravitation);
+    if(basketBallGame.basketball.position.center.y > basketBallGame.basketball.fallLimit) {
+        move(0, -gravitation);
         gravitation += 0.18;
     } else {
         gravitation = 0;
     }
 
     if(leftArrow) {
-        moveSprite(-1,0);
+        move(-1,0);
     }
     if(rightArrow) {
-        moveSprite(1,0)
+        move(1,0)
     }
     if(upArrow) {
-        moveSprite(0,2.5);
+        move(0,2.5);
     }
 
 
 }
 
 /* MOVE SPRITE */
-function moveSprite(dx, dy){
-    // current position
-    let x = parseFloat(basketball.style.left);
-    let y = parseFloat(basketball.style.bottom);
+function move(dx, dy){
 
-    // calc new position
-    x += dx;
-    y += dy;
+    basketBallGame.moveBall(dx,dy);
 
-    if(x < 0) {
-        x = 0;
-    } else if (x > 95) {
-        x = 95;
-    }
+    basketball.style.left = basketBallGame.basketball.position.center.x + "%";
+    basketball.style.bottom = basketBallGame.basketball.position.center.y + "%";
 
-    if(y < fallBorder) {
-        y = fallBorder;
-    }
-
-    fallBorder = 0;
-
-    x = checkObstacle(bigObstacle, 5, 55, x, y);
-    x = checkObstacle(longObstacle1, 20, 10, x, y);
-    x = checkObstacle(longObstacle2, 20, 10, x, y);
-    x = checkObstacle(smallObstacle, 5, 10, x, y);
-
-    // assign new position
-    basketball.style.left = x + "%";
-    basketball.style.bottom = y + "%";
-
-}
-
-function checkObstacle(obstacle: HTMLElement, width: number, height: number, x: number, y: number) {
-    if(x + 4 > parseFloat(obstacle.style.left) && x < parseFloat(obstacle.style.left) + width) {
-        if(parseFloat(basketball.style.bottom) >= parseFloat(obstacle.style.bottom) + height ) {
-            fallBorder = parseFloat(obstacle.style.bottom) + height;
-        } else if (!(parseFloat(basketball.style.bottom)+5 < parseFloat(obstacle.style.bottom))) {
-            return parseFloat(basketball.style.left);
-        }
-
-    }
-    return x;
-}
-
-function moveBasket() {
-    if(!isBasketOnTop) {
-        basket.style.bottom = parseFloat(basket.style.bottom)+2 +"%";
-        moveBasketCounter++;
-        if(parseFloat(basket.style.bottom) == 90) {
-            isBasketOnTop = true;
-        }
-    } else {
-        basket.style.bottom = parseFloat(basket.style.bottom)-2 +"%";
-        moveBasketCounter--;
-        if(parseFloat(basket.style.bottom) == 10) {
-            isBasketOnTop = false;
-        }
-    }
 }
 
 function checkBasket() {
