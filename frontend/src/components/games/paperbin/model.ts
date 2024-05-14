@@ -31,11 +31,6 @@ export class PaperPlane implements GameElement{
         x += dx;
         y += dy;
 
-        if(y > 120) {
-            y = 120;
-            x = x-0.1;
-        }
-
         if(x < 0) {
             x = 0;
         } else if (x > 95) {
@@ -47,7 +42,7 @@ export class PaperPlane implements GameElement{
         this.position.center.y = y;  
     }
 
-    id: string
+    id: number
     position: Rectangle = {
         center: {
             x: 0,
@@ -64,7 +59,7 @@ export class PaperPlane implements GameElement{
 }
 
 export class Bin {
-    move(dx, dy) {
+    move(dx: number, dy: number) {
         // current position
         let x = this.position.center.x;
         let y = this.position.center.y;

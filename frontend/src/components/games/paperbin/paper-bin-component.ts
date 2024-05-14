@@ -6,7 +6,6 @@ import {endGame} from "../../../script";
 /* INIT */
 let gameInterval: NodeJS.Timeout;
 let planes: PaperPlane[];
-let binHTML: HTMLElement;
 let gameState: PaperBinGameState = {
     paperPlanes: [],
     bin: new Bin
@@ -45,6 +44,7 @@ function template(paperbingame: PaperBinGameState) {
     console.log("template", paperbingame)
     return html`
     <style>
+        
         #surface{
             width: 50vw;
             height: 50vh;
@@ -53,7 +53,7 @@ function template(paperbingame: PaperBinGameState) {
     </style>
     <div id="paperBinGame" class="game">
         <div id="surface">
-            <div id="sprite" style="position: absolute; bottom: 20vw; left: 20vw;">
+            <div id="sprite" style="position: absolute; bottom: 20vw; left: 20vw; z-index: 100;">
                 <img id="korb" style="width: 15vw; height: auto" src = "../../../images/papierkorb.png"/>
             </div>  
             
@@ -66,28 +66,26 @@ function template(paperbingame: PaperBinGameState) {
 /* INIT GAME */
 let surface = document.getElementById("surface");
 
-startPaperBinGame();
-spawnPlane();
-setInterval(spawnPlane,3000);
-
 export function startPaperBinGame() {
     //plane array initialisieren
     planes = gameState.paperPlanes;
 
     //bin initialisieren
-    const bin = gameState.bin;
-    bin.position.center.x = 5;
-    bin.position.center.y = 99;
-    bin.id = 'sprite';
+    gameState.bin.position.center.x = 5;
+    gameState.bin.position.center.y = 99;
+    gameState.bin.id = 'sprite';
 
-    binHTML = document.getElementById(bin.id)
-    binHTML.style.left = bin.position.center.x + "%";
-    binHTML.style.top = bin.position.center.y + "%";
+    let binHTML = document.getElementById(gameState.bin.id)
+    binHTML.style.left = gameState.bin.position.center.x + "%";
+    binHTML.style.top = gameState.bin.position.center.y + "%";
 
     //game interval starten
     gameInterval = setInterval(gameLoop, 10); // async recursion
     document.onkeydown = keyListenerDown;
     document.onkeyup = keyListenerUp;
+
+    spawnPlane();
+    setInterval(spawnPlane,3000);
 }
 
 function spawnPlane(){
@@ -100,13 +98,13 @@ function createPlane(x: number, y: number, dx: number, dy: number): PaperPlane{
     plane.position.center.x = x;
     plane.position.center.y = y;
     planeId++;
-    plane.id = "plane" + planeId;
+    plane.id = planeId;
     plane.velocityX = dx;
     plane.velocityY = dy;
 
     surface.innerHTML += createPlaneBox(plane)
 
-    const plHTML = document.getElementById(plane.id)
+    const plHTML = document.getElementById(""+plane.id)
     plHTML.style.left = plane.position.center.x + "%";
     plHTML.style.top = plane.position.center.y + "%";
         
@@ -120,7 +118,7 @@ function createPlane(x: number, y: number, dx: number, dy: number): PaperPlane{
 
 function createPlaneBox(plane: PaperPlane){
     return `<div id="${plane.id}" style="position: absolute;">
-                <img id="plane" style="width: 5vw; height: auto; position: absolute; animation-timing-function: ease-in-out; animation: paperplane 4s infinite" src="../../../images/papierflieger.png"/>
+                <img id="plane" style="width: 5vw; height: auto; position: absolute; transform: rotate(40deg)" src="../../../images/papierflieger.png"/>
             </div>`
 }
 
@@ -129,7 +127,7 @@ function randomPositionX(){
 } 
 
 function randomSpeed(){
-    return Math.random() * (0.5 - 0.0001) + 0.0001; //random number zwischen 0.0001 und 0.5
+    return Math.random() * (0.5 - 0.001) + 0.001; //random number zwischen 0.001 und 0.5
 }
         
 /* CHECK PRESSED KEY */
@@ -166,50 +164,67 @@ function gameLoop() {
     for (let i = 0; i < planes.length; i++) {
         checkKorb(gameState.paperPlanes[i]);
     }
-    
-    let dx = 0;
-    let dy = 0;
 
     if(leftArrow) {
-        dx = -0.5
+        moveBin(-0.5, 0);
     }
     if(rightArrow) {
-        dx = 0.5
+        moveBin(0.5, 0);
     }
-    moveBin(gameState.bin, dx, dy);
+    
     planes.forEach(pl => movePlane(pl));
 }
 
-function moveBin(bin: Bin, dx: number, dy:number){
-    bin.move(dx, dy);
-
-    binHTML.style.left = bin.position.center.x + "%";
-    binHTML.style.top = bin.position.center.y + "%"; 
+function moveBin(dx: number, dy:number){
+    gameState.bin.move(dx, dy);
+   
+    document.getElementById(gameState.bin.id).style.left = gameState.bin.position.center.x + "%";
+    document.getElementById(gameState.bin.id).style.top = gameState.bin.position.center.y + "%"; 
 }
 
 function movePlane(pl: PaperPlane){
     pl.move(pl.velocityX, pl.velocityY);
+    
+    const plHTML = document.getElementById(""+pl.id)
 
-    const plHTML = document.getElementById(pl.id)
-
-    if(plHTML){
+    if(pl.position.center.y > 135 || pl.position.center.x <= 10 || pl.position.center.x >= 95){
+        deletePlane(pl.id, plHTML)
+    }else{
         plHTML.style.left = pl.position.center.x + "%";
         plHTML.style.top = pl.position.center.y + "%";  
-    }  
+    } 
 }
 
+function deletePlane(id: number, planeHTML: HTMLElement){
+    for (let i = 0; i < planes.length; i++) {
+        if(planes[i].id === id){
+            planes.splice(i,1)
+        }   
+    }
+
+    planeHTML.remove();
+}
+
+function resetGame(){
+    clearInterval(gameInterval);
+    planeCounter = 0;
+    planes = [];
+}
+
+
 function checkKorb(plane: PaperPlane) { //plane übergeben 
-    const planeHTML = document.getElementById(plane.id);
+    const planeHTML = document.getElementById(""+plane.id);
+    const binHTML = document.getElementById(gameState.bin.id);
 
     if((parseFloat(planeHTML.style.left) >= parseFloat(binHTML.style.left)) && (parseFloat(planeHTML.style.left) <= parseFloat(binHTML.style.left)+10) &&
         (parseFloat(planeHTML.style.top) >= parseFloat(binHTML.style.top))){
             //clearInterval(gameInterval);
+            deletePlane(plane.id,planeHTML)
             planeCounter++;
             console.log(planeCounter)
 
             if(planeCounter === 4){
                 console.log("YOU WON")
-                clearInterval(gameInterval);
                 endGame();
             }
     }
