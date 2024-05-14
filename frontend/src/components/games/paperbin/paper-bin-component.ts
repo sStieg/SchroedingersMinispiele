@@ -1,16 +1,33 @@
 import { html, render } from "lit-html";
-import { PaperBinGame, store } from "./model";
+import { PaperBinGameState, PaperPlane, Bin, store } from "./model";
 import {produce} from 'immer'
 import {endGame} from "../../../script";
+
+/* INIT */
+let gameInterval: NodeJS.Timeout;
+let planes: PaperPlane[];
+let binHTML: HTMLElement;
+let gameState: PaperBinGameState = {
+    paperPlanes: [],
+    bin: new Bin
+}
+
+let leftArrow = false;
+let rightArrow = false;
+
+let planeId = 0;
+let planeCounter = 0;
+
 
 class PaperBinComponent extends HTMLElement{
     connectedCallback(){
         console.log("connected")
-        store.subscribe(paperbingame => {
+        /*store.subscribe(paperbingame => {
             this.render(paperbingame)
-        })
+        })*/
+        this.render(gameState)
     }
-    render(paperbingame: PaperBinGame) {
+    render(paperbingame: PaperBinGameState) {
         render(template(paperbingame), this);
     }
 
@@ -24,34 +41,10 @@ class PaperBinComponent extends HTMLElement{
 }
 customElements.define("paper-bin-component", PaperBinComponent);
 
-function template(paperbingame: PaperBinGame) {
+function template(paperbingame: PaperBinGameState) {
+    console.log("template", paperbingame)
     return html`
     <style>
-        
-        @keyframes paperplane {
-            0% {
-                transform: rotate(30deg);
-            }
-            40% {
-                transform: rotate(45deg);
-            }
-            50% {
-                transform: rotate(45deg);
-            }
-            60% {
-                transform: rotate(20deg);
-            }
-            65% {
-                transform: rotate(20deg);
-            }
-            80%{
-                transform: rotate(45deg);
-            }
-            99% {
-                transform: rotate(30deg)
-            }
-        }
-
         #surface{
             width: 50vw;
             height: 50vh;
@@ -64,40 +57,79 @@ function template(paperbingame: PaperBinGame) {
                 <img id="korb" style="width: 15vw; height: auto" src = "../../../images/papierkorb.png"/>
             </div>  
             
-            <div id="planeBox" style="position: absolute;">
-                <img id="plane" style="width: 5vw; height: auto; position: absolute; animation-timing-function: ease-in-out; animation: paperplane 4s infinite" src="../../../images/papierflieger.png"/>
-            </div>
         </div>
     </div>
     `
 }
 
-/* INIT */
-let korb = document.getElementById("sprite");
+
+/* INIT GAME */
 let surface = document.getElementById("surface");
-let planeBox = document.getElementById("planeBox");
-let plane = document.getElementById("plane");
-let gameInterval: NodeJS.Timeout;
 
-let leftArrow = false;
-let rightArrow = false;
-
-let planeIdCounter = 0;
-
-/* EVENT LISTENER */
-
+startPaperBinGame();
+spawnPlane();
+setInterval(spawnPlane,3000);
 
 export function startPaperBinGame() {
-    korb.style.left = "5%"; // starting position
-    korb.style.top = "99%";
+    //plane array initialisieren
+    planes = gameState.paperPlanes;
 
-    planeBox.style.left = "10%"; // starting position
-    planeBox.style.top = "0%";
+    //bin initialisieren
+    const bin = gameState.bin;
+    bin.position.center.x = 5;
+    bin.position.center.y = 99;
+    bin.id = 'sprite';
 
+    binHTML = document.getElementById(bin.id)
+    binHTML.style.left = bin.position.center.x + "%";
+    binHTML.style.top = bin.position.center.y + "%";
 
+    //game interval starten
     gameInterval = setInterval(gameLoop, 10); // async recursion
     document.onkeydown = keyListenerDown;
     document.onkeyup = keyListenerUp;
+}
+
+function spawnPlane(){
+    const plane = createPlane(randomPositionX(), 0, 0.05, randomSpeed());
+    planes.push(plane);
+}
+
+function createPlane(x: number, y: number, dx: number, dy: number): PaperPlane{
+    const plane = new PaperPlane()
+    plane.position.center.x = x;
+    plane.position.center.y = y;
+    planeId++;
+    plane.id = "plane" + planeId;
+    plane.velocityX = dx;
+    plane.velocityY = dy;
+
+    surface.innerHTML += createPlaneBox(plane)
+
+    const plHTML = document.getElementById(plane.id)
+    plHTML.style.left = plane.position.center.x + "%";
+    plHTML.style.top = plane.position.center.y + "%";
+        
+    if(x>50){
+        plane.velocityX = -plane.velocityX;
+        plHTML.style.transform = "scaleX(-1)";
+    } 
+    
+    return plane;
+}
+
+function createPlaneBox(plane: PaperPlane){
+    return `<div id="${plane.id}" style="position: absolute;">
+                <img id="plane" style="width: 5vw; height: auto; position: absolute; animation-timing-function: ease-in-out; animation: paperplane 4s infinite" src="../../../images/papierflieger.png"/>
+            </div>`
+}
+
+function randomPositionX(){
+    return Math.floor(Math.random() * 100)
+} 
+
+function randomSpeed(){
+    return Math.random() * (0.5 - 0.0001) + 0.0001; //random number zwischen 0.0001 und 0.5
 }
         
 /* CHECK PRESSED KEY */
@@ -129,85 +161,56 @@ function keyListenerUp(e){
 }
 
 
-function randomPositionX(){
-    return Math.floor(Math.random() * (1200 - 5 + 1 )+ 5);
-}
-
-/* SPAWNING PLANES */
-/*
-function spawnPlane(){
-    planeBox.innerHTML = '<img id="plane" style="width: 8vw; height: auto;position: relative; animation-timing-function: ease-in-out; animation: paperplane 4s infinite; top: 0px; left:' + randomPositionX() + 'px" src="../../../images/papierflieger.png">';
-    
-    planeIdCounter++;
-
-    setTimeout(spawnPlane, 4000); // async recursion
-}
-spawnPlane();*/
-
+/* GAME LOOP */
 function gameLoop() {
-    checkKorb();
+    for (let i = 0; i < planes.length; i++) {
+        checkKorb(gameState.paperPlanes[i]);
+    }
+    
+    let dx = 0;
+    let dy = 0;
 
     if(leftArrow) {
-        moveKorb(-0.5,0);
+        dx = -0.5
     }
     if(rightArrow) {
-        moveKorb(0.5,0)
+        dx = 0.5
     }
-    movePlane(0.1,0.3);
+    moveBin(gameState.bin, dx, dy);
+    planes.forEach(pl => movePlane(pl));
 }
 
+function moveBin(bin: Bin, dx: number, dy:number){
+    bin.move(dx, dy);
 
-
-/* GAME LOOP */
-
-
-/*MOVE PLANE*/
-function movePlane(dx, dy){
-    // current position
-    let x = parseFloat(planeBox.style.left);
-    let y = parseFloat(planeBox.style.top);
-            
-    // calc new position
-    x += dx;
-    y += dy;
-
-    if(y > 120) {
-        y = 120;
-        x = x-0.1;
-    }
-    
-    // assign new position
-    planeBox.style.left = x + "%";
-    planeBox.style.top = y + "%";  
+    binHTML.style.left = bin.position.center.x + "%";
+    binHTML.style.top = bin.position.center.y + "%"; 
 }
 
-/* MOVE KORB */
-function moveKorb(dx, dy){
-    // current position
-    let x = parseFloat(korb.style.left);
-    let y = parseFloat(korb.style.top);
-            
-    // calc new position
-    x += dx;
-    y += dy;
+function movePlane(pl: PaperPlane){
+    pl.move(pl.velocityX, pl.velocityY);
 
-    if(x < 0) {
-        x = 0;
-    } else if (x > 95) {
-        x = 95;
-    }
-            
-    // assign new position
-    korb.style.left = x + "%";
-    korb.style.top = y + "%";  
+    const plHTML = document.getElementById(pl.id)
+
+    if(plHTML){
+        plHTML.style.left = pl.position.center.x + "%";
+        plHTML.style.top = pl.position.center.y + "%";  
+    }  
 }
-	
 
-function checkKorb() {
-    if((parseFloat(planeBox.style.left) >= parseFloat(korb.style.left)) && (parseFloat(planeBox.style.left) <= parseFloat(korb.style.left)+15) &&
-        (parseFloat(planeBox.style.top) >= parseFloat(korb.style.top))){
-        console.log("YOU WON")
-        clearInterval(gameInterval);
-        endGame();
+function checkKorb(plane: PaperPlane) { //plane übergeben 
+    const planeHTML = document.getElementById(plane.id);
+
+    if((parseFloat(planeHTML.style.left) >= parseFloat(binHTML.style.left)) && (parseFloat(planeHTML.style.left) <= parseFloat(binHTML.style.left)+10) &&
+        (parseFloat(planeHTML.style.top) >= parseFloat(binHTML.style.top))){
+            //clearInterval(gameInterval);
+            planeCounter++;
+            console.log(planeCounter)
+
+            if(planeCounter === 4){
+                console.log("YOU WON")
+                clearInterval(gameInterval);
+                endGame();
+            }
     }
 }

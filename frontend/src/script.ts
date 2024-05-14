@@ -1,5 +1,5 @@
 import {startBasketballGame} from "./components/games/basketball/basketball-game-component";
-import {startPaperBinGame} from "./components/games/paperbin/paper-bin-component";
+import { startPaperBinGame } from "./components/games/paperbin/paper-bin-component";
 
 export {solution};
 
