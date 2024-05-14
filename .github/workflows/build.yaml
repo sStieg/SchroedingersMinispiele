@@ -25,7 +25,7 @@ jobs:
         working-directory: frontend
         run: npm install | npm run build
 
-      - name: Upload backend to release
+      - name: backend upload to release
         id: upload
         uses: svenstaro/upload-release-action@v2
         with:
@@ -36,7 +36,7 @@ jobs:
           body: "Intermediate Release for Sprint Review"
           file: backend/target/*-runner.jar
 
-      - name: Upload frontend to release
+      - name: frontend upload to release
         id: upload
         uses: svenstaro/upload-release-action@v2
         with:
