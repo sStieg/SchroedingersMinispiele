@@ -77,7 +77,7 @@ function startGame(roomNumber?: number, gameNumber?: number) {
 }
 
 export function endGame(){
-    socket.send("solution: "+solution);
+    socket.send("won game");
 
     $("#minigames").css("display", "none");
     $(".game").css("opacity", "0");

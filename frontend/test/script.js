@@ -1,4 +1,5 @@
 var connected = false;
+var currentGame;
         var socket;
 
         $( document ).ready(function() {
@@ -15,11 +16,16 @@ var connected = false;
 
                 socket.onmessage = function (m) {
                     console.log(m.data);
+
+                    if(m.data.toString().includes("won game")) {
+                        currentGame.style.backgroundColor = "green";
+                    }
                 };
             }
         }
 
-        function startGame(message) {
+        function startGame(message, gameElement) {
+            currentGame = gameElement;
             fetch("http://schroedinger.hopto.org/api/position/", {
                 method: "POST",
                 mode: "no-cors",
