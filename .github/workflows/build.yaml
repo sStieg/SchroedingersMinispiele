@@ -17,9 +17,13 @@ jobs:
           cache-dependency-path: 'backend/pom.xml' # optional
 
 
-      - name: compile
+      - name: compile backend
         working-directory: backend
         run: mvn -B package
+
+      - name: compile frontend
+        working-directory: frontend
+        run: npm install | npm run build
 
       - name: List files in the repository
         run: |
