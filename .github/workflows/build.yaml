@@ -23,7 +23,7 @@ jobs:
 
       - name: compile frontend
         working-directory: frontend
-        run: npm install | npm run build
+        run: npm install || npm run build
 
       - name: Upload backend to release
         id: upload-backend
