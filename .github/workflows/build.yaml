@@ -25,12 +25,7 @@ jobs:
         working-directory: frontend
         run: npm install | npm run build
 
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}/backend/target
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-
-      - name: Upload binaries to release
+      - name: Upload backend to release
         id: upload
         uses: svenstaro/upload-release-action@v2
         with:
@@ -40,6 +35,17 @@ jobs:
           prerelease: true
           body: "Intermediate Release for Sprint Review"
           file: backend/target/*-runner.jar
+
+      - name: Upload frontend to release
+        id: upload
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file_glob: true
+          overwrite: true
+          prerelease: true
+          body: "Intermediate Release for Sprint Review"
+          file: frontend/dist
       #         tag: ${{ github.ref }}
       #- name: Display url
        # run: |
