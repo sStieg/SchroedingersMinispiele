@@ -30,6 +30,8 @@ class PaperBinComponent extends HTMLElement{
         render(template(paperbingame), this);
     }
 
+
+
     /*
     tick(){
         const nextState = produce(store.getValue(), game => {
@@ -42,6 +44,7 @@ customElements.define("paper-bin-component", PaperBinComponent);
 
 function template(paperbingame: PaperBinGameState) {
     console.log("template", paperbingame)
+    //TODO: const planeBoxes = paperbinGame.planes.map(plane => createPlaneBox(plane))
     return html`
     <style>
         
@@ -56,7 +59,8 @@ function template(paperbingame: PaperBinGameState) {
             <div id="sprite" style="position: absolute; bottom: 20vw; left: 20vw; z-index: 100;">
                 <img id="korb" style="width: 15vw; height: auto" src = "../../../images/papierkorb.png"/>
             </div>  
-            
+            <!-- $ {planeBoxes}
+            -->
         </div>
     </div>
     `
