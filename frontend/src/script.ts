@@ -1,4 +1,6 @@
-import {startBasketballGame} from "./components/games/basketball/basketball-game-component";
+import {
+    startBasketBallGame
+} from "./components/games/basketball/basketball-game-component";
 import { startPaperBinGame } from "./components/games/paperbin/paper-bin-component";
 
 export {solution};
@@ -52,7 +54,7 @@ function startGame(roomNumber?: number, gameNumber?: number) {
                 $('#basketballGame').css("opacity", "1");
                 $("#basketballGame").css("position", "relative");
                 $("#basketballGame").css("z-index", "15");
-                startBasketballGame();
+                startBasketBallGame()
             } else if(gameNumber == 2) {
                 $('#paperBinGame').css("opacity", "1");
                 $("#paperBinGame").css("position", "relative");
