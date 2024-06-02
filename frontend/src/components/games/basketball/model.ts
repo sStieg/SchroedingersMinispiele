@@ -30,6 +30,7 @@ export class Basketball implements GameElement {
 
 export class BasketballGame {
     running: boolean
+    isWon: boolean
     basketball: Basketball
     basket: GameElement
     obstacles: GameElement[]
@@ -38,6 +39,7 @@ export class BasketballGame {
 
 export const basketBallGame: BasketballGame = {
     running: false,
+    isWon: false,
     basketball: {
         position: {
             center: {

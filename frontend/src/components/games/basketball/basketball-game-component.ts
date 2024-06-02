@@ -9,17 +9,18 @@ class BasketballGameComponent extends HTMLElement{
     upArrow: boolean = false;
     gameInterval: NodeJS.Timeout = null;
     gravitation: number = 0;
+    isWon: boolean = false;
 
     connectedCallback(){
         console.log("connected")
-        gameState.subscribe(basketballGame => {
-            this.render(basketballGame)
+        gameState.subscribe(() => {
+            this.render()
         })
         this.startBasketballGame();
     }
 
-    render(basketballGame: BasketballGame) {
-        render(template(basketballGame), this)
+    render() {
+        render(template(), this)
     }
 
     checkBasket() {
@@ -27,7 +28,8 @@ class BasketballGameComponent extends HTMLElement{
             if(basketBallGame.basketball.position.center.y+5 <= basketBallGame.basket.position.center.y) {
                 console.log("YOU WON")
                 clearInterval(this.gameInterval);
-                endGame();
+                basketBallGame.isWon = true;
+                this.render();
             }
         }
     }
@@ -47,13 +49,13 @@ class BasketballGameComponent extends HTMLElement{
                 basketBallGame.moveBall(-1,0);
             }
             if(this.rightArrow) {
-                basketBallGame.moveBall(1,0)
+                basketBallGame.moveBall(1,0);
             }
             if(this.upArrow) {
                 basketBallGame.moveBall(0,2.5);
             }
 
-            this.render(basketBallGame)
+            this.render();
         }   
     }
 
@@ -113,15 +115,19 @@ class BasketballGameComponent extends HTMLElement{
         this.gameInterval = setInterval(() => {
             this.gameLoop()
         }, 20); // async recursion
-        document.onkeydown = this.keyListenerDown;
-        document.onkeyup = this.keyListenerUp;
+        document.onkeydown = (e) => {
+            this.keyListenerDown(e);
+        }
+        onkeyup = (e) => {
+            this.keyListenerUp(e);
+        }
     }
     keyListenerDown(e){
         console.log(e);
         //console.log(e.keyCode);
-        if (!e){
+        /*if (!e){
             e = window.event; //Internet Explorer
-        }
+        }*/
         if (e.keyCode == 37){ // leftArrow
             this.leftArrow = true;
         }
@@ -151,14 +157,14 @@ class BasketballGameComponent extends HTMLElement{
 }
 customElements.define("basketball-component", BasketballGameComponent);
 
-function template (basketballGame: BasketballGame){
+function template (){
     const basketballStyle =
-        "left:" + basketballGame.basketball.position.center.x + "%;" +
-        "bottom:" + basketballGame.basketball.position.center.y + "%";
+        "left:" + basketBallGame.basketball.position.center.x + "%;" +
+        "bottom:" + basketBallGame.basketball.position.center.y + "%";
 
     const basketStyle =
-        "left:" + basketballGame.basket.position.center.x + "%;" +
-        "bottom:" + basketballGame.basket.position.center.y + "%";
+        "left:" + basketBallGame.basket.position.center.x + "%;" +
+        "bottom:" + basketBallGame.basket.position.center.y + "%";
 
     let bigObstacleStyle = "";
     let longObstacleStyle1 = "";
@@ -166,23 +172,21 @@ function template (basketballGame: BasketballGame){
     let smallObstacleStyle = "";
     if(basketBallGame.obstacles.length >= 4) {
         bigObstacleStyle =
-        "left:" + basketballGame.obstacles[0].position.center.x + "%;" +
-        "bottom:" + basketballGame.obstacles[0].position.center.y + "%";
+        "left:" + basketBallGame.obstacles[0].position.center.x + "%;" +
+        "bottom:" + basketBallGame.obstacles[0].position.center.y + "%";
 
         longObstacleStyle1 =
-            "left:" + basketballGame.obstacles[1].position.center.x + "%;" +
-            "bottom:" + basketballGame.obstacles[1].position.center.y + "%";
+            "left:" + basketBallGame.obstacles[1].position.center.x + "%;" +
+            "bottom:" + basketBallGame.obstacles[1].position.center.y + "%";
 
         longObstacleStyle2 =
-            "left:" + basketballGame.obstacles[2].position.center.x + "%;" +
-            "bottom:" + basketballGame.obstacles[2].position.center.y + "%";
+            "left:" + basketBallGame.obstacles[2].position.center.x + "%;" +
+            "bottom:" + basketBallGame.obstacles[2].position.center.y + "%";
 
         smallObstacleStyle =
-            "left:" + basketballGame.obstacles[3].position.center.x + "%;" +
-            "bottom:" + basketballGame.obstacles[3].position.center.y + "%";
+            "left:" + basketBallGame.obstacles[3].position.center.x + "%;" +
+            "bottom:" + basketBallGame.obstacles[3].position.center.y + "%";
     }
-
-    
 
     return html`
         <style>
@@ -225,6 +229,29 @@ function template (basketballGame: BasketballGame){
                 background-color: #fff;
                 position: absolute;
             }
+            
+            #winning {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                font-family: calibri;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(0, 0, 0, 0.78);
+                z-index: 3;
+            }
+
+            #winning #button {
+                width: 10%;
+                height: 30px;
+                color: #fff;
+                background-color: #5a8d23;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         </style>
         
         <div id="basketballGame" class="game" ?hidden=${!basketBallGame.running}>
@@ -236,6 +263,11 @@ function template (basketballGame: BasketballGame){
                 <div id="long1" class="obstacle long" style=${longObstacleStyle1}></div>
                 <div id="long2" class="obstacle long" style=${longObstacleStyle2}></div>
                 <div id="small" class="obstacle" style=${smallObstacleStyle}></div>
+
+                <div id="winning" ?hidden=${basketBallGame.isWon}>
+                    <h1>Gewonnen!</h1>
+                    <div id="button">Fertig</div>
+                </div>
             </div>
         </div>
     `
@@ -246,6 +278,10 @@ function template (basketballGame: BasketballGame){
 export function startBasketBallGame() {
     basketBallGame.running = true;
 }
+
+document.getElementById("button").addEventListener("click", () => {
+    endGame();
+})
 
 
 
