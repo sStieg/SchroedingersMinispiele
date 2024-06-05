@@ -35,8 +35,8 @@ export class PaperPlane implements GameElement{
 
         if(x < 0) {
             x = 0;
-        } else if (x > 95) {
-            x = 95;
+        } else if (x > 80) {
+            x = 80;
         }
         
         // assign new position

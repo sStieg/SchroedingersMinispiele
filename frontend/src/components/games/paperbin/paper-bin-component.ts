@@ -7,7 +7,7 @@ import {endGame} from "../../../script";
 class PaperBinComponent extends HTMLElement{
     gameInterval: NodeJS.Timeout;
     planeInterval: NodeJS.Timeout;
-    planes: PaperPlane[];
+    //planes: PaperPlane[];
     leftArrow = false;
     rightArrow = false;
 
@@ -27,8 +27,8 @@ class PaperBinComponent extends HTMLElement{
 
     checkKorb(plane: PaperPlane) { //plane übergeben 
         if(plane != null && paperbinGame.paperPlanes[plane.id] != null){
-            if((paperbinGame.paperPlanes[plane.id].position.center.x >= paperbinGame.bin.position.center.x-10) && (paperbinGame.paperPlanes[plane.id].position.center.x <= paperbinGame.bin.position.center.x+10) &&
-            (paperbinGame.paperPlanes[plane.id].position.center.y <= paperbinGame.bin.position.center.y+10)){
+            if((paperbinGame.paperPlanes[plane.id].position.center.x >= paperbinGame.bin.position.center.x-5) && (paperbinGame.paperPlanes[plane.id].position.center.x <= paperbinGame.bin.position.center.x+5) &&
+            (paperbinGame.paperPlanes[plane.id].position.center.y <= paperbinGame.bin.position.center.y+3)){
                 //clearInterval(gameInterval);
                 this.deletePlane(plane.id)
                 this.planeCounter++;
@@ -46,13 +46,13 @@ class PaperBinComponent extends HTMLElement{
     startPaperBinGame() {
         //bin initialisieren
         paperbinGame.bin.position.center.x = 5;
-        paperbinGame.bin.position.center.y = 99;
+        paperbinGame.bin.position.center.y = 60;
         paperbinGame.bin.id = 'sprite';
         console.log("initialized bin")
 
         //plane array initialisieren
-        this.planes = paperbinGame.paperPlanes;
-        console.log(this.planes)
+        //this.planes = paperbinGame.paperPlanes;
+        //console.log(this.planes)
 
         this.gameInterval = setInterval(() => {
             this.gameLoop()
@@ -72,7 +72,11 @@ class PaperBinComponent extends HTMLElement{
 
     gameLoop() {
         if(paperbinGame.running){
-            for (let i = 0; i < this.planes.length; i++) {
+            if(paperbinGame.isWon){
+                this.planeInterval = null;
+            }
+
+            for (let i = 0; i < paperbinGame.paperPlanes.length; i++) {
                 this.checkKorb(paperbinGame.paperPlanes[i]);
             }
         
@@ -83,10 +87,10 @@ class PaperBinComponent extends HTMLElement{
                 this.moveBin(0.5, 0);
             }
             
-            this.planes.forEach(pl => this.movePlane(pl));
-        } 
+            paperbinGame.paperPlanes.forEach(pl => this.movePlane(pl));
 
-        this.render();
+            this.render();
+        } 
     }
 
     
@@ -124,7 +128,7 @@ class PaperBinComponent extends HTMLElement{
     movePlane(pl: PaperPlane){
         pl.move(pl.velocityX, pl.velocityY);
     
-        if(pl.position.center.y > 135 || pl.position.center.x <= 10 || pl.position.center.x >= 95){
+        if(pl.position.center.y > 95 || pl.position.center.x <= 10 || pl.position.center.x >= 95){
             this.deletePlane(pl.id)
         }else{
             pl.move(pl.velocityX, pl.velocityY);
@@ -132,9 +136,9 @@ class PaperBinComponent extends HTMLElement{
     }
 
     deletePlane(id: number){
-        for (let i = 0; i < this.planes.length; i++) {
-            if(this.planes[i].id === id){
-                this.planes.splice(i,1)
+        for (let i = 0; i < paperbinGame.paperPlanes.length; i++) {
+            if(paperbinGame.paperPlanes[i].id === id){
+                paperbinGame.paperPlanes.splice(i,1)
             }   
         }
     }
@@ -195,20 +199,25 @@ function template() {
         </div>`; 
     }
 
-    let winHTML = html``;
-    if(paperbinGame.isWon){
-        winHTML =  html`
-        <div id="winning">
+    let congratulation = html``;
+        if(paperbinGame.isWon) {
+            congratulation = html`
+        <div id="winningPaperBin">
             <h1>Gewonnen!</h1>
-            <div id="buttonP">Fertig</div>
-        </div>`
-    }
+            <div id="button" @click=${() => {endGame()}}>Fertig</div>
+        </div>`;
+        }
     
     return html`
     <style>
+        #paperBinGame{
+            width: 100%;
+            height: 100%;
+        }
+
         #surface{
-            width: 50vw;
-            height: 50vh;
+            width: 100%;
+            height: 100%;
             position: relative;
         }
 
@@ -217,12 +226,28 @@ function template() {
             z-index: 100;
         }
 
-        #winning #button {
+        #winningPaperBin #button {
+            width: 10%;
+            height: 30px;
             color: #fff;
             background-color: #5a8d23;
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer
+        }
+
+        #winningPaperBin {
+            font-family: calibri;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.78);
+            z-index: 100;
         }
     </style>
     <div id="paperBinGame" class="game">
@@ -232,7 +257,7 @@ function template() {
             </div>
             ${planesHTML}
 
-            ${winHTML}
+            ${congratulation}
         </div>
     </div>
     `
@@ -241,6 +266,7 @@ function template() {
 export function startPaperBinGame() {
     paperbinGame.running = true;
 }
+
 
 /* INIT GAME */
 /*
