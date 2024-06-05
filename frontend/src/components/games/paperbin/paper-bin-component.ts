@@ -242,11 +242,6 @@ export function startPaperBinGame() {
     paperbinGame.running = true;
 }
 
-document.getElementById("buttonP").addEventListener("click", () => {
-    endGame();
-})
-
-
 /* INIT GAME */
 /*
 let surface = document.getElementById("surface");
