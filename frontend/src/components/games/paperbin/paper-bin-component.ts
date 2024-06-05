@@ -13,7 +13,6 @@ class PaperBinComponent extends HTMLElement{
 
     planeId = 0;
     planeCounter = -1;
-    isWon: boolean = false;
 
     connectedCallback(){
         console.log("connected")
@@ -28,8 +27,8 @@ class PaperBinComponent extends HTMLElement{
 
     checkKorb(plane: PaperPlane) { //plane übergeben 
         if(plane != null && paperbinGame.paperPlanes[plane.id] != null){
-            if((paperbinGame.paperPlanes[plane.id].position.center.x >= paperbinGame.bin.position.center.x-2) && (paperbinGame.paperPlanes[plane.id].position.center.x <= paperbinGame.bin.position.center.x+2) &&
-            (paperbinGame.paperPlanes[plane.id].position.center.y <= paperbinGame.bin.position.center.y+2)){
+            if((paperbinGame.paperPlanes[plane.id].position.center.x >= paperbinGame.bin.position.center.x-10) && (paperbinGame.paperPlanes[plane.id].position.center.x <= paperbinGame.bin.position.center.x+10) &&
+            (paperbinGame.paperPlanes[plane.id].position.center.y <= paperbinGame.bin.position.center.y+10)){
                 //clearInterval(gameInterval);
                 this.deletePlane(plane.id)
                 this.planeCounter++;
@@ -37,8 +36,8 @@ class PaperBinComponent extends HTMLElement{
     
                 if(this.planeCounter === 0){
                     console.log("YOU WON")
-                    this.isWon = true;
-                    endGame();
+                    paperbinGame.isWon = true;
+                    //endGame();
                 }
             }
         }
@@ -195,6 +194,15 @@ function template() {
             <img id="plane" style="width: 5vw; height: auto; position: absolute; transform: rotate(40deg)" src="../../../images/papierflieger.png"/>
         </div>`; 
     }
+
+    let winHTML = html``;
+    if(paperbinGame.isWon){
+        winHTML =  html`
+        <div id="winning">
+            <h1>Gewonnen!</h1>
+            <div id="buttonP">Fertig</div>
+        </div>`
+    }
     
     return html`
     <style>
@@ -210,8 +218,6 @@ function template() {
         }
 
         #winning #button {
-            width: 10%;
-            height: 30px;
             color: #fff;
             background-color: #5a8d23;
             display: flex;
@@ -226,10 +232,7 @@ function template() {
             </div>
             ${planesHTML}
 
-            <div id="winning" ?hidden=${paperbinGame.isWon}>
-                <h1>Gewonnen!</h1>
-                <div id="button">Fertig</div>
-            </div>
+            ${winHTML}
         </div>
     </div>
     `
@@ -239,7 +242,7 @@ export function startPaperBinGame() {
     paperbinGame.running = true;
 }
 
-document.getElementById("button").addEventListener("click", () => {
+document.getElementById("buttonP").addEventListener("click", () => {
     endGame();
 })
 
