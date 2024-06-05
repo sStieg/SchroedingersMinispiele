@@ -212,8 +212,8 @@ class BasketballGameComponent extends HTMLElement{
             }
             
             #board {
-                width: 50vw;
-                height: 50vh;
+                width: 100%;
+                height: 100%;
                 position: relative;
                 background-color: #000000;
             }
