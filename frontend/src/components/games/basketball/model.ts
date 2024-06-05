@@ -6,7 +6,7 @@ interface Point {
 }
 
 interface Rectangle {
-    center: Point
+    leftTop: Point
     width: number
     height: number
 }
@@ -42,7 +42,7 @@ export const basketBallGame: BasketballGame = {
     isWon: false,
     basketball: {
         position: {
-            center: {
+            leftTop: {
                 x: 0,
                 y: 0
             },
@@ -71,7 +71,7 @@ export const basketBallGame: BasketballGame = {
     },
     basket: {
         position: {
-            center: {
+            leftTop: {
                 x: 0,
                 y: 0
             },
