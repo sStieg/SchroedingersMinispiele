@@ -20,7 +20,7 @@ class BasketballGameComponent extends HTMLElement{
     }
 
     render() {
-        render(template(), this)
+        render(this.template(), this)
     }
 
     checkBasket() {
@@ -115,7 +115,7 @@ class BasketballGameComponent extends HTMLElement{
         this.gameInterval = setInterval(() => {
             this.gameLoop()
         }, 20); // async recursion
-        document.onkeydown = (e) => {
+        onkeydown = (e) => {
             this.keyListenerDown(e);
         }
         onkeyup = (e) => {
@@ -154,41 +154,49 @@ class BasketballGameComponent extends HTMLElement{
             this.rightArrow = false;
         }
     }
-}
-customElements.define("basketball-component", BasketballGameComponent);
 
-function template (){
-    const basketballStyle =
-        "left:" + basketBallGame.basketball.position.center.x + "%;" +
-        "bottom:" + basketBallGame.basketball.position.center.y + "%";
+    template (){
+        const basketballStyle =
+            "left:" + basketBallGame.basketball.position.center.x + "%;" +
+            "bottom:" + basketBallGame.basketball.position.center.y + "%";
 
-    const basketStyle =
-        "left:" + basketBallGame.basket.position.center.x + "%;" +
-        "bottom:" + basketBallGame.basket.position.center.y + "%";
+        const basketStyle =
+            "left:" + basketBallGame.basket.position.center.x + "%;" +
+            "bottom:" + basketBallGame.basket.position.center.y + "%";
 
-    let bigObstacleStyle = "";
-    let longObstacleStyle1 = "";
-    let longObstacleStyle2 = "";
-    let smallObstacleStyle = "";
-    if(basketBallGame.obstacles.length >= 4) {
-        bigObstacleStyle =
-        "left:" + basketBallGame.obstacles[0].position.center.x + "%;" +
-        "bottom:" + basketBallGame.obstacles[0].position.center.y + "%";
+        let bigObstacleStyle = "";
+        let longObstacleStyle1 = "";
+        let longObstacleStyle2 = "";
+        let smallObstacleStyle = "";
+        if(basketBallGame.obstacles.length >= 4) {
+            bigObstacleStyle =
+                "left:" + basketBallGame.obstacles[0].position.center.x + "%;" +
+                "bottom:" + basketBallGame.obstacles[0].position.center.y + "%";
 
-        longObstacleStyle1 =
-            "left:" + basketBallGame.obstacles[1].position.center.x + "%;" +
-            "bottom:" + basketBallGame.obstacles[1].position.center.y + "%";
+            longObstacleStyle1 =
+                "left:" + basketBallGame.obstacles[1].position.center.x + "%;" +
+                "bottom:" + basketBallGame.obstacles[1].position.center.y + "%";
 
-        longObstacleStyle2 =
-            "left:" + basketBallGame.obstacles[2].position.center.x + "%;" +
-            "bottom:" + basketBallGame.obstacles[2].position.center.y + "%";
+            longObstacleStyle2 =
+                "left:" + basketBallGame.obstacles[2].position.center.x + "%;" +
+                "bottom:" + basketBallGame.obstacles[2].position.center.y + "%";
 
-        smallObstacleStyle =
-            "left:" + basketBallGame.obstacles[3].position.center.x + "%;" +
-            "bottom:" + basketBallGame.obstacles[3].position.center.y + "%";
-    }
+            smallObstacleStyle =
+                "left:" + basketBallGame.obstacles[3].position.center.x + "%;" +
+                "bottom:" + basketBallGame.obstacles[3].position.center.y + "%";
+        }
 
-    return html`
+        let congratulation = html``;
+        if(basketBallGame.isWon) {
+            congratulation = html`
+        <div id="winning">
+            <h1>Gewonnen!</h1>
+            <div id="button" @click=${() => {endGame()}}>Fertig</div>
+        </div>`;
+        }
+
+
+        return html`
         <style>
             #basketball {
                 width: 40px;
@@ -254,7 +262,7 @@ function template (){
             }
         </style>
         
-        <div id="basketballGame" class="game" ?hidden=${!basketBallGame.running}>
+        <div id="basketballGame" class="game">
             <div id="board">
                 <img id="basket" src="../../../../images/basket.png" style=${basketStyle}>
                 <img id="basketball" src="../../../../images/basketball.png" style=${basketballStyle}/>
@@ -264,26 +272,19 @@ function template (){
                 <div id="long2" class="obstacle long" style=${longObstacleStyle2}></div>
                 <div id="small" class="obstacle" style=${smallObstacleStyle}></div>
 
-                <div id="winning" ?hidden=${basketBallGame.isWon}>
-                    <h1>Gewonnen!</h1>
-                    <div id="button">Fertig</div>
-                </div>
+                ${congratulation}
             </div>
         </div>
     `
+    }
 }
+customElements.define("basketball-component", BasketballGameComponent);
 
 //const game = new BasketballGameComponent();
 
 export function startBasketBallGame() {
     basketBallGame.running = true;
 }
-
-document.getElementById("button").addEventListener("click", () => {
-    endGame();
-})
-
-
 
 /* INIT */
 /*let basketball: HTMLElement = document.getElementById("basketball");
