@@ -52,17 +52,17 @@ export const basketBallGame: BasketballGame = {
         elementId: "basketball",
         move: function (dx: number, dy: number): void {
             // calc new position
-            this.position.center.x += dx;
-            this.position.center.y += dy;
+            this.position.leftTop.x += dx;
+            this.position.leftTop.y += dy;
 
-            if(this.position.center.x < 0) {
-                this.position.center.x = 0;
-            } else if (this.position.center.x > 95) {
-                this.position.center.x = 95;
+            if(this.position.leftTop.x < 0) {
+                this.position.leftTop.x = 0;
+            } else if (this.position.leftTop.x > 95) {
+                this.position.leftTop.x = 95;
             }
 
-            if(this.position.center.y < this.fallLimit) {
-                this.position.center.y = this.fallLimit;
+            if(this.position.leftTop.y < this.fallLimit) {
+                this.position.leftTop.y = this.fallLimit;
             }
 
 
@@ -83,13 +83,13 @@ export const basketBallGame: BasketballGame = {
     obstacles: [],
     moveBall(dx: number, dy: number): any {
         this.basketball.fallLimit = 0;
-        let x = this.basketball.position.center.x + dx;
-        let y = this.basketball.position.center.y + dy;
+        let x = this.basketball.position.leftTop.x + dx;
+        let y = this.basketball.position.leftTop.y + dy;
         for(let currObstacle of this.obstacles) {
-            if(x + 4 > parseFloat(currObstacle.position.center.x) && x < parseFloat(currObstacle.position.center.x) + currObstacle.position.width) {
-                if(parseFloat(this.basketball.position.center.y) >= parseFloat(currObstacle.position.center.y) + currObstacle.position.height ) {
-                    this.basketball.fallLimit = parseFloat(currObstacle.position.center.y) + currObstacle.position.height;
-                } else if (!(parseFloat(this.basketball.position.center.y)+5 < parseFloat(currObstacle.position.center.y))) {
+            if(x + 4 > parseFloat(currObstacle.position.leftTop.x) && x < parseFloat(currObstacle.position.leftTop.x) + currObstacle.position.width) {
+                if(parseFloat(this.basketball.position.leftTop.y) >= parseFloat(currObstacle.position.leftTop.y) + currObstacle.position.height ) {
+                    this.basketball.fallLimit = parseFloat(currObstacle.position.leftTop.y) + currObstacle.position.height;
+                } else if (!(parseFloat(this.basketball.position.leftTop.y)+5 < parseFloat(currObstacle.position.leftTop.y))) {
                     dx = 0;
                 }
             }
