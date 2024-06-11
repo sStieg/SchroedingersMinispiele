@@ -1,7 +1,6 @@
 import{BehaviorSubject} from 'rxjs'
 
 interface GameElement {
-    elementId: string
     position: Rectangle
     move: (dx: number, dy: number) => void
 }
@@ -54,7 +53,6 @@ export class PaperPlane implements GameElement{
     }
     velocityX: number = 0
     velocityY: number = 0
-    elementId: string = ""
 }
 
 export class Bin {
@@ -64,12 +62,10 @@ export class Bin {
             x: 0,
             y: 0
         },
-        width: 20,
-        height: 20
+        width: 0,
+        height: 0
     }
     id: string
-    width: number
-    elementId: string
 }
 
 export class PaperBinGame {
@@ -105,25 +101,23 @@ export const paperbinGame: PaperBinGame = {
         
             if(x < 0) {
                 x = 0;
-            } else if (x > 95) {
-                x = 95;
+            } else if (x > 80) {
+                x = 80;
             }
                     
             // assign new position
             this.position.leftTop.x = x;
             this.position.leftTop.y = y;  
         },
-        id: "",
         position: {
             leftTop: {
                 x: 0,
                 y: 0
             },
-            width: 20,
-            height: 20
+            width: 30,
+            height: 35
         },
-        width: 0,
-        elementId: "bin"
+        id: "sprite"
     }
 }
 

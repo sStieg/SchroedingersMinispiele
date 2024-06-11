@@ -32,12 +32,13 @@ class PaperBinComponent extends HTMLElement{
                 this.numPlanesInBin++;
                 console.log(this.numPlanesInBin)
     
-                if(this.numPlanesInBin > 0){
+                if(this.numPlanesInBin > 2){
                     console.log("YOU WON")
                     paperbinGame.isWon = true;
                     clearInterval(this.gameInterval);
                     clearInterval(this.planeInterval);
                     paperbinGame.running = false;
+                    this.numPlanesInBin = 0;
                 }
             }
         }
@@ -47,6 +48,7 @@ class PaperBinComponent extends HTMLElement{
         //bin initialisieren
         paperbinGame.bin.position.leftTop.x = 5;
         paperbinGame.bin.position.leftTop.y = 60;
+        
         paperbinGame.bin.id = 'sprite';
         console.log("initialized bin")
 
@@ -72,9 +74,7 @@ class PaperBinComponent extends HTMLElement{
 
     gameLoop() {
         if(paperbinGame.running){
-            for (let i = 0; i < paperbinGame.paperPlanes.length; i++) {
-                this.collisonHandler(paperbinGame.paperPlanes[i]);
-            }
+            
 
             if(this.leftArrow) {
                 this.moveBin(-0.5, 0);
@@ -82,8 +82,12 @@ class PaperBinComponent extends HTMLElement{
             if(this.rightArrow) {
                 this.moveBin(0.5, 0);
             }
-            
+
             paperbinGame.paperPlanes.forEach(pl => this.movePlane(pl));
+            console.log(paperbinGame.paperPlanes)
+            for (let i = 0; i < paperbinGame.paperPlanes.length; i++) {
+                this.collisonHandler(paperbinGame.paperPlanes[i]);
+            }
 
             this.render();
         } 
@@ -126,8 +130,6 @@ class PaperBinComponent extends HTMLElement{
     
         if(pl.position.leftTop.y > 95 || pl.position.leftTop.x <= 10 || pl.position.leftTop.x >= 95){
             this.deletePlane(pl.id)
-        }else{
-            pl.move(pl.velocityX, pl.velocityY);
         } 
     }
 
@@ -183,6 +185,8 @@ customElements.define("paper-bin-component", PaperBinComponent);
 function template() {
     //TODO: const planeBoxes = paperbinGame.planes.map(plane => createPlaneBox(plane))
     const binStyle = 
+        "width:" + paperbinGame.bin.position.width + "%;" +
+        "height:" + paperbinGame.bin.position.height + "%;" +
         "left:" + paperbinGame.bin.position.leftTop.x + "%;" +
         "top:" + paperbinGame.bin.position.leftTop.y + "%";
         
@@ -190,8 +194,8 @@ function template() {
     
     for (let i = 0; i < paperbinGame.paperPlanes.length; i++) {
         planesHTML[i] = html`
-        <div style="position: absolute; left: ${paperbinGame.paperPlanes[i].position.leftTop.x}%; top:${paperbinGame.paperPlanes[i].position.leftTop.y}%;">
-            <img id="plane" style="width: 5vw; height: auto; position: absolute; transform: rotate(40deg)" src="../../../images/papierflieger.png"/>
+        <div style="width: 7%; height: 5%; position: absolute; left: ${paperbinGame.paperPlanes[i].position.leftTop.x}%; top:${paperbinGame.paperPlanes[i].position.leftTop.y}%;">
+            <img id="plane" style="width: 100%; height: 100%; position: absolute; transform: rotate(40deg)" src="../../../images/papierflieger.png"/>
         </div>`; 
     }
 
@@ -249,7 +253,7 @@ function template() {
     <div id="paperBinGame" class="game">
         <div id="surface">
             <div id="sprite" style=${binStyle}>
-                <img id="korb" style="width: 15vw; height: auto" src = "../../../images/papierkorb.png"/>
+                <img id="korb" style="width: 100%; height: 100%" src = "../../../images/papierkorb.png"/>
             </div>
             ${planesHTML}
 
