@@ -1,5 +1,5 @@
 import { html, render } from "lit-html";
-import { PaperBinGameState, PaperPlane, Bin, gameState, paperbinGame} from "./model";
+import { PaperBinGameState, PaperPlane, Bin, gameState, paperbinGame, Rectangle} from "./model";
 import {produce} from 'immer'
 import {endGame} from "../../../script";
 
@@ -12,7 +12,7 @@ class PaperBinComponent extends HTMLElement{
     rightArrow = false;
 
     planeId = 0;
-    planeCounter = -1;
+    numPlanesInBin = 0;
 
     connectedCallback(){
         console.log("connected")
@@ -25,19 +25,19 @@ class PaperBinComponent extends HTMLElement{
         render(template(), this);
     }
 
-    checkKorb(plane: PaperPlane) { //plane übergeben 
+    collisonHandler(plane: PaperPlane) { //plane übergeben 
         if(plane != null && paperbinGame.paperPlanes[plane.id] != null){
-            if((paperbinGame.paperPlanes[plane.id].position.center.x >= paperbinGame.bin.position.center.x-5) && (paperbinGame.paperPlanes[plane.id].position.center.x <= paperbinGame.bin.position.center.x+5) &&
-            (paperbinGame.paperPlanes[plane.id].position.center.y <= paperbinGame.bin.position.center.y+3)){
-                //clearInterval(gameInterval);
+            if(doRectanglesCollide(plane.position, paperbinGame.bin.position)){
                 this.deletePlane(plane.id)
-                this.planeCounter++;
-                console.log(this.planeCounter)
+                this.numPlanesInBin++;
+                console.log(this.numPlanesInBin)
     
-                if(this.planeCounter === 0){
+                if(this.numPlanesInBin > 0){
                     console.log("YOU WON")
                     paperbinGame.isWon = true;
-                    //endGame();
+                    clearInterval(this.gameInterval);
+                    clearInterval(this.planeInterval);
+                    paperbinGame.running = false;
                 }
             }
         }
@@ -45,8 +45,8 @@ class PaperBinComponent extends HTMLElement{
 
     startPaperBinGame() {
         //bin initialisieren
-        paperbinGame.bin.position.center.x = 5;
-        paperbinGame.bin.position.center.y = 60;
+        paperbinGame.bin.position.leftTop.x = 5;
+        paperbinGame.bin.position.leftTop.y = 60;
         paperbinGame.bin.id = 'sprite';
         console.log("initialized bin")
 
@@ -62,24 +62,20 @@ class PaperBinComponent extends HTMLElement{
             this.spawnPlane()
         }, 2000); 
 
-        document.onkeydown = (e) => {
+        onkeydown = (e) => {
             this.keyListenerDown(e);
         }
-        document.onkeyup = (e) => {
+        onkeyup = (e) => {
             this.keyListenerUp(e);
         }
     }
 
     gameLoop() {
         if(paperbinGame.running){
-            if(paperbinGame.isWon){
-                this.planeInterval = null;
+            for (let i = 0; i < paperbinGame.paperPlanes.length; i++) {
+                this.collisonHandler(paperbinGame.paperPlanes[i]);
             }
 
-            for (let i = 0; i < paperbinGame.paperPlanes.length; i++) {
-                this.checkKorb(paperbinGame.paperPlanes[i]);
-            }
-        
             if(this.leftArrow) {
                 this.moveBin(-0.5, 0);
             }
@@ -128,7 +124,7 @@ class PaperBinComponent extends HTMLElement{
     movePlane(pl: PaperPlane){
         pl.move(pl.velocityX, pl.velocityY);
     
-        if(pl.position.center.y > 95 || pl.position.center.x <= 10 || pl.position.center.x >= 95){
+        if(pl.position.leftTop.y > 95 || pl.position.leftTop.x <= 10 || pl.position.leftTop.x >= 95){
             this.deletePlane(pl.id)
         }else{
             pl.move(pl.velocityX, pl.velocityY);
@@ -153,8 +149,8 @@ class PaperBinComponent extends HTMLElement{
     createPlane(x: number, y: number, dx: number, dy: number): PaperPlane{
         let plane = new PaperPlane()
 
-        plane.position.center.x = x;
-        plane.position.center.y = y;
+        plane.position.leftTop.x = x;
+        plane.position.leftTop.y = y;
         plane.id = this.planeId;
         this.planeId++;
         plane.velocityX = dx;
@@ -187,14 +183,14 @@ customElements.define("paper-bin-component", PaperBinComponent);
 function template() {
     //TODO: const planeBoxes = paperbinGame.planes.map(plane => createPlaneBox(plane))
     const binStyle = 
-        "left:" + paperbinGame.bin.position.center.x + "%;" +
-        "top:" + paperbinGame.bin.position.center.y + "%";
+        "left:" + paperbinGame.bin.position.leftTop.x + "%;" +
+        "top:" + paperbinGame.bin.position.leftTop.y + "%";
         
     let planesHTML = [];
     
     for (let i = 0; i < paperbinGame.paperPlanes.length; i++) {
         planesHTML[i] = html`
-        <div style="position: absolute; left: ${paperbinGame.paperPlanes[i].position.center.x}%; top:${paperbinGame.paperPlanes[i].position.center.y}%;">
+        <div style="position: absolute; left: ${paperbinGame.paperPlanes[i].position.leftTop.x}%; top:${paperbinGame.paperPlanes[i].position.leftTop.y}%;">
             <img id="plane" style="width: 5vw; height: auto; position: absolute; transform: rotate(40deg)" src="../../../images/papierflieger.png"/>
         </div>`; 
     }
@@ -265,6 +261,14 @@ function template() {
 
 export function startPaperBinGame() {
     paperbinGame.running = true;
+}
+
+function doRectanglesCollide(recA: Rectangle, recB: Rectangle){
+    if (recA.leftTop.x < recB.leftTop.x+recB.width && recA.leftTop.x > recB.leftTop.x &&
+        recA.leftTop.y < recB.leftTop.y+recB.height && recA.leftTop.y > recB.leftTop.y ) {
+        return true;
+    }
+    return false;
 }
 
 

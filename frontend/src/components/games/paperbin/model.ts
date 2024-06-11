@@ -11,8 +11,8 @@ interface Point {
     y: number
 }
 
-class Rectangle {
-    center: Point
+export class Rectangle {
+    leftTop: Point
     width: number
     height: number
 }
@@ -26,8 +26,8 @@ enum PaperPlaneState {
 export class PaperPlane implements GameElement{
     move(dx: number, dy: number){
         // current position
-        let x = this.position.center.x;
-        let y = this.position.center.y;
+        let x = this.position.leftTop.x;
+        let y = this.position.leftTop.y;
                 
         // calc new position
         x += dx;
@@ -40,12 +40,12 @@ export class PaperPlane implements GameElement{
         }
         
         // assign new position
-        this.position.center.x = x;
-        this.position.center.y = y;  
+        this.position.leftTop.x = x;
+        this.position.leftTop.y = y;  
     }
     id: number = 0
     position: Rectangle = {
-        center: {
+        leftTop: {
             x: 0,
             y: 0
         },
@@ -60,7 +60,7 @@ export class PaperPlane implements GameElement{
 export class Bin {
     move(dx: number, dy: number){}	
     position: Rectangle = {
-        center: {
+        leftTop: {
             x: 0,
             y: 0
         },
@@ -96,8 +96,8 @@ export const paperbinGame: PaperBinGame = {
     bin: {
         move(dx: number, dy: number){
             // current position
-            let x = this.position.center.x;
-            let y = this.position.center.y;
+            let x = this.position.leftTop.x;
+            let y = this.position.leftTop.y;
                     
             // calc new position
             x += dx;
@@ -110,12 +110,12 @@ export const paperbinGame: PaperBinGame = {
             }
                     
             // assign new position
-            this.position.center.x = x;
-            this.position.center.y = y;  
+            this.position.leftTop.x = x;
+            this.position.leftTop.y = y;  
         },
         id: "",
         position: {
-            center: {
+            leftTop: {
                 x: 0,
                 y: 0
             },
