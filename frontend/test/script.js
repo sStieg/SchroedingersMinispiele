@@ -8,7 +8,7 @@ var currentGame;
 
         var connect = function() {
             if (!connected) {
-                socket = new WebSocket("ws://schroedinger.hopto.org/api/connect-websocket/vrplayer");
+                socket = new WebSocket("wss://it200301.cloud.htl-leonding.ac.at/api/connect-websocket/vrplayer");
                 socket.onopen = function () {
                     connected = true;
                     console.log("Connected to the web socket");
@@ -26,7 +26,7 @@ var currentGame;
 
         function startGame(message, gameElement) {
             currentGame = gameElement;
-            fetch("http://schroedinger.hopto.org/api/position/", {
+            fetch("https://it200301.cloud.htl-leonding.ac.at/api/position/", {
                 method: "POST",
                 mode: "no-cors",
                 body: message

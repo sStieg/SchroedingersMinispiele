@@ -16,19 +16,14 @@ jobs:
           cache: 'maven'
           cache-dependency-path: 'backend/pom.xml' # optional
 
+
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: compile backend
-        working-directory: backend
-        run: |
-          mvn -B package 
-          docker build --tag ghcr.io/sstieg/schroedinger-backend .
-          docker push ghcr.io/sstieg/schroedinger-backend
 
       - name: compile frontend
         working-directory: frontend
@@ -38,6 +33,15 @@ jobs:
           sudo apt install zip unzip
           zip -r frontend.zip dist/
           ls
+          docker build --tag ghcr.io/sstieg/schroedinger-frontend .
+          docker push ghcr.io/sstieg/schroedinger-frontend
+
+      - name: compile backend
+        working-directory: backend
+        run: |
+          mvn -B package 
+          docker build --tag ghcr.io/sstieg/schroedinger-backend .
+          docker push ghcr.io/sstieg/schroedinger-backend
 
       - name: Upload backend to release
         id: upload-backend

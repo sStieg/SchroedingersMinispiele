@@ -22,7 +22,7 @@ spec:
           ports:
             - containerPort: 8080
 
-          command: ["tail", "-f", "/dev/null"]
+          # command: ["tail", "-f", "/dev/null"]
 
           livenessProbe:
             tcpSocket:
