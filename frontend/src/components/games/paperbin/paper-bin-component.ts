@@ -2,6 +2,7 @@ import { html, render } from "lit-html";
 import { PaperBinGameState, PaperPlane, Bin, gameState, paperbinGame, Rectangle} from "./model";
 import {produce} from 'immer'
 import {endGame} from "../../../script";
+import "../won-game-component";
 
 
 class PaperBinComponent extends HTMLElement{
@@ -32,7 +33,7 @@ class PaperBinComponent extends HTMLElement{
                 this.numPlanesInBin++;
                 console.log(this.numPlanesInBin)
     
-                if(this.numPlanesInBin > 2){
+                if(this.numPlanesInBin > 0){
                     console.log("YOU WON")
                     paperbinGame.isWon = true;
                     clearInterval(this.gameInterval);
@@ -202,10 +203,7 @@ function template() {
     let congratulation = html``;
         if(paperbinGame.isWon) {
             congratulation = html`
-        <div id="winningPaperBin">
-            <h1>Gewonnen!</h1>
-            <div id="button" @click=${() => {endGame()}}>Fertig</div>
-        </div>`;
+            <won-game-component></won-game-component>`;
         }
     
     return html`
@@ -223,30 +221,6 @@ function template() {
 
         #sprite{
             position: absolute;
-            z-index: 100;
-        }
-
-        #winningPaperBin #button {
-            width: 10%;
-            height: 30px;
-            color: #fff;
-            background-color: #5a8d23;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer
-        }
-
-        #winningPaperBin {
-            font-family: calibri;
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0, 0, 0, 0.78);
             z-index: 100;
         }
     </style>

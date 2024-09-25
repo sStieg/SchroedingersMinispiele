@@ -2,6 +2,7 @@ import {Basketball, basketBallGame, BasketballGame, gameState} from "./model";
 import {produce} from "immer";
 import {html, render} from "lit-html";
 import {endGame} from "../../../script";
+import "../won-game-component";
 
 class BasketballGameComponent extends HTMLElement{
     leftArrow: boolean = false;
@@ -115,10 +116,10 @@ class BasketballGameComponent extends HTMLElement{
         this.gameInterval = setInterval(() => {
             this.gameLoop()
         }, 20); // async recursion
-        onkeydown = (e) => {
+        document.onkeydown = (e) => {
             this.keyListenerDown(e);
         }
-        onkeyup = (e) => {
+        document.onkeyup = (e) => {
             this.keyListenerUp(e);
         }
     }
@@ -189,10 +190,7 @@ class BasketballGameComponent extends HTMLElement{
         let congratulation = html``;
         if(basketBallGame.isWon) {
             congratulation = html`
-        <div id="winning">
-            <h1>Gewonnen!</h1>
-            <div id="button" @click=${() => {endGame()}}>Fertig</div>
-        </div>`;
+            <won-game-component></won-game-component>`;
         }
 
 
@@ -236,29 +234,6 @@ class BasketballGameComponent extends HTMLElement{
             .obstacle {
                 background-color: #fff;
                 position: absolute;
-            }
-            
-            #winning {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                font-family: calibri;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                background-color: rgba(0, 0, 0, 0.78);
-                z-index: 3;
-            }
-
-            #winning #button {
-                width: 10%;
-                height: 30px;
-                color: #fff;
-                background-color: #5a8d23;
-                display: flex;
-                justify-content: center;
-                align-items: center;
             }
         </style>
         
