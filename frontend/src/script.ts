@@ -16,7 +16,7 @@ $( document ).ready(function() {
 
 var connect = function() {
     if (!connected) {
-        socket = new WebSocket("ws://schroedinger.hopto.org/api/connect-websocket/player1");
+        socket = new WebSocket("wss://" + window.location.host + "/api/connect-websocket/player1");
         socket.onopen = function () {
             connected = true;
             console.log("Connected to the web socket");
