@@ -5,10 +5,12 @@ import { startPaperBinGame } from "./components/games/paperbin/paper-bin-compone
 
 export {solution};
 
-var solution;
-var connected = false;
-var socket;
-var currentRoomNumber;
+let solution;
+let connected = false;
+let socket;
+let currentRoomNumber;
+let username = "player1"
+
 
 $( document ).ready(function() {
     connect();
@@ -16,7 +18,7 @@ $( document ).ready(function() {
 
 var connect = function() {
     if (!connected) {
-        socket = new WebSocket("wss://" + window.location.host + "/api/connect-websocket/player1");
+        socket = new WebSocket("wss://" + window.location.host + "/api/connect-websocket/",username);
         socket.onopen = function () {
             connected = true;
             console.log("Connected to the web socket");
@@ -25,7 +27,7 @@ var connect = function() {
         socket.onmessage = function (m) {
             console.log(m.data);
 
-            var splittedMessage = m.data.toString().split(";");
+            let splittedMessage = m.data.toString().split(";");
 
             solution = splittedMessage[1];
 

@@ -1,5 +1,6 @@
 package at.schroedingers.minigames;
 
+import jakarta.inject.Inject;
 import jakarta.websocket.ContainerProvider;
 import jakarta.websocket.Session;
 import jakarta.ws.rs.*;
@@ -10,15 +11,16 @@ import java.net.URI;
 @Path("/position")
 public class RestAPI {
 
+    @Inject
+    WebSocketServer webSocketServer;
+
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.MEDIA_TYPE_WILDCARD)
-    public void startGame(String message) throws Exception {
+    public void startGame(String message) {
         System.out.println(message);
-        try (Session session = ContainerProvider.getWebSocketContainer().connectToServer(WebSocketClient.class, URI.create("http://localhost:8080/api/connect-websocket/rest"))) {
-            session.getAsyncRemote().sendText(String.format("%s" ,message));
-        }
 
+        webSocketServer.broadcast(message);
     }
 
     @GET
