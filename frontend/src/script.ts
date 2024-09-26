@@ -18,7 +18,7 @@ $( document ).ready(function() {
 
 var connect = function() {
     if (!connected) {
-        socket = new WebSocket("wss://" + window.location.host + "/api/connect-websocket/",username);
+        socket = new WebSocket("wss://" + window.location.host + "/api/connect-websocket/" + username);
         socket.onopen = function () {
             connected = true;
             console.log("Connected to the web socket");
