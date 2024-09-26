@@ -1,9 +1,6 @@
 package at.schroedingers.minigames;
 
-import jakarta.websocket.ClientEndpoint;
-import jakarta.websocket.OnMessage;
-import jakarta.websocket.OnOpen;
-import jakarta.websocket.Session;
+import jakarta.websocket.*;
 
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -19,6 +16,11 @@ public class WebSocketClient {
     @OnMessage
     public void message(String msg) {
         MESSAGES.add(msg);
+    }
+
+    @OnClose
+    public void close(Session session) {
+        System.out.println();
     }
 
 }
