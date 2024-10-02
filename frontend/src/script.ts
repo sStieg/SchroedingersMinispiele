@@ -11,12 +11,10 @@ let socket;
 let currentRoomNumber;
 let username = "player1"
 
+addEventListener("DOMContentLoaded", connect)
 
-$( document ).ready(function() {
-    connect();
-});
-
-var connect = function() {
+function connect() {
+    console.log()
     if (!connected) {
         socket = new WebSocket("wss://" + window.location.hostname + "/api/connect-websocket/" + username);
         socket.onopen = function () {
@@ -32,7 +30,7 @@ var connect = function() {
 
         socket.onerror = function (e) {
             connected = false;
-            console.log(e.message());
+            console.log("Error with Websocket ",e);
         }
 
         socket.onmessage = function (m) {
