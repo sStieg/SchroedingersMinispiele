@@ -12,26 +12,39 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 
 const config = {
-    entry: './src/index.ts',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
+    entry: {
+        main: './src/index.ts',  
+        test: './test/index.ts', 
     },
+    output: {
+        filename: '[name]-build.js',
+        path: path.resolve(__dirname, 'dist'),
+        clean: true, 
+    },
+
     devtool: "eval-source-map",
     devServer: {
         open: true,
         host: 'localhost',
-        port: 4200
+        port: 4200,
+        
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'index.html',
-            scriptLoading: "module"
+            filename: "main.html",
+            template: './index.html',
+            chunks: ['main']
+        }),
+        new HtmlWebpackPlugin({
+            filename: "test.html",
+            template:"./test/index.html",
+            chunks: ['test']
         }),
         new CopyPlugin({
             patterns: [
-              { from: "scss", to: "scss"},
+                {from: "scss", to: "scss"},
                 {from: "images", to: "images"},
-                {from: "test", to: "test"}
+                {from: "test/images", to: "images"},
             ],
           }),
 
@@ -58,7 +71,7 @@ const config = {
                 type: 'asset',
             },
             {
-                test: /\.(png|jpe?g|gif)$/i,
+                test: /\.(png|jpe?g|gif|svg)$/i,
                 use: [
                     {
                         loader: 'file-loader',

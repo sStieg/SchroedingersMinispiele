@@ -16,7 +16,7 @@ addEventListener("DOMContentLoaded", connect)
 function connect() {
     console.log("Entered Websocket connect function")
     if (!connected) {
-        socket = new WebSocket("wss://" + window.location.hostname + "/api/connect-websocket/" + username);
+        socket = new WebSocket(window.location.protocol + "//" + window.location.hostname + ":8080/api/connect-websocket/player1");
         socket.onopen = function () {
             connected = true;
             console.log("Connected to the web socket");

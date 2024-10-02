@@ -219,16 +219,19 @@ class BasketballGameComponent extends HTMLElement{
             #big {
                 width: 5%;
                 height: 55%;
+                border-radius: 50px 50px 0px 0px;
             }
             
             #small {
                 width: 5%;
                 height: 10%;
+                border-radius: 50px 50px 0px 0px;
             }
             
             .long {
                 width: 20%;
                 height: 10%;
+                border-radius: 50px;
             }
             
             .obstacle {
