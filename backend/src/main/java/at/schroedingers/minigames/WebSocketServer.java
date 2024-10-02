@@ -1,5 +1,6 @@
 package at.schroedingers.minigames;
 
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.websocket.OnClose;
 import jakarta.websocket.OnError;
@@ -19,7 +20,7 @@ public class WebSocketServer {
 
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username) {
-        System.out.println("User " + username + " joined");
+        Log.info("User " + username + " joined ");
         broadcast("User " + username + " joined");
         sessions.put(username, session);
     }
@@ -27,7 +28,8 @@ public class WebSocketServer {
     @OnClose
     public void onClose(Session session, @PathParam("username") String username) {
         sessions.remove(username);
-        System.out.println("User " + username + " left");
+        //System.out.println("User " + username + " left");
+        Log.info("User " + username + " left ");
         //broadcast("User " + username + " left");
     }
 
