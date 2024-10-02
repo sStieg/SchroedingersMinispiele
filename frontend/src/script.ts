@@ -14,7 +14,7 @@ let username = "player1"
 addEventListener("DOMContentLoaded", connect)
 
 function connect() {
-    console.log()
+    console.log("Entered Websocket connect function")
     if (!connected) {
         socket = new WebSocket("wss://" + window.location.hostname + "/api/connect-websocket/" + username);
         socket.onopen = function () {
