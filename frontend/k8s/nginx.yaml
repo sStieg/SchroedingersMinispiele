@@ -61,3 +61,11 @@ spec:
                 name: nginx
                 port:
                   number: 80
+
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: appsrv
+                port:
+                  number: 8080
