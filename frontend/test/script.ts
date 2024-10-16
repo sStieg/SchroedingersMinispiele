@@ -26,7 +26,7 @@ var connect = function() {
 
 export function startGame(message, gameElement) {
     currentGame = gameElement;
-    fetch(window.location.protocol + "//" + window.location.hostname + ":8080/api/position/", {
+    fetch(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/api/position/", {
         method: "POST",
         mode: "no-cors",
         body: message
