@@ -26,24 +26,29 @@ class PaperBinComponent extends HTMLElement{
         render(template(), this);
     }
 
-    collisonHandler(plane: PaperPlane) { //plane übergeben 
-        if(plane != null && paperbinGame.paperPlanes[plane.id] != null){
-            if(doRectanglesCollide(plane.position, paperbinGame.bin.position)){
-                this.deletePlane(plane.id)
-                this.numPlanesInBin++;
-                console.log(this.numPlanesInBin)
+    collisonHandler(plane: PaperPlane): boolean { 
+        if (plane != null && paperbinGame.paperPlanes[plane.id] != null) {
+            // Check for collision with the bin
+            if (doRectanglesCollide(plane.position, paperbinGame.bin.position)) {
+                console.log("Plane collided with bin");
     
-                if(this.numPlanesInBin > 0){
-                    console.log("YOU WON")
+                this.numPlanesInBin++;
+                console.log(this.numPlanesInBin);
+    
+                if (this.numPlanesInBin > 1) {
+                    console.log("YOU WON");
                     paperbinGame.isWon = true;
                     clearInterval(this.gameInterval);
                     clearInterval(this.planeInterval);
                     paperbinGame.running = false;
                     this.numPlanesInBin = 0;
                 }
+                return true;  
             }
         }
+        return false;  // No collision
     }
+    
 
     startPaperBinGame() {
         //bin initialisieren
@@ -74,25 +79,32 @@ class PaperBinComponent extends HTMLElement{
     }
 
     gameLoop() {
-        if(paperbinGame.running){
-            
-
-            if(this.leftArrow) {
+        if (paperbinGame.running) {
+            if (this.leftArrow) {
                 this.moveBin(-0.5, 0);
             }
-            if(this.rightArrow) {
+            if (this.rightArrow) {
                 this.moveBin(0.5, 0);
             }
-
-            paperbinGame.paperPlanes.forEach(pl => this.movePlane(pl));
-            console.log(paperbinGame.paperPlanes)
-            for (let i = 0; i < paperbinGame.paperPlanes.length; i++) {
-                this.collisonHandler(paperbinGame.paperPlanes[i]);
-            }
-
-            this.render();
-        } 
+    
+            // Array to collect planes that have collided and need deletion
+            let planesToDelete = [];
+    
+            // Move and check collisions for all planes
+            paperbinGame.paperPlanes.forEach(pl => {
+                this.movePlane(pl);  // Move the plane
+                if (this.collisonHandler(pl)) {  // Check for collision
+                    planesToDelete.push(pl.id);  // Mark plane for deletion if collision occurs
+                }
+            });
+    
+            // Delete the collided planes after iteration
+            planesToDelete.forEach(id => this.deletePlane(id));
+    
+            this.render();  // Re-render the game state
+        }
     }
+       
 
     
     keyListenerDown(e){        
@@ -134,12 +146,8 @@ class PaperBinComponent extends HTMLElement{
         } 
     }
 
-    deletePlane(id: number){
-        for (let i = 0; i < paperbinGame.paperPlanes.length; i++) {
-            if(paperbinGame.paperPlanes[i].id === id){
-                paperbinGame.paperPlanes.splice(i,1)
-            }   
-        }
+    deletePlane(id: number) {
+        paperbinGame.paperPlanes = paperbinGame.paperPlanes.filter(plane => plane.id !== id);
     }
 
     spawnPlane(){
@@ -213,19 +221,22 @@ function template() {
             height: 100%;
         }
 
-        #surface{
+        #pboard{
             width: 100%;
             height: 100%;
             position: relative;
+            background-image: url('../../../../images/office.webp');
+            background-repeat: none;
+            background-size: cover;
         }
 
         #sprite{
             position: absolute;
-            z-index: 100;
+            z-index: 5;
         }
     </style>
     <div id="paperBinGame" class="game">
-        <div id="surface">
+        <div id="pboard">
             <div id="sprite" style=${binStyle}>
                 <img id="korb" style="width: 100%; height: 100%" src = "../../../images/papierkorb.png"/>
             </div>
@@ -241,12 +252,17 @@ export function startPaperBinGame() {
     paperbinGame.running = true;
 }
 
-function doRectanglesCollide(recA: Rectangle, recB: Rectangle){
-    if (recA.leftTop.x < recB.leftTop.x+recB.width && recA.leftTop.x > recB.leftTop.x &&
-        recA.leftTop.y < recB.leftTop.y+recB.height && recA.leftTop.y > recB.leftTop.y ) {
-        return true;
-    }
-    return false;
+function doRectanglesCollide(recA: Rectangle, recB: Rectangle) {
+    const recA_right = recA.leftTop.x + recA.width;
+    const recA_bottom = recA.leftTop.y + recA.height;
+    const recB_right = recB.leftTop.x + recB.width;
+    const recB_bottom = recB.leftTop.y + recB.height;
+
+    // Check for horizontal and vertical overlap
+    const horizontalOverlap = recA.leftTop.x < recB_right && recA_right > recB.leftTop.x;
+    const verticalOverlap = recA.leftTop.y < recB_bottom && recA_bottom > recB.leftTop.y;
+
+    return horizontalOverlap && verticalOverlap;
 }
 
 

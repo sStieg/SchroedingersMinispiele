@@ -213,25 +213,28 @@ class BasketballGameComponent extends HTMLElement{
                 width: 100%;
                 height: 100%;
                 position: relative;
-                background-color: #000000;
+                background-image: url('../../../../images/basketball.jpg');
+                background-repeat: none;
+                background-size: cover;
+                background-position: center;
             }
             
             #big {
                 width: 5%;
                 height: 55%;
-                border-radius: 50px 50px 0px 0px;
+                border-radius: 5px 5px 0px 0px;
             }
             
             #small {
                 width: 5%;
                 height: 10%;
-                border-radius: 50px 50px 0px 0px;
+                border-radius: 5px 5px 0px 0px;
             }
             
             .long {
                 width: 20%;
                 height: 10%;
-                border-radius: 50px;
+                border-radius: 5px;
             }
             
             .obstacle {

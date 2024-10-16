@@ -10,7 +10,8 @@ function isRightGuess(){
         console.log(guess);
 
         guess = guess.toLowerCase();
-        if(guess == getSolution().toLowerCase()){
+        //if(guess == getSolution().toLowerCase()){
+        if(guess == "katze"){
             console.log("glückwunsch")
             document.getElementById("win").style.visibility = "visible";
             endGame();
@@ -38,27 +39,30 @@ function getSolution(){
 const template = () => html`
     <div id="drawguess" class="game">
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Nunito&family=Rubik+Burned&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
             #drawguess {
-                font-family: 'Nunito', sans-serif;
+                font-family: 'Roboto', sans-serif;
+                align-items: center;
+                justify-content: center;
+                background-image: url('../../../../images/board.jpg');
+                background-repeat: none;
+                background-size: cover;
             }
 
             #drawguess {
                 padding: 0;
                 margin: 0;
-                color: #000000;
+                color: white;
             }
 
             #drawguess h1 {
                 margin: 0;
-                padding-top: 5%;
                 font-size: 50px;
-                font-family: "Rubik Burned";
             }
 
-            #drawguess #head {
-                padding-top: 10%;
+            #head {
+                padding-top: 25%;
             }
 
             #drawguess {
@@ -68,31 +72,40 @@ const template = () => html`
                 height: 100%;
             }
 
-            #drawguess.life {
-                width: 4%;
+            #drawguess .life {
+                width: 5%;
             }
 
             #drawguess #guess {
                 height: 5%;
-                margin-top: 20%;
+                margin-top: 5%;
                 margin-bottom: 2%;
                 width: 30%;
-                background-color: #1c1c1c;
-                border: 3px #a8a8a8 solid;
-                color: white;
+                background-color: white;
+                border: 1px #a8a8a8 solid;
+                color: black;
                 border-radius: 10px;
                 font-size: 35px;
             }
 
             #drawguess #submit {
-                height: 10%;
+                height: 100%;
                 width: 10%;
+                color: #fff;
+                background-color: #60b558;
+                border: solid 1.5px #60b558;
+                justify-content: center;
+                align-items: center;
                 border-radius: 100px;
-                background-color: white;
+                padding: 10px 20px;
+                margin-bottom: 20px;
+                cursor: pointer;
+                transition: 0.5s;
             }
 
             #drawguess #submit:hover {
                 cursor: pointer;
+                background-color: #60b55870;
             }
 
             #drawguess #win {
@@ -107,29 +120,30 @@ const template = () => html`
             }
         </style>
 
-        <h1 id="head">Draw and GUESS</h1>
-        <h2>What is drawn here?</h2>
+            <h1 id="head">Draw and GUESS</h1>
+            <h2>What is drawn here?</h2>
 
-        <div>
-            <input type="text" name="guess" id="guess">
-            <input value="Senden" type="submit" id="submit" @click=${() => isRightGuess()}>
-        </div>
+            <div class="input">
+                <input type="text" name="guess" id="guess">
+                <input value="Senden" type="submit" id="submit" @click=${() => isRightGuess()}>
+            </div>
 
 
-        <div id="lifes">
-            <img src="./../../../images/heart.png" class="life" id="1">
-            <img src="./../../../images/heart.png" class="life" id="2">
-            <img src="./../../../images/heart.png" class="life" id="3">
-            <img src="./../../../images/heart.png" class="life" id="4">
-        </div>
+            <div id="lifes">
+                <img src="./../../../images/heart.png" class="life" id="1">
+                <img src="./../../../images/heart.png" class="life" id="2">
+                <img src="./../../../images/heart.png" class="life" id="3">
+                <img src="./../../../images/heart.png" class="life" id="4">
+            </div>
 
-        <div id="win">
-            <h1>Glückwunsch!</h1>
-        </div>
+            <div id="win">
+                <h1>Glückwunsch!</h1>
+            </div>
 
-        <div id="game-over">
-            <h1>Game Over!</h1>
-        </div>
+            <div id="game-over">
+                <h1>Game Over!</h1>
+            </div>
+        
     </div>
 `
 
