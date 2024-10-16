@@ -33,12 +33,14 @@ const config = {
         new HtmlWebpackPlugin({
             filename: "main.html",
             template: './index.html',
-            chunks: ['main']
+            chunks: ['main'],
+            hash: true
         }),
         new HtmlWebpackPlugin({
             filename: "test.html",
             template:"./test/index.html",
-            chunks: ['test']
+            chunks: ['test'],
+            hash: true
         }),
         new CopyPlugin({
             patterns: [

@@ -8,7 +8,7 @@ $( document ).ready(() => {
 
 var connect = function() {
     if (!connected) {
-        socket = new WebSocket(window.location.protocol + "//" + window.location.hostname + ":8080/api/connect-websocket/vrplayer");
+        socket = new WebSocket(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/api/connect-websocket/vrplayer");
         socket.onopen = function () {
             connected = true;
             console.log("Connected to the web socket");
