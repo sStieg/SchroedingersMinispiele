@@ -1,20 +1,40 @@
-import {html, render} from "lit-html";
+import { html, render } from "lit-html";
 
-console.log("message-component")
+console.log("message-component");
 
-const template = () => html`
-<div class="name">You</div>
-<div class="text"><p>Lorem ipsum dolor sit amet!</p></div>
-`
+class MessageComponent extends HTMLElement {
+    message: string;
+    sender: string;
 
-class MessageComponent extends HTMLElement{
-    connectedCallback(){
-        console.log("connected")
-        this.render()
+    static get observedAttributes() {
+        return ["message", "sender"];
+    }
+
+    constructor() {
+        super();
+        this.message = "";
+        this.sender = "";
+    }
+
+    connectedCallback() {
+        console.log("connected");
+        this.render();
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (oldValue !== newValue) {
+            this[name] = newValue;
+            this.render();
+        }
     }
 
     render() {
-        render(template(), this)
+        const template = html`
+            <div class="name">${this.sender}</div>
+            <div class="text"><p>${this.message}</p></div>
+        `;
+        render(template, this);
     }
 }
+
 customElements.define("message-component", MessageComponent);
