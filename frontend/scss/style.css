@@ -83,12 +83,16 @@ game-component {
 /*****LIVE-VIEW****/
 live-view-component {
   grid-area: live-view;
-  height: 98%;
-  width: 97.5%;
+  max-height: 98%;
+  max-width: 97.5%;
   background-color: #D9D9D9;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+}
+live-view-component > img {
+  max-width: 100%;
 }
 
 /*****CHAT****/
@@ -97,6 +101,7 @@ chat-component {
 }
 chat-component > div {
   margin-left: 3%;
+  padding-top: 20px;
   height: 100%;
   width: 92%;
   border-radius: 39px;
@@ -145,11 +150,14 @@ message-component {
 }
 message-component .text {
   width: 70%;
-  height: 36px;
-  border-radius: 50px;
+  border-radius: 25px;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+message-component .text > p {
+  max-width: 85%;
 }
 
 .message-self {
@@ -169,7 +177,7 @@ message-component .text {
 }
 
 message-component .name {
-  margin: 10px 40px;
+  margin: 15px 8% 5px;
 }
 
 /*****DIARY****/
@@ -178,30 +186,30 @@ message-component .name {
 }
 .diary p {
   text-align: left;
+  margin: 0 auto;
 }
 .diary > div {
+  position: relative;
   margin-top: 6.5%;
   background-color: #fff;
   height: 90%;
   width: 95%;
   outline: 2px solid rgba(255, 149, 0, 0.48);
-  outline-offset: -2px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
+diary-component {
+  height: 80%;
+  margin: 0 auto;
+}
 diary-component > div {
   margin: 0 auto;
-  max-height: 80%;
+  height: 100%;
   width: 80%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow-y: scroll;
-  overflow-x: hidden;
   -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
 /*****MAP****/
