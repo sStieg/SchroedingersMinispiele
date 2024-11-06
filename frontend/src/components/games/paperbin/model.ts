@@ -69,7 +69,6 @@ export class Bin {
 }
 
 export class PaperBinGame {
-    running: boolean
     isWon: boolean
     paperPlanes: PaperPlane[]
     bin: Bin
@@ -86,7 +85,6 @@ const initalState: PaperBinGameState = {
 }
 
 export const paperbinGame: PaperBinGame = {
-    running: false,
     isWon: false,
     paperPlanes: [],     
     bin: {
@@ -121,4 +119,4 @@ export const paperbinGame: PaperBinGame = {
     }
 }
 
-export const gameState = new BehaviorSubject<PaperBinGameState>(paperbinGame)
+export const paperBinGameState = new BehaviorSubject<PaperBinGameState>(paperbinGame)

@@ -29,7 +29,6 @@ export class Basketball implements GameElement {
 }
 
 export class BasketballGame {
-    running: boolean
     isWon: boolean
     basketball: Basketball
     basket: GameElement
@@ -38,7 +37,6 @@ export class BasketballGame {
 }
 
 export const basketBallGame: BasketballGame = {
-    running: false,
     isWon: false,
     basketball: {
         position: {
@@ -99,4 +97,4 @@ export const basketBallGame: BasketballGame = {
     }
 }
 
-export const gameState = new BehaviorSubject<BasketballGame>(basketBallGame);
+export const basketballGameState = new BehaviorSubject<BasketballGame>(basketBallGame);
