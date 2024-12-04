@@ -3,7 +3,7 @@ import {html, render} from "lit-html";
 console.log("live-view-component")
 
 const template = () => html`
-<img src="../../images/live-view.jpg">
+
 `
 
 class LiveViewComponent extends HTMLElement{

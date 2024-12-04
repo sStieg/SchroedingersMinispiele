@@ -1,30 +1,23 @@
-import {html, render, TemplateResult} from "lit-html";
-import {gameSubject} from "../script";
+import {html, render} from "lit-html";
 
 console.log("game-component")
 
-const template = (currGame: TemplateResult) => html`
+const template = () => html`
 <div id="minigames">
-    ${currGame}
+    <basketball-component></basketball-component>
+    <paper-bin-component></paper-bin-component>
+    <drawguess-component></drawguess-component>
 </div>
 `
 
 class GameComponent extends HTMLElement{
-    static observedAttributes
-    currGame: TemplateResult = html``;
-
     connectedCallback(){
         console.log("connected")
         this.render()
-
-        gameSubject.subscribe(game => {
-            this.currGame = game;
-            this.render()
-        })
     }
 
     render() {
-        render(template(this.currGame), this)
+        render(template(), this)
     }
 }
 customElements.define("game-component", GameComponent);

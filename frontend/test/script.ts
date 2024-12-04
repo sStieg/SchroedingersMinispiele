@@ -1,7 +1,6 @@
 var connected = false;
 var currentGame;
 var socket;
-const url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port
 
 $( document ).ready(() => {
     connect();
@@ -9,7 +8,7 @@ $( document ).ready(() => {
 
 var connect = function() {
     if (!connected) {
-        socket = new WebSocket(url + "/api/connect-websocket/vrplayer");
+        socket = new WebSocket(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/api/connect-websocket/vrplayer");
         socket.onopen = function () {
             connected = true;
             console.log("Connected to the web socket");
@@ -27,7 +26,7 @@ var connect = function() {
 
 export function startGame(message, gameElement) {
     currentGame = gameElement;
-    fetch(url + "/api/position/", {
+    fetch(window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/api/position/", {
         method: "POST",
         mode: "no-cors",
         body: message
