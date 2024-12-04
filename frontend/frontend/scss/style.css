@@ -223,4 +223,40 @@ map-component .room {
   border: 2px solid rgba(255, 149, 0, 0.48);
 }
 
-/*# sourceMappingURL=style.css.map */
+.diary-container {
+  display: flex;
+  flex-direction: column;
+  height: 200px; /* Set a fixed height for the diary */
+  width: 440px; /* Set a fixed width for the diary */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.diary-content {
+  flex: 1; /* Fills the available space */
+  overflow-y: auto; /* Allows scrolling within the content area */
+  padding: 10px;
+}
+
+.diary-buttons {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-top: 1px solid #ccc; /* Optional: visual separation */
+}
+
+.diary-buttons button {
+  background-color: #99D7D7; /* Primary button color */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners */
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 8px 16px; /* Padding for better click area */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 12px; /* Button font size */
+  transition: background-color 0.3s, box-shadow 0.3s; /* Smooth hover effect */
+}
+
+.diary-buttons button:hover {
+  background-color: #70c1c1; /* Darker shade on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Box shadow on hover */
+}

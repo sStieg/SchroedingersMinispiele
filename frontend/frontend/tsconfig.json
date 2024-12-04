@@ -5,6 +5,7 @@
     "target": "es2018",
     "outDir": "dist",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "importHelpers": true,
