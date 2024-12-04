@@ -69,7 +69,7 @@ jobs:
           overwrite: true
           prerelease: true
           body: "Intermediate Release for Sprint Review"
-          file: frontend/frontend.zip
+          file: frontend/frontend/frontend.zip
           tag: SchroedingersMinispiele
       #- name: Display url
        # run: |
