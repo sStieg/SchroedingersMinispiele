@@ -1,4 +1,4 @@
-import {Basketball, basketBallGame, BasketballGame, gameState} from "./model";
+import {Basketball, basketBallGame, BasketballGame, basketballGameState} from "./model";
 import {produce} from "immer";
 import {html, render} from "lit-html";
 import {endGame} from "../../../script";
@@ -12,16 +12,22 @@ class BasketballGameComponent extends HTMLElement{
     gravitation: number = 0;
     isWon: boolean = false;
 
+    constructor() {
+        super();
+        this.attachShadow({ mode: "open" });
+    }
+
     connectedCallback(){
         console.log("connected")
-        gameState.subscribe(() => {
+        basketballGameState.subscribe(() => {
+            this.startBasketballGame()
             this.render()
+
         })
-        this.startBasketballGame();
     }
 
     render() {
-        render(this.template(), this)
+        render(this.template(), this.shadowRoot)
     }
 
     checkBasket() {
@@ -36,28 +42,26 @@ class BasketballGameComponent extends HTMLElement{
     }
 
     gameLoop() {
-        if(basketBallGame.running){
-            this.checkBasket();
+        this.checkBasket();
 
-            if(basketBallGame.basketball.position.leftTop.y > basketBallGame.basketball.fallLimit) {
-                basketBallGame.moveBall(0, -this.gravitation);
-                this.gravitation += 0.18;
-            } else {
-                this.gravitation = 0;
-            }
+        if(basketBallGame.basketball.position.leftTop.y > basketBallGame.basketball.fallLimit) {
+            basketBallGame.moveBall(0, -this.gravitation);
+            this.gravitation += 0.18;
+        } else {
+            this.gravitation = 0;
+        }
 
-            if(this.leftArrow) {
-                basketBallGame.moveBall(-1,0);
-            }
-            if(this.rightArrow) {
-                basketBallGame.moveBall(1,0);
-            }
-            if(this.upArrow) {
-                basketBallGame.moveBall(0,2.5);
-            }
+        if(this.leftArrow) {
+            basketBallGame.moveBall(-1,0);
+        }
+        if(this.rightArrow) {
+            basketBallGame.moveBall(1,0);
+        }
+        if(this.upArrow) {
+            basketBallGame.moveBall(0,2.5);
+        }
 
-            this.render();
-        }   
+        this.render();
     }
 
     startBasketballGame() {
@@ -202,6 +206,14 @@ class BasketballGameComponent extends HTMLElement{
                 position: absolute;
             }
             
+            #basketballGame {
+                position: relative;
+                top:0;
+                left:0;
+                width: 100%;
+                height: 100%;
+            }
+            
             #basket {
                 width: 80px;
                 height: 80px;
@@ -214,7 +226,7 @@ class BasketballGameComponent extends HTMLElement{
                 height: 100%;
                 position: relative;
                 background-image: url('../../../../images/basketball.jpg');
-                background-repeat: none;
+                background-repeat: no-repeat;
                 background-size: cover;
                 background-position: center;
             }
@@ -243,7 +255,7 @@ class BasketballGameComponent extends HTMLElement{
             }
         </style>
         
-        <div id="basketballGame" class="game">
+        <div id="basketballGame">
             <div id="board">
                 <img id="basket" src="../../../../images/basket.png" style=${basketStyle}>
                 <img id="basketball" src="../../../../images/basketball.png" style=${basketballStyle}/>
@@ -263,8 +275,9 @@ customElements.define("basketball-component", BasketballGameComponent);
 
 //const game = new BasketballGameComponent();
 
-export function startBasketBallGame() {
+/*export function startBasketBallGame() {
     basketBallGame.running = true;
+
 }
 
 /* INIT */
@@ -428,4 +441,3 @@ function checkBasket() {
 
     }
 }*/
-

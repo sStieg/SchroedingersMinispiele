@@ -1,25 +1,6 @@
 import {BehaviorSubject} from "rxjs";
-
-interface Point {
-    x: number
-    y: number
-}
-
-interface Rectangle {
-    leftTop: Point
-    width: number
-    height: number
-}
-
-enum BasketballState {
-    DUNKED,
-    MISSED
-}
-
-export class GameElement {
-    elementId: string
-    position: Rectangle
-}
+import {GameElement} from "../interfaces/GameElement";
+import {Rectangle} from "../interfaces/Rectangle";
 
 export class Basketball implements GameElement {
     move(dx: number, dy: number): void {}
@@ -29,7 +10,6 @@ export class Basketball implements GameElement {
 }
 
 export class BasketballGame {
-    running: boolean
     isWon: boolean
     basketball: Basketball
     basket: GameElement
@@ -38,7 +18,6 @@ export class BasketballGame {
 }
 
 export const basketBallGame: BasketballGame = {
-    running: false,
     isWon: false,
     basketball: {
         position: {
@@ -99,4 +78,4 @@ export const basketBallGame: BasketballGame = {
     }
 }
 
-export const gameState = new BehaviorSubject<BasketballGame>(basketBallGame);
+export const basketballGameState = new BehaviorSubject<BasketballGame>(basketBallGame);

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schrödingers Minispiele</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="./scss/style.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script defer src="main-build.js"></script></head>
+
+<body> 
+    <div class="overview"> 
+        <div>
+            <div id="grid">
+                <game-component>
+                    <live-view-component>Live View</live-view-component>
+
+                    <map-component></map-component>
+
+                    <div class="diary">
+                        <div>
+                            <diary-component></diary-component>
+                        </div>
+                    </div>
+                </game-component>
+                
+                <chat-component></chat-component>
+            </div>
+        </div> 
+    </div>
+</body>
+</html>
