@@ -4,6 +4,15 @@ import {gameSubject} from "../script";
 console.log("game-component")
 
 const template = (currGame: TemplateResult) => html`
+    <live-view-component></live-view-component>
+
+    <map-component></map-component>
+
+    <div class="diary">
+        <div>
+            <diary-component></diary-component>
+        </div>
+    </div>
     <div id="minigames">
         ${currGame}
     </div>
