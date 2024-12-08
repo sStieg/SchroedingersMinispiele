@@ -1,0 +1,322 @@
+$base-grey: #D9D9D9;
+$border-orange: rgba(255, 149, 0, 0.48);
+$current-room-border: #FF6800;
+$current-room-filling: rgba(255, 148, 0, 0.15);
+$chat-color-other: #F8BA64;
+$chat-color-self: #99D7D7;
+
+html{
+    overflow: hidden;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    font-family: Roboto;
+    text-align: center;
+    margin: 0;
+}
+
+#anfrage{
+    color: white;
+    position: absolute;
+    top: 0px;
+}
+
+#minigames {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    z-index: 5;
+    box-sizing: border-box;
+
+    & > * {
+        z-index: 21;
+    }
+}
+
+/**************OVERVIEW***************/
+.overview{
+    display: flex;
+}
+
+.overview>div{
+    margin: 10vh 10vw;
+    width: 80vw;
+    height: 80vh;
+}
+
+.overview #grid{
+    width: 90vw;
+    height: 80vh;
+    display: grid;
+    grid-template-areas: 'game-place chat';
+    grid-template-columns: 60% 30%;
+    grid-template-rows: 100%;
+}
+
+
+game-component{
+    grid-area: game-place;
+    display: grid;
+    grid-template-areas: 'live-view live-view' 'map diary';
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 60% 40%;
+    position: relative;
+}
+
+
+/*****LIVE-VIEW****/
+live-view-component{
+    grid-area: live-view;
+    max-height: 98%;
+    max-width: 97.5%;
+    background-color: $base-grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    & > img{
+        max-width: 100%;
+    }
+}
+
+
+/*****CHAT****/
+
+
+chat-component{
+    grid-area: chat;
+
+    & > div{
+        margin-left: 3%;
+        padding-top: 20px;
+        height: 100%;
+        width: 92%;
+        border-radius: 39px;
+        box-shadow: 0px 0px 11px rgba(0,0,0,0.2);
+    }
+
+    #messages{
+        height: 85%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    #write-message{
+        margin-top: 4%;
+    }
+
+    textarea{
+        width: 70%;
+        box-sizing: border-box;
+        padding: 12px 20px;
+        box-shadow: 1px 2px 5.4px rgba(0,0,0,0.2);
+    }
+
+    button{
+        width: 40px;
+    }
+
+    button ,textarea{
+        height: 40px;
+        border-radius: 50px;
+        border: none;
+        background-color: white;
+    }
+
+    img{
+        width: 30px;
+        rotate: -45deg;
+        margin: 7px;
+        padding: 0;
+    }
+    h2{
+        margin: 0;
+        padding-top: 40px;
+        font-size:large;
+        font-weight: 500;
+    }
+
+}
+
+message-component{
+    padding-top: 30px;
+
+    .text{
+        width: 70%;
+        border-radius: 25px;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & > p{
+            max-width: 85%;
+        }
+    }
+}
+
+.message-self{
+    text-align: right;
+
+    .text{
+        background-color: $chat-color-self;
+        margin-left: 25%;
+    }
+}
+
+.message-other{
+    text-align: left;
+
+    .text{
+        background-color: $chat-color-other;
+        margin-left: 5%;
+    }
+}
+
+message-component .name{
+    margin: 15px 8% 5px;
+}
+
+/*****MAP****/
+map-component{
+    grid-area: map;
+
+    & > div{
+        margin-top: 6.5%;
+        background-color: #fff;
+        height: 90%;
+        width: 95%;
+        display: grid;
+        grid-template-columns: 49.5% 49.5%;
+        grid-template-rows: 49% 49%;
+        grid-gap: 2% 1%;
+    }
+
+    .room {
+        border: 2px solid $border-orange;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        h2 {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: bold;
+            margin: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    }
+
+    #room1 {
+        background-image: url("../images/kinderzimmer.jpeg");
+    }
+
+    #room2 {
+        background-image: url("../images/bibliothek.jpeg");
+    }
+
+    #room3 {
+        background-image: url("../images/labor.jpeg");
+    }
+
+    #room4 {
+        background-image: url("../images/kerker.jpeg");
+    }
+}
+/*****DIARY****/
+.diary{
+    grid-area: diary;
+    justify-content: center;
+    align-items: center;
+
+    p{
+        text-align: left;
+    }
+
+    & > div{
+        margin-top: 6.5%;
+        background-color: #fff;
+        height: 90%;
+        width: 95%;
+        outline: 2px solid $border-orange;
+        outline-offset: -2px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+diary-component > div{
+    margin: 0 auto;
+    max-height: 100%;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.diary-container {
+    display: flex;
+    flex-direction: column;
+    height: 200px; /* Set a fixed height for the diary */
+    width: 440px; /* Set a fixed width for the diary */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.diary-content {
+    flex: 1; /* Fills the available space */
+    overflow-y: auto; /* Allows scrolling within the content area */
+    padding: 10px;
+}
+
+.diary-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-top: 1px solid #ccc; /* Optional: visual separation */
+    z-index:20;
+}
+
+.diary-buttons button {
+    background-color: #99D7D7; /* Primary button color */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 8px 16px; /* Padding for better click area */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 12px; /* Button font size */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth hover effect */
+}
+
+.diary-buttons button:hover {
+    background-color: #70c1c1; /* Darker shade on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Box shadow on hover */
+}
