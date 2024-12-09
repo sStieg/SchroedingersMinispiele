@@ -9,54 +9,57 @@ export class ChatService {
     this.socket = null;
   }
 
-  // Send a chat message
+  /**
+   * Sends a chat message through the WebSocket connection.
+   * @param message The message to send
+   */
   public sendMessage(message: string): void {
-    if (this.socket === null || this.socket.closed) {
-      throw new SocketClosed();
+    if (!this.socket || this.socket.closed) {
+      throw new SocketClosed("WebSocket is closed. Unable to send message.");
     }
     this.socket.sendMessage(message);
   }
 
-  // Connect to the chat WebSocket
-  public connect(user: string, lobbyId: string, onMessage: (msg: string) => void, onError: (err: string) => void): void {
-    if (this.socket === null) {
+  /**
+   * Connects to the chat WebSocket.
+   * @param user The username of the connecting user
+   * @param lobbyId The chat room/lobby ID
+   * @param onMessage Callback for incoming messages
+   * @param onError Callback for errors
+   */
+  public connect(
+    user: string,
+    lobbyId: string,
+    onMessage: (msg: string) => void,
+    onError: (err: string) => void
+  ): void {
+    if (!this.socket) {
       this.socket = new WebSocket<string>(`${ENDPOINT_URL}/${lobbyId}/${user}`);
-      console.log("Connected to WebSocket");
 
-      // Subscribe to error messages
-      this.socket.errorMessages.subscribe((eMsg: string) => {
-        console.error(`WebSocket error: ${eMsg}`);
-        onError(eMsg);
+      console.log("Connecting to WebSocket...");
+
+      this.socket.errorMessages.subscribe((errorMessage: string) => {
+        console.error(`WebSocket error: ${errorMessage}`);
+        onError(errorMessage);
       });
 
-      // Subscribe to incoming messages
-      this.socket.messages.subscribe((msg: string) => {
-        console.log(`Received message: ${msg}`);
-        onMessage(msg);
+      this.socket.messages.subscribe((message: string) => {
+        console.log(`Message received: ${message}`);
+        onMessage(message);
       });
 
       this.socket.connect();
     }
   }
 
-  // Close the WebSocket connection
+  /**
+   * Closes the WebSocket connection gracefully.
+   */
   public close(): void {
     if (this.socket) {
       this.socket.close();
       this.socket = null;
-      console.log("WebSocket closed");
+      console.log("WebSocket closed.");
     }
   }
 }
-
-// Example Usage
-/*const chatService = new ChatService();
-chatService.connect(
-  "TestUser",
-  "12345",
-  (msg) => console.log("Message received:", msg),
-  (err) => console.error("WebSocket error:", err)
-);
-
-chatService.sendMessage("Hello, World!");
-chatService.close();*/

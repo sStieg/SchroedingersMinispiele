@@ -34,7 +34,7 @@ body {
   width: 100%;
   height: 100%;
   color: #fff;
-  z-index: 5;
+  display: none;
   box-sizing: border-box;
 }
 #minigames > * {
@@ -192,7 +192,7 @@ map-component .room {
 }
 map-component .room h2 {
   width: 100%;
-  height: 100%;
+  height: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -212,6 +212,50 @@ map-component #room3 {
 }
 map-component #room4 {
   background-image: url("../images/kerker.jpeg");
+}
+
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
+}
+.popup h2 {
+  margin-top: 0;
+}
+.popup ul {
+  list-style: none;
+  padding: 0;
+}
+.popup ul li {
+  margin: 5px 0;
+}
+.popup button {
+  margin-top: 10px;
+  padding: 5px 10px;
+  border: none;
+  background-color: rgba(255, 149, 0, 0.48);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.popup button:hover {
+  background-color: rgba(255, 149, 0, 0.48);
+}
+
+#popup-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
 /*****DIARY****/

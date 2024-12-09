@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     loadingIndicator.style.display = 'none';
 
     if (success) {
-      window.location.href = `/main.html`;
+      // Redirect with lobbyId and username
+    window.location.href = `/main.html?lobbyId=${lobbyId}&username=${encodeURIComponent(username)}`;
     } else {
       alert('Name already taken!');
       usernameInput.value = '';

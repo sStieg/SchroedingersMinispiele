@@ -41,7 +41,8 @@ body{
     width: 100%;
     height: 100%;
     color: #fff;
-    z-index: 5;
+    //z-index: 5;
+    display: none;
     box-sizing: border-box;
 
     & > * {
@@ -219,7 +220,7 @@ map-component{
 
         h2 {
             width: 100%;
-            height: 100%;
+            height: 80%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -246,6 +247,55 @@ map-component{
         background-image: url("../images/kerker.jpeg");
     }
 }
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000;
+
+    h2 {
+        margin-top: 0;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            margin: 5px 0;
+        }
+    }
+
+    button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        border: none;
+        background-color: $border-orange;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: $border-orange;
+        }
+    }
+}
+
+#popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
 /*****DIARY****/
 .diary{
     grid-area: diary;
@@ -320,3 +370,4 @@ diary-component > div{
     background-color: #70c1c1; /* Darker shade on hover */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Box shadow on hover */
 }
+
