@@ -41,8 +41,6 @@ body{
     width: 100%;
     height: 100%;
     color: #fff;
-    //z-index: 5;
-    display: none;
     box-sizing: border-box;
 
     & > * {
@@ -351,7 +349,6 @@ diary-component > div{
     justify-content: space-between;
     padding: 10px;
     border-top: 1px solid #ccc; /* Optional: visual separation */
-    z-index:20;
 }
 
 .diary-buttons button {

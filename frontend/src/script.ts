@@ -10,7 +10,7 @@ let socket;
 let currentRoomNumber;
 let username = "player1"
 let currentGame: TemplateResult = html``;
-let socketUrl = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/api/connect-websocket/" + username
+let socketUrl = window.location.protocol + "//" + window.location.hostname + ":" + '8080' + "/api/connect-websocket/" + username
 export let gameSubject = new BehaviorSubject<TemplateResult>(currentGame)
 
 addEventListener("DOMContentLoaded", connect)
