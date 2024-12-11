@@ -2,7 +2,7 @@ var connected = false;
 var currentGame;
 var socket;
 
-const baseURL = window.location.protocol + "//" + window.location.hostname + ":" + '8080' + "/api/";
+const baseURL = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/api/";
 
 $( document ).ready(() => {
     connect();
