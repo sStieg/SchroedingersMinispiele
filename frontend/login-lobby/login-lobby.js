@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
   joinButton.addEventListener('click', async () => {
     loadingIndicator.style.display = 'block';
     const lobbyId = lobbyInput.value.trim();
-    const lobbyExists = await requestLobbyStatus(lobbyId);
+    //const lobbyExists = await requestLobbyStatus(lobbyId);
+
+    let lobbyExists = true;
 
     loadingIndicator.style.display = 'none';
     if (lobbyExists) {

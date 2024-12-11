@@ -24,8 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     loadingIndicator.style.display = 'block';
     const username = usernameInput.value.trim();
 
-    const success = await attemptUserLogin(username, lobbyId);
+    //const success = await attemptUserLogin(username, lobbyId);
     loadingIndicator.style.display = 'none';
+    let success = true;
 
     if (success) {
       // Redirect with lobbyId and username
