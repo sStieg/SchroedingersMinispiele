@@ -5,33 +5,18 @@ console.log("diary-component");
 
 const template = (entry) => html`
 <style>
-  .diary-content {
-    max-height: 70vh; /* Adjust to desired height */
-    overflow-y: auto;
-    padding: 1rem;
-    box-sizing: border-box;
-  }
-  .diary-content::-webkit-scrollbar {
-    width: 8px;
-  }
-  .diary-content::-webkit-scrollbar-thumb {
-    background: #ccc; 
-    border-radius: 4px;
-  }
-  .diary-content::-webkit-scrollbar-thumb:hover {
-    background: #aaa;
-  }
+  
 </style>
 
 <div class="diary-container">
   <div class="diary-content">
-    
     <h2>Chapter ${entry.chapter}: ${entry.date}</h2>
     <p>${entry.entry}</p>
   </div>
+
   <div class="diary-buttons">
-    <button id="prevBtn">Previous</button>
-    <button id="nextBtn">Next</button>
+    <button class="small-button" id="prevBtn">Previous</button>
+    <button class="small-button" id="nextBtn">Next</button>
   </div>
 </div>
 `;

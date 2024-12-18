@@ -48,6 +48,19 @@ body{
     }
 }
 
+/**************WIEDERVERWENDBAR**************/
+.small-button{  
+    border: none;
+    border-radius:20px; 
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 8px 16px; 
+    cursor: pointer; 
+    font-size: 12px; 
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
 /**************OVERVIEW***************/
 .overview{
     display: flex;
@@ -97,22 +110,20 @@ live-view-component{
 
 
 /*****CHAT****/
-
-
 chat-component{
     grid-area: chat;
 
     & > div{
         margin-left: 3%;
-        padding-top: 20px;
         height: 100%;
         width: 92%;
-        border-radius: 39px;
+        border-radius: 40px;
         box-shadow: 0px 0px 11px rgba(0,0,0,0.2);
     }
 
     #messages{
-        height: 85%;
+        height: 80%;
+        padding: 20px 40px;
         overflow-y: scroll;
         overflow-x: hidden;
         -ms-overflow-style: none;
@@ -120,7 +131,7 @@ chat-component{
     }
 
     #write-message{
-        margin-top: 4%;
+        margin-top: 2vh;
     }
 
     textarea{
@@ -128,73 +139,90 @@ chat-component{
         box-sizing: border-box;
         padding: 12px 20px;
         box-shadow: 1px 2px 5.4px rgba(0,0,0,0.2);
+        text-decoration: none;
+        border-radius: 20px;
+        resize: none;
+        font-family: Roboto;
     }
 
     button{
         width: 40px;
     }
 
-    button ,textarea{
+    button, textarea{
         height: 40px;
-        border-radius: 50px;
         border: none;
         background-color: white;
     }
 
     img{
         width: 30px;
-        rotate: -45deg;
         margin: 7px;
         padding: 0;
     }
+
     h2{
         margin: 0;
         padding-top: 40px;
         font-size:large;
         font-weight: 500;
     }
-
 }
 
-message-component{
-    padding-top: 30px;
+message-component {
+    display: flex;
+    flex-direction: column;
+    max-width: 90%;      
+    margin-bottom: 20px;
+  
+    .sender {
+      margin: 0;
+      font-weight: bold;
+      width: 100%;
+    }
 
-    .text{
-        width: 70%;
-        border-radius: 25px;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        & > p{
-            max-width: 85%;
-        }
+    .text {
+      display: inline-block;
+      border-radius: 25px;
+      padding: 0px 20px;
+      word-wrap: break-word;
+      margin-top: 5px; 
+      max-width: 100%;
+      text-align: left; 
     }
 }
 
-.message-self{
-    text-align: right;
+.message-self {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-end;
 
-    .text{
+    .sender {
+        text-align: right; 
+    }
+
+    .text {
         background-color: $chat-color-self;
-        margin-left: 25%;
     }
 }
 
-.message-other{
-    text-align: left;
+.message-other {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 
-    .text{
+    .sender {
+        text-align: left;
+    }
+
+    .text {
         background-color: $chat-color-other;
-        margin-left: 5%;
     }
 }
 
-message-component .name{
-    margin: 15px 8% 5px;
-}
-
+  
+  
+  
 /*****MAP****/
 map-component{
     grid-area: map;
@@ -208,25 +236,6 @@ map-component{
         grid-template-columns: 49.5% 49.5%;
         grid-template-rows: 49% 49%;
         grid-gap: 2% 1%;
-    }
-
-    .room {
-        border: 2px solid $border-orange;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-
-        h2 {
-            width: 100%;
-            height: 80%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            font-weight: bold;
-            margin: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
     }
 
     #room1 {
@@ -245,6 +254,44 @@ map-component{
         background-image: url("../images/kerker.jpeg");
     }
 }
+
+room-component {
+    position: relative; 
+    display: grid;
+    place-items: center;
+    padding: 10px;
+    border: 2px solid $border-orange;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        background: rgba(0, 0, 0, 0.5); 
+        z-index: 1; 
+    }
+  
+    h2, button {
+        position: relative;
+        z-index: 2;
+        margin: 0; 
+        color: #fff;
+        text-align: center;
+    }
+  
+    button {
+        color: #000000;
+        background-color: #f8ba64cb; 
+    }
+  
+    button:hover {
+        background-color: #f8ba64;  
+    }
+}
+  
+
 .popup {
     position: fixed;
     top: 50%;
@@ -253,7 +300,7 @@ map-component{
     background-color: white;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border-radius: 20px;
     z-index: 1000;
 
     h2 {
@@ -275,7 +322,7 @@ map-component{
         border: none;
         background-color: $border-orange;
         color: white;
-        border-radius: 4px;
+        border-radius: 20px;
         cursor: pointer;
 
         &:hover {
@@ -333,38 +380,44 @@ diary-component > div{
 .diary-container {
     display: flex;
     flex-direction: column;
-    height: 200px; /* Set a fixed height for the diary */
-    width: 440px; /* Set a fixed width for the diary */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 200px; 
+    width: 90%; 
 }
 
 .diary-content {
-    flex: 1; /* Fills the available space */
-    overflow-y: auto; /* Allows scrolling within the content area */
-    padding: 10px;
+    flex: 1; 
+    overflow-y: auto; 
+    box-sizing: border-box;
+
+    & > h2{
+        margin-top: -2px;
+    }
+}
+
+.diary-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.diary-content::-webkit-scrollbar-thumb {
+    background: #ccc; 
+    border-radius: 20px;
+}
+
+.diary-content::-webkit-scrollbar-thumb:hover {
+    background: #aaa;
 }
 
 .diary-buttons {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
-    border-top: 1px solid #ccc; /* Optional: visual separation */
-}
+    padding-top: 10px;
+    border-top: 1px solid #ccc; 
 
-.diary-buttons button {
-    background-color: #99D7D7; /* Primary button color */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    margin-left: 10px;
-    margin-right: 10px;
-    padding: 8px 16px; /* Padding for better click area */
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 12px; /* Button font size */
-    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth hover effect */
-}
+    button {
+        background-color: $chat-color-self; 
+    }
 
-.diary-buttons button:hover {
-    background-color: #70c1c1; /* Darker shade on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Box shadow on hover */
+    button:hover {
+        background-color: #70c1c1;  
+    }
 }
-
