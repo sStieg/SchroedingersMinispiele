@@ -87,32 +87,36 @@ class DrawguessComponent extends HTMLElement{
                         background-size: cover;
                         background-position: center;
                         width: 100%;
-                        height: 100%;
+                        height: 40%;
                         position: relative;
                         left: 0;
-                        top: 0;
-                    }
-
-                    #drawguess {
+                        top: 48vh;
+                        text-align: center;
+                        display: flex;
+                        flex-direction: column;
                         padding: 0;
                         margin: 0;
                         color: white;
+                        font-size: 20px;
                     }
 
                     #drawguess h1 {
                         margin: 0;
-                        font-size: 50px;
                     }
-
-                    #head {
-                        padding-top: 25%;
+                    
+                    #drawguess h2 {
+                        font-weight: normal;
+                        margin: 0;
+                        margin-bottom: 10px;
                     }
-
-                    #drawguess {
-                        text-align: center;
-                        justify-content: center;
-                        width: 100%;
-                        height: 100%;
+                    
+                    #drawguess .input {
+                        display: flex;
+                        justify-content: space-evenly;
+                        align-items: center;
+                        padding: 10px;
+                        position: relative;
+                        height: 10%;
                     }
 
                     #drawguess .life {
@@ -120,28 +124,26 @@ class DrawguessComponent extends HTMLElement{
                     }
 
                     #drawguess #guess {
-                        height: 5%;
-                        margin-top: 5%;
-                        margin-bottom: 2%;
-                        width: 30%;
+                        height: 100%;
+                        width: 60%;
                         background-color: white;
                         border: 1px #a8a8a8 solid;
                         color: black;
                         border-radius: 10px;
-                        font-size: 35px;
+                        font-size: 15px;
                     }
 
                     #drawguess #submit {
                         height: 100%;
-                        width: 10%;
+                        width: 30%;
                         color: #fff;
                         background-color: #60b558;
                         border: solid 1.5px #60b558;
+                        box-sizing: border-box;
+                        display: flex;
                         justify-content: center;
                         align-items: center;
                         border-radius: 100px;
-                        padding: 10px 20px;
-                        margin-bottom: 20px;
                         cursor: pointer;
                         transition: 0.5s;
                     }
@@ -152,7 +154,6 @@ class DrawguessComponent extends HTMLElement{
                     }
 
                     #drawguess #win {
-                        margin-top: -2%;
                         font-size: 40px;
                         visibility: hidden;
                     }

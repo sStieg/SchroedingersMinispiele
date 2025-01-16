@@ -38,7 +38,7 @@ body{
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 97.5%;
     height: 100%;
     color: #fff;
     box-sizing: border-box;
@@ -270,12 +270,12 @@ room-component {
         position: absolute;
         top: 0; right: 0; bottom: 0; left: 0;
         background: rgba(0, 0, 0, 0.5); 
-        z-index: 1; 
+        //z-index: 1;
     }
   
     h2, button {
         position: relative;
-        z-index: 2;
+        //z-index: 2;
         margin: 0; 
         color: #fff;
         text-align: center;
