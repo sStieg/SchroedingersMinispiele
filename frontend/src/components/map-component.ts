@@ -101,22 +101,22 @@ const closePopup = () => {
 const template = () => html`
   <div>
     <room-component id="room1">
-        <h2>Kinderzimmer</h2>
-        <button class="small-button" @click=${() => openPopup("Kinderzimmer")}>Show Challenges</button>
+      <h2>Nursery</h2>
+      <button class="small-button" @click=${() => openPopup("Kinderzimmer")}>Show Challenges</button>
     </room-component>
 
     <room-component id="room2">
-      <h2>Bibliothek</h2>
+      <h2>Library</h2>
       <button class="small-button" @click=${() => openPopup("Bibliothek")}>Show Challenges</button>
     </room-component>
 
     <room-component id="room3">
-      <h2>Labor</h2>
+      <h2>Laboratory</h2>
       <button class="small-button" @click=${() => openPopup("Labor")}>Show Challenges</button>
     </room-component>
 
     <room-component id="room4">
-      <h2>Kerker</h2>
+      <h2>Dungeon</h2>
       <button class="small-button" @click=${() => openPopup("Kerker")}>Show Challenges</button>
     </room-component>
   </div>
