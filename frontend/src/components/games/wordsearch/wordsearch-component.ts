@@ -12,13 +12,18 @@ class WordsearchComponent extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+  }
+
+  startWordSearch() {
     this.selectedWord = this.randomWord();
     this.initGrid();
+    this.render();
   }
 
   connectedCallback() {
     console.log("connected");
-    this.render();
+
+    this.startWordSearch();
   }
 
   randomWord() {
@@ -80,6 +85,7 @@ class WordsearchComponent extends HTMLElement {
   }
 
   handleCellClick(row, col) {
+    console.log("FJKLDJSLKFJSDKLFJKLDSJJFDKLSJFKLDJSLKF")
     const position = `${row},${col}`;
 
     if (this.correctPositions.includes(position)) {
@@ -101,20 +107,25 @@ class WordsearchComponent extends HTMLElement {
   }
 
   renderGrid() {
-    return html`
-      <div id="grid">
-        ${this.grid.map((row, rowIndex) =>
-          row.map((letter, colIndex) => html`
-            <div
+    // Im Render-Code
+    let grid = this.grid.map((row, rowIndex) => {
+      return row.map((letter, colIndex) => {
+        return html`
+          <div
               class="cell"
               data-row="${rowIndex}"
               data-col="${colIndex}"
               @click="${() => this.handleCellClick(rowIndex, colIndex)}"
-            >
-              ${letter}
-            </div>
-          `)
-        )}
+          >
+            ${letter}
+          </div>
+        `;
+      });
+    });
+
+    return html`
+      <div id="grid">
+        ${grid}
       </div>
     `;
   }
@@ -131,7 +142,15 @@ class WordsearchComponent extends HTMLElement {
             font-family: 'Roboto', sans-serif;
             text-align: center;
             color: white;
+            position: relative;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #555555;
+            
           }
+
           #grid {
             display: grid;
             grid-template-columns: repeat(15, 1fr);
@@ -139,6 +158,7 @@ class WordsearchComponent extends HTMLElement {
             margin: 20px auto;
             max-width: 600px;
           }
+
           .cell {
             width: 40px;
             height: 40px;
@@ -150,10 +170,12 @@ class WordsearchComponent extends HTMLElement {
             border: 1px solid #ccc;
             cursor: pointer;
           }
+
           .cell.correct {
             background-color: #78fa41;
             color: white;
           }
+
           .cell.incorrect {
             background-color: #fa4141;
             color: white;
@@ -165,10 +187,12 @@ class WordsearchComponent extends HTMLElement {
         ${this.renderGrid()}
 
         ${this.isWon
-          ? html`<p><strong>Congratulations! You found the word!</strong></p>`
-          : ""}
+            ? html`
+              <won-game-component></won-game-component>`
+            : ""}
       </div>
     `;
+
   }
 }
 

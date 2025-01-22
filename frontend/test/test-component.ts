@@ -128,7 +128,7 @@ class TestComponent extends HTMLElement{
         
         <div class="room" style="background-image: url('./images/kerker.jpeg')">
             <h1 class="roomName">Kerker</h1>
-            <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
+            <div class="post-button" @click=${() => {startGame('100x1; ', this)}}>(Kein Spiel verfügbar)</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>

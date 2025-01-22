@@ -93,6 +93,10 @@ function startGame(roomNumber?: number, gameNumber?: number) {
                 $("#pingpong").css("position", "relative");
                 $("#pingpong").css("z-index", "10");*/
             }
+        } else if(roomNumber == 100) {
+            if(gameNumber == 1) {
+                gameSubject.next(html`<wordsearch-component></wordsearch-component>`)
+            }
         }
 
     }
