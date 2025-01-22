@@ -1,286 +1,194 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Wortspiel - Bücherei</title>
-	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Permanent+Marker">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Search Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    .grid {
+      display: grid;
+      gap: 0; 
+      grid-template-columns: repeat(auto-fit, minmax(20px, 1fr)); 
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .grid-cell {
+      width: 40px;
+      height: 40px;
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #ccc;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 18px;
+      line-height: 40px;
+      cursor: pointer;
+      box-sizing: border-box;
+      user-select: none;
+    }
+    .grid-cell.correct {
+      background-color: #78fa41;
+      color: #fff;
+    }
+    .grid-cell.incorrect {
+      background-color: #fa4141;
+      color: #fff;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 36px;
+      z-index: 1000;
+      display: none;
+    }
+  </style>
 </head>
 <body>
+  <h1>Word Search Game</h1>
+  <p>Find the word in the grid!</p>
+  <div id="game-container">
+    <div class="grid" id="grid"></div>
+  </div>
+  <div class="overlay" id="overlay">Great Job!</div>
+  <script>
+    const words = ["LEONDING", "CODE", "VRBRILLE", "TECHNIK", "INFORMATIK", "SCHROEDINGERS", "MEDIENTECHNIK"];
+    const selectedWord = words[Math.floor(Math.random() * words.length)];
+    console.log("Selected word:", selectedWord);
 
-<style type="text/css">
-  @import url('https://fonts.googleapis.com/css2?family=Rethink+Sans&family=Whisper&display=swap');
-  #wordgame *{
-    font-family: 'Rethink Sans', sans-serif;
-    text-align: center;
-    background-color: rgb(17, 17, 17);
-    color: white;
-  }
-  #wordgame .letter:hover{
-    cursor: pointer;
-  }
+    const gridSize = 15;
+    const grid = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
+    const correctPositions = [];
+    const selectedPositions = new Set();
+    let isSelecting = false;
 
-  #wordgame h2{
-    font-weight: 400;
-  }
+    function placeWord(word) {
+      const isHorizontal = Math.random() > 0.5;
+      let placed = false;
 
-  #wordgame #raster td{
-    padding: 20px;
-    margin: 10px;
-    border: solid black 1px;
-    text-align: center;
-    font-weight: bolder;
-    border-radius: 5px;
-    color: black;
-    background-color: white;
-  }
+      while (!placed) {
+        const rowStart = Math.floor(Math.random() * gridSize);
+        const colStart = Math.floor(Math.random() * gridSize);
 
-  #wordgame #raster{
-    background-color: grey;
-    border-radius: 5px;
-
-  }
-
-  #wordgame table{
-    margin: 0 auto;
-  }
-
-  #wordgame #result td{
-    visibility: hidden;
-    font-size: 30px;
-    font-weight:bolder;
-    color: black;
-    background-color: #e8ffde;
-  }
-
-  #wordgame #result{
-    margin: 30px auto;
-    border: #78fa41 solid 2px;
-    padding: 10px 30px;
-    background-color: #e8ffde;
-    border-radius: 10px;
-  }
-
-</style>
-
-<h1>Spiel 2</h1>
-<h2>Finde die Wörter. <br> Wo könnte der nächste Schlüssel versteckt sein?</h2>
-
-<table id="raster">
-  <tbody>
-    <tr>
-      <td class="letter" id="1x1" onclick="setEingabe(this.id)">H</td>
-      <td class="letter" id="1x2" onclick="setEingabe(this.id)">I</td>
-      <td class="letter" id="1x3" onclick="setEingabe(this.id)">N</td>
-      <td class="letter" id="1x4" onclick="setEingabe(this.id)">T</td>
-      <td class="letter" id="1x5" onclick="setEingabe(this.id)">E</td>
-      <td class="letter" id="1x6" onclick="setEingabe(this.id)">R</td>
-      <td class="letter" id="1x7" onclick="setEingabe(this.id)">X</td>
-      <td class="letter" id="1x8" onclick="setEingabe(this.id)">I</td>
-      <td class="letter" id="1x9" onclick="setEingabe(this.id)">J</td>
-    </tr>
-    <tr>
-      <td class="letter" id="2x1" onclick="setEingabe(this.id)">D</td>
-      <td class="letter" id="2x2" onclick="setEingabe(this.id)">G</td>
-      <td class="letter" id="2x3" onclick="setEingabe(this.id)">N</td>
-      <td class="letter" id="2x4" onclick="setEingabe(this.id)">M</td>
-      <td class="letter" id="2x5" onclick="setEingabe(this.id)">S</td>
-      <td class="letter" id="2x6" onclick="setEingabe(this.id)">D</td>
-      <td class="letter" id="2x7" onclick="setEingabe(this.id)">I</td>
-      <td class="letter" id="2x8" onclick="setEingabe(this.id)">L</td>
-      <td class="letter" id="2x9" onclick="setEingabe(this.id)">B</td>
-    </tr>
-    <tr>
-      <td class="letter" id="3x1" onclick="setEingabe(this.id)">Z</td>
-      <td class="letter" id="3x2" onclick="setEingabe(this.id)">D</td>
-      <td class="letter" id="3x3" onclick="setEingabe(this.id)">H</td>
-      <td class="letter" id="3x4" onclick="setEingabe(this.id)">U</td>
-      <td class="letter" id="3x5" onclick="setEingabe(this.id)">U</td>
-      <td class="letter" id="3x6" onclick="setEingabe(this.id)">S</td>
-      <td class="letter" id="3x7" onclick="setEingabe(this.id)">P</td>
-      <td class="letter" id="3x8" onclick="setEingabe(this.id)">T</td>
-      <td class="letter" id="3x9" onclick="setEingabe(this.id)">R</td>
-    </tr>
-    <tr>
-      <td class="letter" id="4x1" onclick="setEingabe(this.id)">L</td>
-      <td class="letter" id="4x2" onclick="setEingabe(this.id)">Ö</td>
-      <td class="letter" id="4x3" onclick="setEingabe(this.id)">K</td>
-      <td class="letter" id="4x4" onclick="setEingabe(this.id)">S</td>
-      <td class="letter" id="4x5" onclick="setEingabe(this.id)">M</td>
-      <td class="letter" id="4x6" onclick="setEingabe(this.id)">G</td>
-      <td class="letter" id="4x7" onclick="setEingabe(this.id)">D</td>
-      <td class="letter" id="4x8" onclick="setEingabe(this.id)">O</td>
-      <td class="letter" id="4x9" onclick="setEingabe(this.id)">Q</td>
-    </tr>
-    <tr>
-      <td class="letter" id="5x1" onclick="setEingabe(this.id)">F</td>
-      <td class="letter" id="5x2" onclick="setEingabe(this.id)">S</td>
-      <td class="letter" id="5x3" onclick="setEingabe(this.id)">Ü</td>
-      <td class="letter" id="5x4" onclick="setEingabe(this.id)">L</td>
-      <td class="letter" id="5x5" onclick="setEingabe(this.id)">C</td>
-      <td class="letter" id="5x6" onclick="setEingabe(this.id)">O</td>
-      <td class="letter" id="5x7" onclick="setEingabe(this.id)">V</td>
-      <td class="letter" id="5x8" onclick="setEingabe(this.id)">H</td>
-      <td class="letter" id="5x9" onclick="setEingabe(this.id)">S</td>
-    </tr>
-    <tr>
-      <td class="letter" id="6x1" onclick="setEingabe(this.id)">W</td>
-      <td class="letter" id="6x2" onclick="setEingabe(this.id)">R</td>
-      <td class="letter" id="6x3" onclick="setEingabe(this.id)">V</td>
-      <td class="letter" id="6x4" onclick="setEingabe(this.id)">N</td>
-      <td class="letter" id="6x5" onclick="setEingabe(this.id)">O</td>
-      <td class="letter" id="6x6" onclick="setEingabe(this.id)">B</td>
-      <td class="letter" id="6x7" onclick="setEingabe(this.id)">U</td>
-      <td class="letter" id="6x8" onclick="setEingabe(this.id)">C</td>
-      <td class="letter" id="6x9" onclick="setEingabe(this.id)">H</td>
-    </tr>
-    <tr>
-      <td class="letter" id="7x1" onclick="setEingabe(this.id)">R</td>
-      <td class="letter" id="7x2" onclick="setEingabe(this.id)">P</td>
-      <td class="letter" id="7x3" onclick="setEingabe(this.id)">E</td>
-      <td class="letter" id="7x4" onclick="setEingabe(this.id)">R</td>
-      <td class="letter" id="7x5" onclick="setEingabe(this.id)">X</td>
-      <td class="letter" id="7x6" onclick="setEingabe(this.id)">I</td>
-      <td class="letter" id="7x7" onclick="setEingabe(this.id)">F</td>
-      <td class="letter" id="7x8" onclick="setEingabe(this.id)">U</td>
-      <td class="letter" id="7x9" onclick="setEingabe(this.id)">L</td>
-    </tr>
-    <tr>
-      <td class="letter" id="8x1" onclick="setEingabe(this.id)">I</td>
-      <td class="letter" id="8x2" onclick="setEingabe(this.id)">Z</td>
-      <td class="letter" id="8x3" onclick="setEingabe(this.id)">A</td>
-      <td class="letter" id="8x4" onclick="setEingabe(this.id)">F</td>
-      <td class="letter" id="8x5" onclick="setEingabe(this.id)">Y</td>
-      <td class="letter" id="8x6" onclick="setEingabe(this.id)">T</td>
-      <td class="letter" id="8x7" onclick="setEingabe(this.id)">K</td>
-      <td class="letter" id="8x8" onclick="setEingabe(this.id)">G</td>
-      <td class="letter" id="8x9" onclick="setEingabe(this.id)">U</td>
-    </tr>
-    <tr>
-      <td class="letter" id="9x1" onclick="setEingabe(this.id)">T</td>
-      <td class="letter" id="9x2" onclick="setEingabe(this.id)">O</td>
-      <td class="letter" id="9x3" onclick="setEingabe(this.id)">E</td>
-      <td class="letter" id="9x4" onclick="setEingabe(this.id)">R</td>
-      <td class="letter" id="9x5" onclick="setEingabe(this.id)">S</td>
-      <td class="letter" id="9x6" onclick="setEingabe(this.id)">K</td>
-      <td class="letter" id="9x7" onclick="setEingabe(this.id)">F</td>
-      <td class="letter" id="9x8" onclick="setEingabe(this.id)">Z</td>
-      <td class="letter" id="9x9" onclick="setEingabe(this.id)">L</td>
-    </tr>
-  </tbody>
-</table>
-
-<table id="result">
-  <tbody>
-    <tr>
-      <td id="11">H</td>
-      <td id="12">I</td>
-      <td id="13">N</td>
-      <td id="14">T</td>
-      <td id="15">E</td>
-      <td id="16">R</td>
-    </tr>
-    <tr>
-      <td id="21">B</td>
-      <td id="22">U</td>
-      <td id="23">C</td>
-      <td id="24">H</td>
-    </tr>
-  </tbody>
-</table>
-
-
-  <script type="text/javascript" defer>
-      let letters = [];
-
-      const array = [
-          [11, 12, 13, 14, 15, 16, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 21, 22, 23, 24],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        ];
-
-      function setEingabe(id){
-          let row = getRowOrColumn(id, true) -1;
-          let column = getRowOrColumn(id, false) -1;
-          
-          if(isRight(row, column) != 0){
-            let letter = document.getElementById(id);
-            letter.style.backgroundColor = "#e8ffde";
-            letter.style.border = "solid #78fa41 1px";
-            
-            letters.push(id);
-
-            let result = document.getElementById(isRight(row, column));
-            result.style.visibility = "visible";
-
-            console.log(isEnd())
-          }else{
-            for(i = 0; i < letters.length; i++){
-              document.getElementById(letters[i]).style.backgroundColor = "white";
-              document.getElementById(letters[i]).style.border = "solid black 1px";
-            } 
-            letters = [];
-            console.log(":( nochmal von vorne, falscher Buchstabe")
-          }
-      }
-
-      function isEnd(){
-        if(letters.includes("1x1") && letters.includes("1x2") && letters.includes("1x3") && letters.includes("1x3") 
-        && letters.includes("1x4") && letters.includes("1x5") && letters.includes("1x6") && letters.includes("6x6")
-        && letters.includes("6x7") && letters.includes("6x8") && letters.includes("6x9")){
-          
-          console.log("Juhu, Du hast gewonnen")
-          resetGame()
-          
-          return true;
-        }
-        return false;
-      }
-
-      function isRight(row, column){
-        if(array[row][column] != 0){
-          return array[row][column];
-        }else{
-          resetGame(array)
-          return 0;
-        }
-      }
-
-      function resetGame(){
-        console.log("reset...")
-
-        for(i = 0; i < letters.length; i++){
-          document.getElementById(letters[i]).style.backgroundColor = "white";
-          document.getElementById(letters[i]).style.border = "solid black 1px";
-        } 
-        letters = [];
-
-        for (let i = 0; i < array.length; i++) {
-          for (let j = 0; j < array.length; j++) {
-            if(array[i][j] != 0){
-              document.getElementById(array[i][j]).style.visibility = "hidden";
+        if (isHorizontal && colStart + word.length <= gridSize) {
+          if (canPlaceWord(word, rowStart, colStart, 0, 1)) {
+            for (let i = 0; i < word.length; i++) {
+              grid[rowStart][colStart + i] = word[i];
+              correctPositions.push(`${rowStart},${colStart + i}`);
             }
+            placed = true;
+          }
+        } else if (!isHorizontal && rowStart + word.length <= gridSize) {
+          if (canPlaceWord(word, rowStart, colStart, 1, 0)) {
+            for (let i = 0; i < word.length; i++) {
+              grid[rowStart + i][colStart] = word[i];
+              correctPositions.push(`${rowStart + i},${colStart}`);
+            }
+            placed = true;
           }
         }
       }
+    }
 
-      function getRowOrColumn(str, isRow) {
-        var charCode
-
-        if(isRow){
-          charCode = str.charAt(0);
-        }else{
-          charCode = str.charAt(2);
-        }
-        
-        var charNumber = parseInt(charCode);
-        return charNumber;
+    function canPlaceWord(word, row, col, rowInc, colInc) {
+      for (let i = 0; i < word.length; i++) {
+        const currentRow = row + i * rowInc;
+        const currentCol = col + i * colInc;
+        if (grid[currentRow][currentCol] !== null) return false;
       }
+      return true;
+    }
+
+    function fillGrid() {
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      for (let row = 0; row < gridSize; row++) {
+        for (let col = 0; col < gridSize; col++) {
+          if (grid[row][col] === null) {
+            grid[row][col] = alphabet[Math.floor(Math.random() * alphabet.length)];
+          }
+        }
+      }
+    }
+
+    function renderGrid() {
+      const gridContainer = document.getElementById("grid");
+      gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+      gridContainer.innerHTML = "";
+
+      grid.forEach((row, rowIndex) => {
+        row.forEach((letter, colIndex) => {
+          const cell = document.createElement("div");
+          cell.className = "grid-cell";
+          cell.textContent = letter;
+          cell.dataset.row = rowIndex;
+          cell.dataset.col = colIndex;
+          cell.addEventListener("mousedown", () => startSelecting(cell));
+          cell.addEventListener("mousemove", () => continueSelecting(cell));
+          cell.addEventListener("mouseup", stopSelecting);
+          gridContainer.appendChild(cell);
+        });
+      });
+    }
+
+    function startSelecting(cell) {
+      isSelecting = true;
+      handleCellSelection(cell);
+    }
+
+    function continueSelecting(cell) {
+      if (isSelecting) {
+        handleCellSelection(cell);
+      }
+    }
+
+    function stopSelecting() {
+      isSelecting = false;
+      checkWin();
+    }
+
+    function handleCellSelection(cell) {
+      const row = cell.dataset.row;
+      const col = cell.dataset.col;
+      const position = `${row},${col}`;
+
+      if (correctPositions.includes(position)) {
+        if (!selectedPositions.has(position)) {
+          cell.classList.add("correct");
+          selectedPositions.add(position);
+        }
+      } else {
+        cell.classList.add("incorrect");
+      }
+    }
+
+    function checkWin() {
+      if (selectedPositions.size === correctPositions.length) {
+        showOverlay();
+      }
+    }
+
+    function showOverlay() {
+      const overlay = document.getElementById("overlay");
+      overlay.style.display = "flex";
+    }
+
+    placeWord(selectedWord);
+    fillGrid();
+    renderGrid();
   </script>
 </body>
 </html>
