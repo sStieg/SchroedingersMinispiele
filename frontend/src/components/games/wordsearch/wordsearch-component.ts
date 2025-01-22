@@ -115,7 +115,7 @@ class WordsearchComponent extends HTMLElement {
               class="cell"
               data-row="${rowIndex}"
               data-col="${colIndex}"
-              @click="${() => this.handleCellClick(rowIndex, colIndex)}"
+              onclick="this.handleCellClick(${rowIndex}, ${colIndex})"
           >
             ${letter}
           </div>
