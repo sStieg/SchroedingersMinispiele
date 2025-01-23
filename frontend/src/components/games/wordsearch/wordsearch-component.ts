@@ -85,60 +85,82 @@ class WordsearchComponent extends HTMLElement {
   }
 
   handleCellClick(row, col) {
-    console.log("FJKLDJSLKFJSDKLFJKLDSJJFDKLSJFKLDJSLKF")
+    console.log(row + ' ' + col);
     const position = `${row},${col}`;
+    const cell = this.shadowRoot.querySelector(`.cell[data-row='${row}'][data-col='${col}']`);
 
     if (this.correctPositions.includes(position)) {
       if (!this.selectedPositions.has(position)) {
         this.selectedPositions.add(position);
+        cell.classList.add("correct");
         this.checkWin();
       }
     } else {
-      const cell = this.shadowRoot.querySelector(`.cell[data-row='${row}'][data-col='${col}']`);
       cell.classList.add("incorrect");
     }
-    this.render();
+    //this.render();
   }
 
   checkWin() {
     if (this.selectedPositions.size === this.correctPositions.length) {
       this.isWon = true;
+      this.render();
     }
   }
 
   renderGrid() {
-    // Im Render-Code
-    let grid = this.grid.map((row, rowIndex) => {
-      return row.map((letter, colIndex) => {
-        return html`
-          <div
-              class="cell"
-              data-row="${rowIndex}"
-              data-col="${colIndex}"
-              onclick="this.handleCellClick(${rowIndex}, ${colIndex})"
-          >
-            ${letter}
-          </div>
-        `;
+    // HTML für das Grid erstellen
+    const gridContainer = document.createElement('div');
+    gridContainer.setAttribute('id', 'grid');
+
+    // Vorherigen Inhalt entfernen
+    gridContainer.innerHTML = '';
+
+    // HTML-Elemente erstellen und hinzufügen
+    this.grid.forEach((row, rowIndex) => {
+      row.forEach((letter, colIndex) => {
+        // Zelle erstellen
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.dataset.row = ''+rowIndex;
+        cell.dataset.col = ''+colIndex;
+        cell.textContent = letter;
+
+        // Event-Listener hinzufügen
+        cell.addEventListener('click', () => {
+          this.handleCellClick(rowIndex, colIndex);
+        });
+
+        // Zelle zum Container hinzufügen
+        gridContainer.appendChild(cell);
       });
     });
 
-    return html`
-      <div id="grid">
-        ${grid}
-      </div>
-    `;
+    // Es ist optional, `gridContainer.outerHTML` zurückzugeben, wenn der HTML-Code benötigt wird
+    return gridContainer;
   }
+
+
+
+
 
   render() {
     render(this.template(), this.shadowRoot);
   }
 
   template() {
+    let content = html``;
+
+    if(this.isWon) {
+      content = html`<won-game-component></won-game-component>`
+    } else {
+      content = html`${this.renderGrid()}`
+    }
+
     return html`
       <div id="wordsearch">
         <style>
-          #wordsearch {
+          #wordsearch{
             font-family: 'Roboto', sans-serif;
             text-align: center;
             color: white;
@@ -184,12 +206,7 @@ class WordsearchComponent extends HTMLElement {
 
         <h1>Word Search</h1>
         <p>Find the word: <strong>${this.selectedWord}</strong></p>
-        ${this.renderGrid()}
-
-        ${this.isWon
-            ? html`
-              <won-game-component></won-game-component>`
-            : ""}
+        ${content}
       </div>
     `;
 

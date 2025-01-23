@@ -24,6 +24,7 @@ class WonGameComponent extends HTMLElement {
                 font-weight: 400;
                 font-style: normal;
                 position: absolute;
+                top: 0;
                 width: 100%;
                 height: 100%;
                 font-family: calibri;
