@@ -1,4 +1,5 @@
 import { attemptUserLogin } from '../shared/user.service.js';
+import {connect, userName} from "../src/script";
 
 document.addEventListener('DOMContentLoaded', () => {
   const usernameInput = document.getElementById('username');
@@ -24,13 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
     loadingIndicator.style.display = 'block';
     const username = usernameInput.value.trim();
 
-    //const success = await attemptUserLogin(username, lobbyId);
+    const success = await attemptUserLogin(username, lobbyId);
     loadingIndicator.style.display = 'none';
-    let success = true;
+    //let success = true;
 
     if (success) {
       // Redirect with lobbyId and username
-    window.location.href = `/main.html?lobbyId=${lobbyId}&username=${encodeURIComponent(username)}`;
+    window.location.href = await `/main.html?lobbyId=${lobbyId}&username=${encodeURIComponent(username)}`;
+    userName = username;
     } else {
       alert('Name already taken!');
       usernameInput.value = '';

@@ -7,10 +7,10 @@ export {solution};
 let solution;
 let connected = false;
 let socket;
+export let userName: string;
 let currentRoomNumber;
-let username = "player1"
 let currentGame: TemplateResult = html``;
-let socketUrl = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/api/connect-websocket/" + username
+let socketUrl = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/api/connect-websocket/"
 export let gameSubject = new BehaviorSubject<TemplateResult>(currentGame)
 
 addEventListener("DOMContentLoaded", connect)
@@ -18,7 +18,7 @@ addEventListener("DOMContentLoaded", connect)
 function connect() {
     console.log("Entered Websocket connect function")
     if (!connected) {
-        socket = new WebSocket(socketUrl);
+        socket = new WebSocket(socketUrl + userName);
         socket.onopen = function () {
             connected = true;
             console.log("Connected to the web socket");

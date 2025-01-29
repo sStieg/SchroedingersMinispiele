@@ -1,10 +1,10 @@
 import { BASE_URL } from "./util";
 
 const URL = `http://${BASE_URL}/user`;
-
 export class UserService {
-  private userName: string | null;
+
   private lobbyId: string | null;
+  userName: string | null;
 
   constructor() {
     this.userName = null;
@@ -12,14 +12,14 @@ export class UserService {
   }
 
   // Attempt user login
-  public async attempUserLogin(userName: string, lobbyId: string): Promise<boolean> {
+  public async attempUserLogin(userNameInput: string, lobbyId: string): Promise<boolean> {
     try {
       const response = await fetch(URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ userName, lobbyId }),
+        body: JSON.stringify({ userNameInput, lobbyId }),
       });
 
       if (!response.ok) {
@@ -31,7 +31,7 @@ export class UserService {
       console.log(result.success);
 
       if (result.success) {
-        this.userName = userName;
+        this.userName = userNameInput;
         this.lobbyId = lobbyId;
         return true;
       }
