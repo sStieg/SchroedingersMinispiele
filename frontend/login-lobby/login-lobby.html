@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lobby Login</title>
+
   <style>
     :root {
         --background-color: #e6e6e6;
@@ -14,12 +15,59 @@
         --border-radius: 30px;
         --button-disabled: #a5a5a5;
         --button-hover: #7ecdcd;
+        --navbar-background: #99D7D7;  /* Matching Primary Color */
+        --navbar-hover: #7ecdcd; /* Slightly Darker Hover */
+        --navbar-text: #ffffff;
         --font-family: 'Arial', sans-serif;
     }
 
+    /* NAVBAR STYLES */
+    .navbar {
+        width: 100%;
+        background-color: var(--navbar-background);
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    .navbar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-between; /* Spaces first and last items out */
+        align-items: center;
+        width: 90%;
+        margin: auto;
+    }
+
+    .navbar ul li {
+        display: inline;
+    }
+
+    .navbar ul li a {
+        color: var(--navbar-text);
+        text-decoration: none;
+        font-size: 22px; /* Bigger text */
+        padding: 15px 30px; /* More spacing */
+        font-weight: bold;
+        border-radius: var(--border-radius);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .navbar ul li a:hover {
+        background-color: var(--navbar-hover);
+        transform: scale(1.1); /* Slight scaling effect */
+    }
+
+    /* ADJUST BODY TO AVOID OVERLAP */
     body {
         margin: 0;
-        padding: 0;
+        padding-top: 80px; /* Push content down to avoid navbar overlap */
         font-family: var(--font-family);
         background-color: var(--background-color);
         display: flex;
@@ -122,27 +170,27 @@
         }
     }
   </style>
+
 </head>
 <body>
+
+  <!-- Navbar at the Top -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="/login-lobby.html">Login</a></li>
+      <li><a href="/how-to-play.html">How to Play</a></li>
+      <li><a href="/about-us.html">About Us</a></li>
+    </ul>
+  </nav>
+
   <div id="root">
     <div class="lobby-ges">
       <div class="lobbyInput">
-        <h2>Enter the Loby-ID from the VR-Player</h2>
+        <h2>Enter the Lobby-ID from the VR-Player</h2>
         <div class="input" id="lobby">
-          <input
-            id="lobby-id"
-            type="text"
-            placeholder="Enter Lobby ID"
-            autofocus
-          />
+          <input id="lobby-id" type="text" placeholder="Enter Lobby ID" autofocus />
           <br />
-          <button
-            id="join-lobby-btn"
-            class="joinLobbyButton"
-            disabled
-          >
-            Lobby beitreten
-          </button>
+          <button id="join-lobby-btn" class="joinLobbyButton" disabled>Lobby beitreten</button>
         </div>
         <div id="loading" style="display: none;">
           <div class="spinner"></div>
@@ -150,5 +198,7 @@
       </div>
     </div>
   </div>
+
+  <script src="js/script.js"></script>
 </body>
 </html>

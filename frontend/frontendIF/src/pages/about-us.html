@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us</title>
+
+  <style>
+    :root {
+        --background-color: #e6e6e6;
+        --card-background: #ffffff;
+        --primary-color: #99D7D7;
+        --navbar-background: #99D7D7;
+        --navbar-hover: #7ecdcd;
+        --navbar-text: #ffffff;
+        --text-color: #333;
+        --border-radius: 30px;
+        --font-family: 'Arial', sans-serif;
+    }
+
+    /* NAVBAR STYLES */
+    .navbar {
+        width: 100%;
+        background-color: var(--navbar-background);
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    .navbar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        margin: auto;
+    }
+
+    .navbar ul li {
+        display: inline;
+    }
+
+    .navbar ul li a {
+        color: var(--navbar-text);
+        text-decoration: none;
+        font-size: 22px;
+        padding: 15px 30px;
+        font-weight: bold;
+        border-radius: var(--border-radius);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .navbar ul li a:hover {
+        background-color: var(--navbar-hover);
+        transform: scale(1.1);
+    }
+
+    /* PAGE STYLES */
+    body {
+        margin: 0;
+        padding-top: 100px; /* Adjust to fit navbar */
+        font-family: var(--font-family);
+        background-color: var(--background-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    h2 {
+        color: var(--text-color);
+        font-size: 28px;
+    }
+
+    p {
+        font-size: 18px;
+        max-width: 600px;
+        margin-bottom: 30px;
+    }
+
+    /* TEAM SECTION */
+    .team-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columns per row */
+        gap: 50px;
+        max-width: 800px;
+        margin: 20px auto;
+    }
+
+    .team-member {
+        background: var(--card-background);
+        padding: 15px;
+        border-radius: var(--border-radius);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 100%;
+        max-width: 300px;
+        margin: auto;
+    }
+
+    .team-member img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: var(--border-radius);
+    }
+
+    /* Bigger names */
+    .team-member p {
+        font-size: 22px; /* Increased size */
+        font-weight: bold;
+        margin-top: 10px;
+        color: var(--text-color);
+    }
+
+    /* RESPONSIVENESS */
+    @media (max-width: 600px) {
+        .team-container {
+            grid-template-columns: 1fr; /* 1 column on small screens */
+        }
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="/login-lobby.html">Login</a></li>
+      <li><a href="/how-to-play.html">How to Play</a></li>
+      <li><a href="/about-us.html">About Us</a></li>
+    </ul>
+  </nav>
+
+  <h2>About Us</h2>
+
+  <div class="team-container">
+    <div class="team-member">
+      <img src="images/emina.jpg" alt="Emina Abazovic 5AHIF">
+      <p>Abazovic Emina 5AHIF</p>
+    </div>
+    <div class="team-member">
+      <img src="images/emina.jpg" alt="Maria Aschenberger 5AHITM">
+      <p>Aschenberger Maria 5AHITM</p>
+    </div>
+    <div class="team-member">
+      <img src="images/sophie.jpg" alt="Sophie Böhm 5AHIF">
+      <p>Böhm Sophie 5AHIF</p>
+    </div>
+    <div class="team-member">
+      <img src="images/sophie.jpg" alt="Sophie Böhm 5AHIF">
+      <p>Stieg Josef 5AHITM</p>
+    </div>
+  </div>
+
+</body>
+</html>
