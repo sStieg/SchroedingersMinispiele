@@ -1,5 +1,6 @@
 import { html, render } from "lit-html";
 import { ChatService } from "../../shared/chat.service";
+import {lobbyIdSubject} from "../script";
 
 // Template function for rendering the component
 const template = (
@@ -68,6 +69,8 @@ class ChatComponent extends HTMLElement {
     const params = new URLSearchParams(window.location.search);
     this.userName = params.get("username");
     this.lobbyId = params.get("lobbyId");
+
+    lobbyIdSubject.next(this.lobbyId);
 
     if (!this.userName || !this.lobbyId) {
       console.error("Missing username or lobbyId in URL parameters.");
