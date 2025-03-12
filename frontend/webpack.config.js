@@ -12,7 +12,6 @@ const config = {
     main: './src/index.ts',
     test: './test/index.ts',
     'login-lobby': './login-lobby/login-lobby.js',
-    'login-lobby': './frontendIF/src/js/script.js',
     'login-user': './login-user/login-user.js',
   },
   output: {
@@ -66,6 +65,7 @@ const config = {
         { from: 'scss', to: 'scss' },
         { from: 'images', to: 'images' },
         { from: 'test/images', to: 'images' },
+        { from: 'frontendIF/src/images', to: 'images'}
       ],
     }),
   ],

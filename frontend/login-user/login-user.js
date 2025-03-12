@@ -12,11 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
   const lobbyId = params.get('lobbyId');
 
-  if (!lobbyId) {
-    alert('Lobby ID is missing!');
-    return;
-  }
-
   usernameInput.addEventListener('input', () => {
     startChatButton.disabled = !usernameInput.value.trim();
   });

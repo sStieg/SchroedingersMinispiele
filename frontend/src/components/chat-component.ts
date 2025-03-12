@@ -91,6 +91,7 @@ class ChatComponent extends HTMLElement {
       this.lobbyId,
       (message: string) => {
         const [sender, ...messageParts] = message.split(":");
+        console.log("Der hot grod a nachricht versendet!!!" + this.userName)
         if (sender !== this.userName) {
           this.onMessageReceived(sender, messageParts.join(":").trim());
         }

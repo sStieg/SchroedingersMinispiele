@@ -20,15 +20,15 @@
 
     /* NAVBAR STYLES */
     .navbar {
-        width: 100%;
-        background-color: var(--navbar-background);
-        position: fixed;
-        top: 0;
-        left: 0;
-        padding: 20px 0;
-        text-align: center;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
+      width: 100%;
+      background-color: var(--navbar-background);
+      position: sticky;
+      top: 0;
+      left: 0;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
     }
 
     .navbar ul {
@@ -63,14 +63,15 @@
 
     /* PAGE STYLES */
     body {
-        margin: 0;
-        padding-top: 100px; /* Adjust to fit navbar */
-        font-family: var(--font-family);
-        background-color: var(--background-color);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
+      margin: 0;
+      /* Push content down to avoid navbar overlap */
+      font-family: var(--font-family);
+      background-color: var(--background-color);
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      height: 100vh;
     }
 
     h2 {
@@ -106,7 +107,7 @@
 
     .team-member img {
         width: 100%;
-        height: 200px;
+        height: 80%;
         object-fit: cover;
         border-radius: var(--border-radius);
     }
@@ -126,11 +127,36 @@
         }
     }
 
+    #title {
+      width: 100vw;
+      height: 15vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(161, 216, 216, 0.79);
+      font-size: 2em;
+      color: var(--text-color);
+      font-weight: bolder;
+    }
+
+    #content {
+      width: 100vw;
+      min-height: 100%;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
   </style>
 
 </head>
 <body>
 
+  <div id="title">
+    <h1>Schrödingers House</h1>
+  </div>
   <!-- Navbar -->
   <nav class="navbar">
     <ul>
@@ -140,26 +166,30 @@
     </ul>
   </nav>
 
-  <h2>About Us</h2>
+  <div id="content">
+    <h2>About Us</h2>
 
-  <div class="team-container">
-    <div class="team-member">
-      <img src="images/emina.jpg" alt="Emina Abazovic 5AHIF">
-      <p>Abazovic Emina 5AHIF</p>
-    </div>
-    <div class="team-member">
-      <img src="images/emina.jpg" alt="Maria Aschenberger 5AHITM">
-      <p>Aschenberger Maria 5AHITM</p>
-    </div>
-    <div class="team-member">
-      <img src="images/sophie.jpg" alt="Sophie Böhm 5AHIF">
-      <p>Böhm Sophie 5AHIF</p>
-    </div>
-    <div class="team-member">
-      <img src="images/sophie.jpg" alt="Sophie Böhm 5AHIF">
-      <p>Stieg Josef 5AHITM</p>
+    <div class="team-container">
+      <div class="team-member">
+        <img src="images/emina.jpg" alt="Emina Abazovic 5AHIF">
+        <p>Abazovic Emina 5AHIF</p>
+      </div>
+      <div class="team-member">
+        <img src="images/maria_aschenberger.jpeg" alt="Maria Aschenberger 5AHITM">
+        <p>Aschenberger Maria 5AHITM</p>
+      </div>
+      <div class="team-member">
+        <img src="images/sophie.jpg" alt="Sophie Böhm 5AHIF">
+        <p>Böhm Sophie 5AHIF</p>
+      </div>
+      <div class="team-member">
+        <img src="images/josef_stieg.jpg" alt="Josef Stieg 5AHITM">
+        <p>Stieg Josef 5AHITM</p>
+      </div>
     </div>
   </div>
+
+
 
 </body>
 </html>
