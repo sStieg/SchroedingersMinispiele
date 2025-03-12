@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Play</title>
+
+  <style>
+    :root {
+        --background-color: #e6e6e6;
+        --card-background: #ffffff;
+        --primary-color: #99D7D7;
+        --navbar-background: #99D7D7;
+        --navbar-hover: #7ecdcd;
+        --navbar-text: #ffffff;
+        --text-color: #333;
+        --border-radius: 30px;
+        --font-family: 'Arial', sans-serif;
+    }
+
+    /* NAVBAR STYLES */
+    .navbar {
+        width: 100%;
+        background-color: var(--navbar-background);
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 20px 0;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+
+    .navbar ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        margin: auto;
+    }
+
+    .navbar ul li {
+        display: inline;
+    }
+
+    .navbar ul li a {
+        color: var(--navbar-text);
+        text-decoration: none;
+        font-size: 22px;
+        padding: 15px 30px;
+        font-weight: bold;
+        border-radius: var(--border-radius);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .navbar ul li a:hover {
+        background-color: var(--navbar-hover);
+        transform: scale(1.1);
+    }
+
+    /* PAGE STYLES */
+    body {
+        margin: 0;
+        padding-top: 100px; /* Adjust to fit navbar */
+        font-family: var(--font-family);
+        background-color: var(--background-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .container {
+        max-width: 800px;
+        background: var(--card-background);
+        padding: 30px;
+        border-radius: var(--border-radius);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: var(--text-color);
+        font-size: 26px;
+        margin-top: 20px;
+    }
+
+    p {
+        font-size: 18px;
+        max-width: 700px;
+        margin: 10px auto 20px;
+        text-align: justify;
+    }
+
+    .vr-setup {
+        margin-top: 40px;
+        padding: 20px;
+        background-color: var(--primary-color);
+        border-radius: var(--border-radius);
+        color: white;
+    }
+
+    .vr-setup h1 {
+        margin: 0;
+        font-size: 28px;
+    }
+
+  </style>
+
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="/login-lobby.html">Login</a></li>
+      <li><a href="/how-to-play.html">How to Play</a></li>
+      <li><a href="/about-us.html">About Us</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h2>Lobby ID eingeben</h2>
+    <p>
+      Du kannst entweder den QR-Code auf dem Bildschirm scannen oder den Code selbst eingeben. Frage den VR-Spieler, 
+      dir eine Lobby ID zu geben, wenn du keinen sehen kannst.
+    </p>
+
+    <h2>Spielername eingeben</h2>
+    <p>
+      Suche dir einen Namen aus, unter dem dich die anderen Spieler in der Lobby sehen. Wähle am besten einen Namen, 
+      unter dem dich der VR-Spieler kennt, da ihr euch während des Spiels gegenseitig nicht hören könnt.
+    </p>
+
+    <h2>Lasst die Spiele beginnen</h2>
+    <p>
+      Chatte mit den anderen Spielern und lies dir das Tagebuch durch, um zusätzliche Hinweise für den VR-Spieler zu finden.
+    </p>
+
+    <div class="vr-setup">
+      <h1>VR</h1>
+      <p>
+        Starte die Anwendung und trage das VR-Headset wie vom Hersteller beschrieben. Dieses Spiel wurde für Oculus Quest 2 entwickelt. 
+        Starte das Spiel und warte einen Moment auf die anderen Spieler, damit sie über die Website der Lobby beitreten können.
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>

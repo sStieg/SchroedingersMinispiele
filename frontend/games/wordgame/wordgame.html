@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Word Search Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    .grid {
+      display: grid;
+      gap: 0; 
+      grid-template-columns: repeat(auto-fit, minmax(20px, 1fr)); 
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .grid-cell {
+      width: 40px;
+      height: 40px;
+      background-color: #fff;
+      color: #000;
+      border: 1px solid #ccc;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 18px;
+      line-height: 40px;
+      cursor: pointer;
+      box-sizing: border-box;
+      user-select: none;
+    }
+    .grid-cell.correct {
+      background-color: #78fa41;
+      color: #fff;
+    }
+    .grid-cell.incorrect {
+      background-color: #fa4141;
+      color: #fff;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 36px;
+      z-index: 1000;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Word Search Game</h1>
+  <p>Find the word in the grid!</p>
+  <div id="game-container">
+    <div class="grid" id="grid"></div>
+  </div>
+  <div class="overlay" id="overlay">Great Job!</div>
+  <script>
+    const words = ["LEONDING", "CODE", "VRBRILLE", "TECHNIK", "INFORMATIK", "SCHROEDINGERS", "MEDIENTECHNIK"];
+    const selectedWord = words[Math.floor(Math.random() * words.length)];
+    console.log("Selected word:", selectedWord);
+
+    const gridSize = 15;
+    const grid = Array.from({ length: gridSize }, () => Array(gridSize).fill(null));
+    const correctPositions = [];
+    const selectedPositions = new Set();
+    let isSelecting = false;
+
+    function placeWord(word) {
+      const isHorizontal = Math.random() > 0.5;
+      let placed = false;
+
+      while (!placed) {
+        const rowStart = Math.floor(Math.random() * gridSize);
+        const colStart = Math.floor(Math.random() * gridSize);
+
+        if (isHorizontal && colStart + word.length <= gridSize) {
+          if (canPlaceWord(word, rowStart, colStart, 0, 1)) {
+            for (let i = 0; i < word.length; i++) {
+              grid[rowStart][colStart + i] = word[i];
+              correctPositions.push(`${rowStart},${colStart + i}`);
+            }
+            placed = true;
+          }
+        } else if (!isHorizontal && rowStart + word.length <= gridSize) {
+          if (canPlaceWord(word, rowStart, colStart, 1, 0)) {
+            for (let i = 0; i < word.length; i++) {
+              grid[rowStart + i][colStart] = word[i];
+              correctPositions.push(`${rowStart + i},${colStart}`);
+            }
+            placed = true;
+          }
+        }
+      }
+    }
+
+    function canPlaceWord(word, row, col, rowInc, colInc) {
+      for (let i = 0; i < word.length; i++) {
+        const currentRow = row + i * rowInc;
+        const currentCol = col + i * colInc;
+        if (grid[currentRow][currentCol] !== null) return false;
+      }
+      return true;
+    }
+
+    function fillGrid() {
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      for (let row = 0; row < gridSize; row++) {
+        for (let col = 0; col < gridSize; col++) {
+          if (grid[row][col] === null) {
+            grid[row][col] = alphabet[Math.floor(Math.random() * alphabet.length)];
+          }
+        }
+      }
+    }
+
+    function renderGrid() {
+      const gridContainer = document.getElementById("grid");
+      gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+      gridContainer.innerHTML = "";
+
+      grid.forEach((row, rowIndex) => {
+        row.forEach((letter, colIndex) => {
+          const cell = document.createElement("div");
+          cell.className = "grid-cell";
+          cell.textContent = letter;
+          cell.dataset.row = rowIndex;
+          cell.dataset.col = colIndex;
+          cell.addEventListener("mousedown", () => startSelecting(cell));
+          cell.addEventListener("mousemove", () => continueSelecting(cell));
+          cell.addEventListener("mouseup", stopSelecting);
+          gridContainer.appendChild(cell);
+        });
+      });
+    }
+
+    function startSelecting(cell) {
+      isSelecting = true;
+      handleCellSelection(cell);
+    }
+
+    function continueSelecting(cell) {
+      if (isSelecting) {
+        handleCellSelection(cell);
+      }
+    }
+
+    function stopSelecting() {
+      isSelecting = false;
+      checkWin();
+    }
+
+    function handleCellSelection(cell) {
+      const row = cell.dataset.row;
+      const col = cell.dataset.col;
+      const position = `${row},${col}`;
+
+      if (correctPositions.includes(position)) {
+        if (!selectedPositions.has(position)) {
+          cell.classList.add("correct");
+          selectedPositions.add(position);
+        }
+      } else {
+        cell.classList.add("incorrect");
+      }
+    }
+
+    function checkWin() {
+      if (selectedPositions.size === correctPositions.length) {
+        showOverlay();
+      }
+    }
+
+    function showOverlay() {
+      const overlay = document.getElementById("overlay");
+      overlay.style.display = "flex";
+    }
+
+    placeWord(selectedWord);
+    fillGrid();
+    renderGrid();
+  </script>
+</body>
+</html>
