@@ -1,5 +1,5 @@
 import {html, render} from "lit-html";
-import {endGame} from "../../script";
+import {endGame, solution} from "../../script";
 
 
 class WonGameComponent extends HTMLElement {
@@ -59,6 +59,7 @@ class WonGameComponent extends HTMLElement {
 
         <div id="winning">
             <h1>Gratulation, Sie haben die Challange geschafft!</h1>
+            <h4>Hint: ${solution}</h4>
             <div id="button" @click=${() => {endGame()}}>Fertig</div>
         </div>
         `

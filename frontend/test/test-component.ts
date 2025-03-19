@@ -100,7 +100,7 @@ class TestComponent extends HTMLElement{
         <div id="big-box">
         <div class="room" style="background-image: url('./images/kinderzimmer.jpeg')">
             <h1 class="roomName">Kinderzimmer</h1>
-            <div class="post-button" @click=${() => {startGame('1x1;Katze',this)}}>Game: Basketball</div>
+            <div class="post-button" @click=${() => {startGame('1x1;Wirf den Basketball in den Korb.',this)}}>Game: Basketball</div>
             <div class="post-button" @click=${() => {startGame('1x2;Papier',this)}}>Game: Paper bin</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
