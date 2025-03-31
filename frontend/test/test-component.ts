@@ -111,7 +111,7 @@ class TestComponent extends HTMLElement{
         
         <div class="room" style="background-image: url('./images/bibliothek.jpeg')">
             <h1 class="roomName">Bibliothek</h1>
-            <div class="post-button" @click=${() => {startGame('2x1;Hinter Buch', this)}}>Game: Wordgame</div>
+            <div class="post-button" @click=${() => {startGame('2x1;Katze', this)}}>Game: Drawguess</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
@@ -119,7 +119,7 @@ class TestComponent extends HTMLElement{
         
         <div class="room" style="background-image: url('./images/labor.jpeg')">
             <h1 class="roomName">Labor</h1>
-            <div class="post-button" @click=${() => {startGame('3x1;PingPong', this)}}>Game: PingPong</div>
+            <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
@@ -128,7 +128,7 @@ class TestComponent extends HTMLElement{
         
         <div class="room" style="background-image: url('./images/kerker.jpeg')">
             <h1 class="roomName">Kerker</h1>
-            <div class="post-button" @click=${() => {startGame('100x1; ', this)}}>(Kein Spiel verfügbar)</div>
+            <div class="post-button" @click=${() => {startGame('100x1;Tag der offenen Tür', this)}}>Game: Wordsearch</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>
             <div class="post-button unavailable" @click=${() => {}}>(Kein Spiel verfügbar)</div>

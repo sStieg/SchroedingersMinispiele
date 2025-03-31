@@ -27,7 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (success) {
       // Redirect with lobbyId and username
     window.location.href = await `/main.html?lobbyId=${lobbyId}&username=${encodeURIComponent(username)}`;
-    userName = username;
     } else {
       alert('Name already taken!');
       usernameInput.value = '';

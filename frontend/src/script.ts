@@ -1,23 +1,29 @@
 
 import{BehaviorSubject} from 'rxjs'
 import {html, TemplateResult} from "lit-html";
+import {ChatService} from "../shared/chat.service";
 
 export {solution};
 
 let solution;
+let chatService: ChatService;
 let connected = false;
 let socket;
-export let userName: string;
 let currentRoomNumber;
 let currentGame: TemplateResult = html``;
 let socketUrl = window.location.protocol + "//" + window.location.hostname + ":" + "8080" + "/api/connect-websocket/"
 export let gameSubject = new BehaviorSubject<TemplateResult>(currentGame)
 export let lobbyIdSubject = new BehaviorSubject<string>("");
+export let usernameSubject = new BehaviorSubject<string>("");
 
 
-addEventListener("DOMContentLoaded", connect)
+addEventListener("DOMContentLoaded", () => {
+    usernameSubject.subscribe(u => {
+        connect(u)
+    })
+})
 
-function connect() {
+function connect(userName) {
     console.log("Entered Websocket connect function")
     if (!connected) {
         socket = new WebSocket(socketUrl + userName);
@@ -40,11 +46,15 @@ function connect() {
         socket.onmessage = function (m) {
             console.log(m.data);
 
-            let splittedMessage = m.data.toString().split(";");
+            if(m.data == "won game") {
+                gameSubject.next(html``);
+            } else {
+                let splittedMessage = m.data.toString().split(";");
 
-            solution = splittedMessage[1];
+                solution = splittedMessage[1];
 
-            startGame(splittedMessage[0].split("x")[0], splittedMessage[0].split("x")[1])
+                startGame(splittedMessage[0].split("x")[0], splittedMessage[0].split("x")[1])
+            }
         }
     }
 }

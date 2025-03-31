@@ -1,6 +1,6 @@
 import { html, render } from "lit-html";
 import { ChatService } from "../../shared/chat.service";
-import {lobbyIdSubject} from "../script";
+import {lobbyIdSubject, usernameSubject} from "../script";
 
 // Template function for rendering the component
 const template = (
@@ -70,6 +70,7 @@ class ChatComponent extends HTMLElement {
     this.userName = params.get("username");
     this.lobbyId = params.get("lobbyId");
 
+    usernameSubject.next(this.userName);
     lobbyIdSubject.next(this.lobbyId);
 
     if (!this.userName || !this.lobbyId) {

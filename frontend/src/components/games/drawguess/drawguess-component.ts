@@ -32,7 +32,7 @@ class DrawguessComponent extends HTMLElement{
     isRightGuess(){
         if(this.counter < 4){
             this.guess = this.guess.toLowerCase();
-            if(this.guess == "katze"){
+            if(this.guess == this.getSolution().toLowerCase()){
                 console.log("glückwunsch")
                 this.isWon = true
                 this.render()
@@ -43,12 +43,12 @@ class DrawguessComponent extends HTMLElement{
 
                 if(this.counter == 4){
                     console.log("tot")
-                    gameSubject.next(html``)
+                    endGame()
                 }
             }
         } else {
             console.log("tot")
-            gameSubject.next(html``)
+            endGame()
         }
     }
 
@@ -74,7 +74,6 @@ class DrawguessComponent extends HTMLElement{
         }
 
         return html`
-            <div id="drawguess">
                 <style>
                     @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
@@ -163,23 +162,25 @@ class DrawguessComponent extends HTMLElement{
                         visibility: hidden;
                     }
                 </style>
+                <div id="drawguess">
+                    ${winningScreen}
 
-                <h1 id="head">Draw and GUESS</h1>
-                <h2>What is drawn here?</h2>
-
-                <div class="input">
-                    <input type="text" name="guess" id="guess" @change=${(event) => this.guess = event.target.value}>
-                    <input value="Senden" type="submit" id="submit" @click=${() => this.isRightGuess()}>
+                    <h1 id="head">Draw and GUESS</h1>
+                    <h2>What is drawn here?</h2>
+    
+                    <div class="input">
+                        <input type="text" name="guess" id="guess" @change=${(event) => this.guess = event.target.value}>
+                        <input value="Senden" type="submit" id="submit" @click=${() => this.isRightGuess()}>
+                    </div>
+    
+    
+                    <div id="lifes">
+                        ${hearts}
+                    </div>
+    
+                    
+    
                 </div>
-
-
-                <div id="lifes">
-                    ${hearts}
-                </div>
-
-                ${winningScreen}
-
-            </div>
         `
     }
 }
