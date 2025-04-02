@@ -1,6 +1,6 @@
 import { BASE_URL, SocketClosed, WebSocket } from "./util";
 
-const ENDPOINT_URL = `ws://${BASE_URL}/chat`;
+const ENDPOINT_URL = `wss://${BASE_URL}/chat`;
 
 export class ChatService {
   private socket: WebSocket<string> | null;

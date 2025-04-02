@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SocketClosed = exports.WebSocket = exports.BASE_URL = void 0;
 var webSocket_1 = require("rxjs/webSocket");
 var rxjs_1 = require("rxjs");
-exports.BASE_URL = 'localhost:8081';
+exports.BASE_URL = 'vm91.htl-leonding.ac.at/api/v1';
 var WebSocket = /** @class */ (function () {
     function WebSocket(endpointUrl) {
         this.endpointUrl = endpointUrl;

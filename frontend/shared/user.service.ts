@@ -1,6 +1,6 @@
 import { BASE_URL } from "./util";
 
-const URL = `http://${BASE_URL}/user`;
+const URL = `https://${BASE_URL}/user`;
 export class UserService {
 
   private lobbyId: string | null;

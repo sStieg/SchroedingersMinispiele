@@ -11,7 +11,7 @@ let connected = false;
 let socket;
 let currentRoomNumber;
 let currentGame: TemplateResult = html``;
-let socketUrl = window.location.protocol + "//" + window.location.hostname + ":" + "8080" + "/api/connect-websocket/"
+let socketUrl = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/api/connect-websocket/"
 export let gameSubject = new BehaviorSubject<TemplateResult>(currentGame)
 export let lobbyIdSubject = new BehaviorSubject<string>("");
 export let usernameSubject = new BehaviorSubject<string>("");
