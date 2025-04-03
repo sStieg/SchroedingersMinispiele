@@ -6,7 +6,7 @@ console.log("live-view-component");
 const template = (lobbyId) => html`
   <div>
     <h1>Live View</h1>
-    <img src="http://localhost:8081/lobby/${lobbyId}/screenshot" alt="Live view" />
+    <img src="https://lvm91.htl-leonding.ac.at/api/v1/lobby/${lobbyId}/screenshot" alt="Live view" />
   </div>
 `;
 
@@ -14,7 +14,6 @@ class LiveViewComponent extends HTMLElement {
 
   connectedCallback() {
     console.log("connected");
-    this.render("");
 
     lobbyIdSubject.subscribe(lobbyId => {
       console.log("this is the loby id,", lobbyId)
