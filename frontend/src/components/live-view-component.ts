@@ -6,7 +6,7 @@ console.log("live-view-component");
 const template = (lobbyId) => html`
   <div>
     <h1>Live View</h1>
-    <img src="https://lvm91.htl-leonding.ac.at/api/v1/lobby/${lobbyId}/screenshot" alt="Live view" />
+    <img src="https://vm91.htl-leonding.ac.at/api/v1/lobby/${lobbyId}/screenshot" alt="Live view" />
   </div>
 `;
 
