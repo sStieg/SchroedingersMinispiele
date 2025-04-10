@@ -1,4 +1,5 @@
 import { BASE_URL } from "./util";
+import {usernameSubject} from "../src/script";
 
 const URL = `https://${BASE_URL}/user`;
 export class UserService {
@@ -33,6 +34,8 @@ export class UserService {
       if (result.success) {
         this.userName = userNameInput;
         this.lobbyId = lobbyId;
+
+        usernameSubject.next(this.userName);
         return true;
       }
 

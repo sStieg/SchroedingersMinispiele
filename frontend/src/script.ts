@@ -19,7 +19,9 @@ export let usernameSubject = new BehaviorSubject<string>("");
 
 addEventListener("DOMContentLoaded", () => {
     usernameSubject.subscribe(u => {
-        connect(u)
+        if(u != "") {
+            connect(u)
+        }
     })
 })
 
