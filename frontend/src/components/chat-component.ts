@@ -1,8 +1,7 @@
 import { html, render } from "lit-html";
 import { ChatService } from "../../shared/chat.service";
-import {lobbyIdSubject, usernameSubject} from "../script";
+import { lobbyIdSubject } from "../script";
 
-// Template function for rendering the component
 const template = (
   messages: MessageDisplay[],
   message: string,
@@ -14,25 +13,29 @@ const template = (
       <h2>Today</h2>
       ${messages.map(
         (msg) => html`
-          <div class="${msg.isSelf ? "message-self" : "message-other"}">
+          <div class="${
+            msg.sender === 'System'
+              ? 'message-system'
+              : msg.isSelf
+              ? 'message-self'
+              : 'message-other'
+          }">
             <div class="sender">${msg.isSelf ? "You" : msg.sender}</div>
-            <message-component
-              message=${msg.message}>
-            </message-component>
+            <message-component message=${msg.message}></message-component>
           </div>
         `
-      )}
+      )}      
     </div>
-
     <div id="write-message">
       <textarea
         id="text"
         .value=${message}
         placeholder="Type your message..."
-        @input=${(e: Event) => onMessageInput((e.target as HTMLTextAreaElement).value)}
+        @input=${(e: Event) =>
+          onMessageInput((e.target as HTMLTextAreaElement).value)}
       ></textarea>
       <button @click=${onSend}>
-        <img src="../../images/send.png" alt="Send">
+        <img src="../../images/send.png" alt="Send" />
       </button>
     </div>
   </div>
@@ -50,7 +53,6 @@ class ChatComponent extends HTMLElement {
     this.chatService = new ChatService();
   }
 
-  // Lifecycle hook when the component is added to the DOM
   connectedCallback() {
     console.log("ChatComponent connected");
     this.extractQueryParams();
@@ -58,92 +60,87 @@ class ChatComponent extends HTMLElement {
     this.render();
   }
 
-  // Lifecycle hook when the component is removed from the DOM
   disconnectedCallback() {
     console.log("ChatComponent disconnected");
     this.chatService.close();
   }
 
-  // Extracts the username and lobbyId from the URL
   private extractQueryParams() {
     const params = new URLSearchParams(window.location.search);
     this.userName = params.get("username");
     this.lobbyId = params.get("lobbyId");
 
-    usernameSubject.next(this.userName);
     lobbyIdSubject.next(this.lobbyId);
 
     if (!this.userName || !this.lobbyId) {
       console.error("Missing username or lobbyId in URL parameters.");
     } else {
       console.log(`Connected as ${this.userName} in lobby ${this.lobbyId}`);
+      
     }
   }
 
-  // Initializes the chat connection
-  private startChat() {
-    if (!this.userName || !this.lobbyId) {
+  private async startChat() {
+    if (!this.lobbyId || !this.userName) {
       console.error("Cannot connect: Missing username or lobbyId.");
       return;
     }
-
-    this.chatService.connect(
-      this.userName,
-      this.lobbyId,
-      (message: string) => {
-        const [sender, ...messageParts] = message.split(":");
-        console.log("Der hot grod a nachricht versendet!!!" + this.userName)
-        if (sender !== this.userName) {
-          this.onMessageReceived(sender, messageParts.join(":").trim());
-        }
-      },
-      this.onError.bind(this)
-    );
-
-    this.chatService.sendMessage(`${this.userName} joined the Party!`);
-  }
-
-  // Handles incoming messages from the WebSocket
-  private onMessageReceived(sender: string, message: string) {
-    console.log("Sender:", sender);
-    console.log("User:", this.userName);
-    if(sender !== ">> " + this.userName) {
-        console.log("Received message:", message);
-        const isSelf = sender === this.userName;
-        this.messages.push(new MessageDisplay(message.replace(/"/g, ''), sender, isSelf));
-        this.render();
+  
+    try {
+      await this.chatService.connect(
+        this.lobbyId,
+        (message: string) => {
+          const separatorIndex = message.indexOf(":");
+          if (separatorIndex !== -1) {
+            const sender = message.substring(0, separatorIndex).trim();
+            const msg = message.substring(separatorIndex + 1).trim();
+            this.onMessageReceived(sender, msg);
+          } else {
+            this.onMessageReceived("System", message);
+          }
+        },
+        this.onError.bind(this)
+      );
+      this.chatService.sendMessage(`${this.userName} joined the Party!`);
+    } catch (error) {
+      console.error("Error establishing connection:", error);
     }
   }
 
-  // Handles WebSocket errors
-  private onError(error: string) {
-    console.error("WebSocket Error:", error);
-  }
-
-  // Sends a chat message
-  private onSendMessage() {
-    if (!this.chatService || !this.message.trim()) {
-      console.error("Cannot send message: Missing WebSocket or message content.");
+  private onMessageReceived(sender: string, message: string) {
+    if (sender === this.userName) {
       return;
     }
-
-    try {
-      console.log("Sending message:", this.message);
-      this.chatService.sendMessage(`${this.message}`);
-      this.messages.push(new MessageDisplay(this.message, this.userName!, true));
-      this.message = ""; 
-      this.render();
-    } catch (error) {
-      console.error("Failed to send message:", error);
+    if (
+      sender === "System" &&
+      message === `${this.userName} joined the Party!`
+    ) {
+      return;
     }
+    this.messages.push(new MessageDisplay(message.replace(/"/g, ""), sender, false));
+    this.render();
   }
 
-  // Handles input from the text area
+  private onError(error: string) {
+    console.error("SignalR Error:", error);
+  }
+
+  private onSendMessage() {
+    if (!this.message.trim()) {
+      console.error("Cannot send message: Missing message content.");
+      return;
+    }
+    const formattedMessage = `${this.userName}: ${this.message}`;
+    this.chatService.sendMessage(formattedMessage);
+    this.messages.push(new MessageDisplay(this.message, this.userName!, true));
+    this.message = "";
+    this.render();
+  }
+
   private onMessageInput(value: string) {
     this.message = value;
   }
 
-  // Renders the component
   render() {
     render(
       template(
@@ -157,17 +154,15 @@ class ChatComponent extends HTMLElement {
   }
 }
 
-// Define the custom element
 customElements.define("chat-component", ChatComponent);
 
-// Helper class for storing messages
 class MessageDisplay {
   public readonly dateTime: Date;
 
   constructor(
     public readonly message: string,
     public readonly sender: string,
-    public readonly isSelf = false
+    public readonly isSelf: boolean = false
   ) {
     this.dateTime = new Date();
   }

@@ -5,35 +5,35 @@ console.log("map-component");
 
 // Example Challenges with "Selected" Status
 const challenges = {
-  "Kinderzimmer": [
-    { name: "Schrödingers Katze", selected: true },
-    { name: "Korbjagd", selected: true },
-    { name: "Absturzlandung", selected: false },
+  "Nursery": [
+    { name: "Schrödinger's Cat", selected: true },
+    { name: "Basket Hunt", selected: true },
+    { name: "Crash Landing", selected: false },
     { name: "Vintage Vision", selected: false },
-    { name: "Teddy's Geheimnis", selected: false },
-    { name: "Die Rätseltruhe", selected: false },
-    { name: "Gleichungs-Entriegelung", selected: false },
-    { name: "Durchbruch", selected: false }
+    { name: "Teddy's Secret", selected: false },
+    { name: "The Mistery Chest", selected: false },
+    { name: "Equation-Escape", selected: false },
+    { name: "Break Through", selected: false }
   ],
-  "Bibliothek": [
-    { name: "Versteckte Notiz", selected: false },
-    { name: "Präzisionsmalerei", selected: true },
-    { name: "Statue des Wegweisers", selected: true },
-    { name: "Buch der Freiheit", selected: false }
+  "Library": [
+    { name: "Hidden Note", selected: false },
+    { name: "Precision Drawing", selected: false },
+    { name: "Guiding Statue", selected: false },
+    { name: "Book of Freedom", selected: false }
   ],
-  "Labor": [
-    { name: "Alarm im Kontaminationsraum", selected: false },
-    { name: "Lüftungssicherung", selected: false },
-    { name: "Gegenmittelzutaten", selected: false },
-    { name: "Heilendes Elixier", selected: false },
-    { name: "Türschlosscode", selected: false }
+  "Laboratory": [
+    { name: "Contamination Alarm", selected: false },
+    { name: "Ventilation Security", selected: false },
+    { name: "Antidote Mix", selected: false },
+    { name: "Healing Elixir", selected: true },
+    { name: "Door Lock Code", selected: false }
   ],
-  "Kerker": [
-    { name: "Die versteckte Schriftrolle", selected: false },
-    { name: "Werkzeugsuche", selected: false },
-    { name: "Glühendes Schmiedefeuer", selected: false },
-    { name: "Schmiedekunst", selected: false },
-    { name: "Kettenbrecher", selected: false }
+  "Dungeon": [
+    { name: "The Hidden Scroll", selected: false },
+    { name: "Tool Search", selected: false },
+    { name: "Glowing Flame", selected: false },
+    { name: "Blacksmith Craft", selected: true },
+    { name: "Chain Breaker", selected: false }
   ]
 };
 
@@ -102,22 +102,22 @@ const template = () => html`
   <div>
     <room-component id="room1">
       <h2>Nursery</h2>
-      <button class="small-button" @click=${() => openPopup("Kinderzimmer")}>Show Challenges</button>
+      <button class="small-button" @click=${() => openPopup("Nursery")}>Show Challenges</button>
     </room-component>
 
     <room-component id="room2">
       <h2>Library</h2>
-      <button class="small-button" @click=${() => openPopup("Bibliothek")}>Show Challenges</button>
+      <button class="small-button" @click=${() => openPopup("Library")}>Show Challenges</button>
     </room-component>
 
     <room-component id="room3">
       <h2>Laboratory</h2>
-      <button class="small-button" @click=${() => openPopup("Labor")}>Show Challenges</button>
+      <button class="small-button" @click=${() => openPopup("Laboratory")}>Show Challenges</button>
     </room-component>
 
     <room-component id="room4">
       <h2>Dungeon</h2>
-      <button class="small-button" @click=${() => openPopup("Kerker")}>Show Challenges</button>
+      <button class="small-button" @click=${() => openPopup("Dungeon")}>Show Challenges</button>
     </room-component>
   </div>
 `;

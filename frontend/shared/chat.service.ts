@@ -1,65 +1,50 @@
-import { BASE_URL, SocketClosed, WebSocket } from "./util";
-
-const ENDPOINT_URL = `wss://${BASE_URL}/chat`;
+import * as signalR from "@microsoft/signalr";
 
 export class ChatService {
-  private socket: WebSocket<string> | null;
+  private connection: signalR.HubConnection | null = null;
 
-  constructor() {
-    this.socket = null;
-  }
-
-  /**
-   * Sends a chat message through the WebSocket connection.
-   * @param message The message to send
-   */
-  public sendMessage(message: string): void {
-    if (!this.socket || this.socket.closed) {
-      throw new SocketClosed("WebSocket is closed. Unable to send message.");
-    }
-    this.socket.sendMessage(message);
-  }
-
-  /**
-   * Connects to the chat WebSocket.
-   * @param user The username of the connecting user
-   * @param lobbyId The chat room/lobby ID
-   * @param onMessage Callback for incoming messages
-   * @param onError Callback for errors
-   */
   public connect(
-    user: string,
     lobbyId: string,
     onMessage: (msg: string) => void,
     onError: (err: string) => void
-  ): void {
-    if (!this.socket) {
-      this.socket = new WebSocket<string>(`${ENDPOINT_URL}/${lobbyId}/${user}`);
-
-      console.log("Connecting to WebSocket...");
-
-      this.socket.errorMessages.subscribe((errorMessage: string) => {
-        console.error(`WebSocket error: ${errorMessage}`);
-        onError(errorMessage);
+  ): Promise<void> {
+    this.connection = new signalR.HubConnectionBuilder()
+      .withUrl(`https://vm91.htl-leonding.ac.at/chat?lobbyId=${encodeURIComponent(lobbyId)}`, { withCredentials: false })
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+  
+    this.connection.on("ReceiveMessage", (message: string) => {
+      console.log(`Message received: ${message}`);
+      onMessage(message);
+    });
+  
+    return this.connection
+      .start()
+      .then(() => {
+        console.log("Chat connection started successfully.");
+      })
+      .catch((err: any) => {
+        console.error("Error while starting chat connection: ", err);
+        onError(err.toString());
+        throw err;
       });
-
-      this.socket.messages.subscribe((message: string) => {
-        console.log(`Message received: ${message}`);
-        onMessage(message);
-      });
-
-      this.socket.connect();
+  }
+  
+  public sendMessage(message: string): void {
+    if (!this.connection) {
+      throw new Error("Chat connection is not established.");
     }
+    this.connection.send("SendMessage", message)
+      .catch(err => console.error("Error while sending message: ", err));
   }
 
-  /**
-   * Closes the WebSocket connection gracefully.
-   */
   public close(): void {
-    if (this.socket) {
-      this.socket.close();
-      this.socket = null;
-      console.log("WebSocket closed.");
+    if (this.connection) {
+      this.connection
+        .stop()
+        .then(() => console.log("Chat connection closed."))
+        .catch(err => console.error("Error while closing chat connection: ", err));
+      this.connection = null;
     }
   }
 }

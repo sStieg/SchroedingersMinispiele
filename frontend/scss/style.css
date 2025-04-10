@@ -194,6 +194,22 @@ message-component .text {
   background-color: #F8BA64;
 }
 
+.message-system .sender {
+  text-align: left;
+  color: #666; /* A medium grey for text */
+}
+
+.message-system .text {
+  background-color: #e0e0e0; /* Light grey background for the message text */
+  color: #333; /* Darker grey for text contrast */
+  border-radius: 25px;
+  padding: 0px 20px;
+  word-wrap: break-word;
+  margin-top: 5px;
+  max-width: 100%;
+  text-align: center;
+}
+
 /*****MAP****/
 map-component {
   grid-area: map;

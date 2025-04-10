@@ -1,29 +1,40 @@
-import { html, render } from "lit-html";
-import {lobbyIdSubject} from "../script";
+import { html, render, TemplateResult } from "lit-html";
+import { ScreenshotService } from "../../shared/screenshot.service";
 
 console.log("live-view-component");
 
-const template = (lobbyId) => html`
+const template = (): TemplateResult => html`
   <div>
-    <h1>Live View</h1>
-    <img src="https://vm91.htl-leonding.ac.at/api/v1/lobby/${lobbyId}/screenshot" alt="Live view" />
+    <img id="liveScreenshot" src="" alt="Live Screenshot" />
   </div>
 `;
 
-class LiveViewComponent extends HTMLElement {
+export class LiveViewComponent extends HTMLElement {
+  private screenshotService: ScreenshotService;
 
-  connectedCallback() {
-    console.log("connected");
-
-    lobbyIdSubject.subscribe(lobbyId => {
-      console.log("this is the loby id,", lobbyId)
-      this.render(lobbyId);
-    })
-
+  constructor() {
+    super();
+    this.screenshotService = new ScreenshotService("https://vm91.htl-leonding.ac.at/screenshot");
   }
 
-  render(lobbyId) {
-    render(template(lobbyId), this);
+  connectedCallback(): void {
+    this.render();
+    this.initializeSignalR();
+  }
+
+  private render(): void {
+    render(template(), this);
+  }
+
+  private async initializeSignalR(): Promise<void> {
+    await this.screenshotService.connect();
+    this.screenshotService.onNewScreenshot((base64Image: string) => {
+      const imgElement = this.querySelector("#liveScreenshot") as HTMLImageElement | null;
+      if (imgElement) {
+        imgElement.src = `data:image/png;base64,${base64Image}`;
+      }
+    });
   }
 }
+
 customElements.define("live-view-component", LiveViewComponent);
